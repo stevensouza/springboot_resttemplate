@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
- * @author stevesouza 
+ * @author stevesouza
  */
 
 @RestController
@@ -31,14 +31,14 @@ public class MyRestController {
     	 return response.getBody();
     }
 
-    @GetMapping("/getpostsasobjects")
+    @GetMapping("/getposts_aslist")
     public List<?> getPostsAsObjects() {
         RestTemplate rest = new RestTemplate();
         List<?> posts = rest.getForObject("https://jsonplaceholder.typicode.com/posts", List.class);
         return posts;
     }
 
-    @GetMapping("/getpostsdelme")
+    @GetMapping("/getposts_asarray")
     public Post[] getPostsAsObjectArray() {
         RestTemplate rest = new RestTemplate();
         // Note I added an extra field 'name' to the Post object and populated it by default and it will show
