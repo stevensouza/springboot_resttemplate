@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
+ *
  */
 
 @RestController
