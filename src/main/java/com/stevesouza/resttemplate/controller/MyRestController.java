@@ -2,7 +2,6 @@ package com.stevesouza.resttemplate.controller;
 
 
 import com.stevesouza.resttemplate.db.Post;
-import javafx.geometry.Pos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
