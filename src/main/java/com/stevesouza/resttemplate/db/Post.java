@@ -27,7 +27,7 @@ public class Post {
     private String userId;
     private String title;
     private String body;
-    private String name="Steve Souza";
+    private String name="SteveSouza";
 
 
     public String getName() {
