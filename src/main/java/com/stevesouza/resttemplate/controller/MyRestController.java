@@ -9,26 +9,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
+ *
  * @author stevesouza
  */
 
 @RestController
-@RequestMapping(value="/resttemplate")
+@RequestMapping(value = "/resttemplate")
 public class MyRestController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/getposts")
     // @PathVariable("job")
     public String getPosts() {
-    	 RestTemplate rest = new RestTemplate();
-    	 ResponseEntity<String> response = rest.getForEntity("https://jsonplaceholder.typicode.com/posts", String.class);
-    	 log.info("http status code: "+response.getStatusCode());
-    	 
-    	 return response.getBody();
+        RestTemplate rest = new RestTemplate();
+        ResponseEntity<String> response = rest.getForEntity("https://jsonplaceholder.typicode.com/posts", String.class);
+        log.info("http status code: " + response.getStatusCode());
+
+        return response.getBody();
     }
 
     @GetMapping("/getposts_aslist")
