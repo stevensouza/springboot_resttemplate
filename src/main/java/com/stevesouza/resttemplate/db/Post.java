@@ -1,5 +1,9 @@
 package com.stevesouza.resttemplate.db;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  *  populated with data from public api: https://jsonplaceholder.typicode.com/posts
  *
@@ -15,7 +19,10 @@ package com.stevesouza.resttemplate.db;
  *
  */
 
+@Entity
 public class Post {
+    @Id
+    @GeneratedValue
     private long id;
     private String userId;
     private String title;
