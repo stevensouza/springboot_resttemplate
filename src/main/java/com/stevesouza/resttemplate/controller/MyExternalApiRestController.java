@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/resttemplate")
-public class MyRestController {
+public class MyExternalApiRestController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/getposts")
