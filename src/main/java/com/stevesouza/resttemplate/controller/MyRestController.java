@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,11 +25,12 @@ public class MyRestController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/getposts")
-    // @PathVariable("job")
-    public String getPosts() {
+    // /getposts/{id} - @PathVariable("id")
+    // note default for @RequestParam is true and an exception will be thrown if it isn't provided.
+    public String getPosts(@RequestParam(value="id", required = false) String notUsedId) {
         RestTemplate rest = new RestTemplate();
         ResponseEntity<String> response = rest.getForEntity("https://jsonplaceholder.typicode.com/posts", String.class);
-        log.info("http status code: " + response.getStatusCode());
+        log.info("http status code for '/getposts': " + response.getStatusCode()+ ", notUsed parameter="+notUsedId);
 
         return response.getBody();
     }
@@ -37,6 +39,8 @@ public class MyRestController {
     public List<?> getPostsAsObjects() {
         RestTemplate rest = new RestTemplate();
         List<?> posts = rest.getForObject("https://jsonplaceholder.typicode.com/posts", List.class);
+        log.info("executing '/getposts_aslists'");
+
         return posts;
     }
 
@@ -46,6 +50,7 @@ public class MyRestController {
         // Note I added an extra field 'name' to the Post object and populated it by default and it will show
         // up in the results.
         Post[] posts = rest.getForObject("https://jsonplaceholder.typicode.com/posts", Post[].class);
+        log.info("executing '/getposts_asarray'");
         return posts;
     }
 }
