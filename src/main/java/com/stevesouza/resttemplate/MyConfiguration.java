@@ -10,7 +10,8 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 public class MyConfiguration {
-    /** factory method for spring bean creation of RestTemplate
+    /** factory method for spring bean creation of RestTemplate. Note although I found a pivotal article that said after
+     * construction RestTemplate is thread safe I also, so conflicting information.
      *
      * @return RestTemplate
      */

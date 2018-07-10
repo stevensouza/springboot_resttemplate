@@ -39,6 +39,7 @@ public class MyExternalApiRestController {
     // The autowiring allows me to inject other implementations including a mock.
     // Autowire would work for any arguments in the constructor.
     // Also if there is only one constructor autowired isn't required.
+    // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
     public  MyExternalApiRestController(RestTemplate rest) {
         this.rest = rest;
