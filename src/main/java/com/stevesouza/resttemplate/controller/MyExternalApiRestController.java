@@ -20,6 +20,9 @@ import java.util.List;
  * RestController annotation includes both Controller and ResponseBody annotations. So @ResponseBody is not needed as an annotation
  * on the method return value.
  *
+ * Note: I don't use a JpaRepository in this class, but a typical use case is to Autowire it into the constructor and call its methods
+ * from the RestController.
+ *
  * @author stevesouza
  */
 
