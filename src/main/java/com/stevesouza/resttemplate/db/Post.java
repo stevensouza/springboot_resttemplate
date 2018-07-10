@@ -36,8 +36,8 @@ public class Post {
     private String userId;
     private String title;
     private String body;
-    @Max(10)
-    private String name="SteveSouza";
+    //@Max(10)
+    private String name="Joe";
 
 
     public String getName() {
@@ -56,6 +56,7 @@ public class Post {
     public void setId(long id) {
         this.id = id;
     }
+
 
     public String getUserId() {
         return userId;
@@ -80,4 +81,17 @@ public class Post {
     public void setBody(String body) {
         this.body = body;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+
 }
