@@ -17,6 +17,9 @@ import java.util.List;
  * Note static images can be placed in various locations.  I put one in src/main/resources/static/mystaticimage.png and
  * it is served with the following url: http://localhost:8080/mystaticimage.png
  *
+ * RestController annotation includes both Controller and ResponseBody annotations. So @ResponseBody is not needed as an annotation
+ * on the method return value.
+ *
  * @author stevesouza
  */
 
@@ -26,9 +29,17 @@ public class MyExternalApiRestController {
     private static final String POST_URL="http://localhost:8080/postentity";
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    // can also use more standardized @Inject
-    @Autowired
+    // note I could autowire here but it isn't as flexible as when you autowire in the constructor.
     private RestTemplate rest;
+
+    // can also use more standardized @Inject
+    // The autowiring allows me to inject other implementations including a mock.
+    // Autowire would work for any arguments in the constructor.
+    // Also if there is only one constructor autowired isn't required.
+    @Autowired
+    public  MyExternalApiRestController(RestTemplate rest) {
+        this.rest = rest;
+    }
 
     @GetMapping("/getposts")
     // /getposts/{id} - @PathVariable("id")
