@@ -16,6 +16,9 @@ import java.util.List;
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
  *
+ * Note static images can be placed in various locations.  I put one in src/main/resources/static/mystaticimage.png and
+ * it is served with the following url: http://localhost:8080/mystaticimage.png
+ *
  * @author stevesouza
  */
 
