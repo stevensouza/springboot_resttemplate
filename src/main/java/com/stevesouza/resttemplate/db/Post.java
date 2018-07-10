@@ -3,6 +3,7 @@ package com.stevesouza.resttemplate.db;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
 
 /**
  *  populated with data from public api: https://jsonplaceholder.typicode.com/posts
@@ -16,7 +17,15 @@ import javax.persistence.Id;
  * body: "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto"
  * },
  *
+ *  @Column(name="strField3")
+ * 	@NotNull
+ * 	@Size(min=2, message="Name should have at least 2 characters")
+ * 	private String str;
  *
+ * 	// note this will error out if value isn't between 0 and 100 however it will
+ * 	// only send an 500 error.  Further work must be done to send a more specific error
+ * 	@Min(0)
+ * 	@Max(100)
  */
 
 @Entity
@@ -27,6 +36,7 @@ public class Post {
     private String userId;
     private String title;
     private String body;
+    @Max(10)
     private String name="SteveSouza";
 
 
