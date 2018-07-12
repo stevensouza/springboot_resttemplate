@@ -5,6 +5,9 @@ import com.stevesouza.resttemplate.db.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -78,6 +81,7 @@ public class MyExternalApiRestController {
      * @return Added Post object (note it will also have an id)
      */
     @PostMapping("/post")
+    @ResponseStatus(HttpStatus.CREATED) // http status code 201 Set the Location header to contain a link to the newly-created resource (on POST). Response body content may or may not be present.
     public Post postForObject(@RequestBody Post post) {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
         log.info("submitted object to create: {}", post);
@@ -85,6 +89,34 @@ public class MyExternalApiRestController {
         log.info("created object: {}", createdObject);
         return createdObject;
     }
+
+    @GetMapping("/post/{id}")
+    public String getPost(@PathVariable("id") long id) {
+        return rest.getForObject(POST_URL+"/"+id, String.class);
+    }
+
+    @DeleteMapping("/post/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // http status code 204 good for delete and put
+    public void deletePost(@PathVariable("id") long id) {
+        rest.delete(POST_URL+"/"+id);
+    }
+
+    @PutMapping("/post/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // http status code 204 good for delete and put
+    public void putPost(@PathVariable("id") long id, @RequestBody Post updatedEntity) {
+        rest.put(POST_URL+"/"+id, updatedEntity);
+    }
+
+    @PatchMapping("/post/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // can provide just changed fields.
+    public ResponseEntity<?>  patchPost(@PathVariable("id") long id, RequestEntity<String> requestEntity) {
+       // rest.put(POST_URL+"/"+id, updatedEntity);
+        log.info("RequestEntity= "+requestEntity);
+        ResponseEntity<?> response = rest.exchange(POST_URL+"/"+id, HttpMethod.PATCH, requestEntity, String.class);
+        return response;
+    }
+
+
 
     @GetMapping("/post")
     public String getAllPosts() {
