@@ -85,18 +85,16 @@ public class MyExternalApiRestController {
     // http status code 201 Set the Location header to contain a link to the newly-created
     // resource (on POST). Response body content may or may not be present.
     @ResponseStatus(HttpStatus.CREATED)
-    //public  ResponseEntity<Post> postForObject(@RequestBody Post post) {
-    public Post postForObject(@RequestBody Post post) {
-
-            // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
+    public  ResponseEntity<Post> postForObject(@RequestBody Post post) {
+        //public Post postForObject(@RequestBody Post post) {
+        // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
         log.info("submitted object to create: {}", post);
-        //ResponseEntity<Post> responseEntity = rest.postForEntity(POST_URL, post, Post.class);
-
-        Post createdObject = rest.postForObject(POST_URL, post, Post.class);
+        ResponseEntity<Post> responseEntity = rest.postForEntity(POST_URL, post, Post.class);
+        //Post createdObject = rest.postForObject(POST_URL, post, Post.class);
         // Post createdObject = responseEntity.getBody();
-//        log.info("ResponseEntity: {}", responseEntity);
-//        return responseEntity;
-        return createdObject;
+        log.info("ResponseEntity: {}", responseEntity);
+        return responseEntity;
+        //return createdObject;
     }
 
     @GetMapping("/post/{id}")
