@@ -32,11 +32,13 @@ public class MyConfiguration {
 
 
 
-    // don't think this needs to be a bean.  note i use httpcomments component as the default used
+    // don't think this needs to be a bean.  or maybe it does.  saw reference about destroy being called
+    // .  note i use httpcomments component as the default used
     // by string is the jdk classes of HttpClient, but it doesn't support patch.
     @Bean
     public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory() {
         HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        //clientHttpRequestFactory.setConnectTimeout();
         //clientHttpRequestFactory.setHttpClient(HttpClientBuilder.create().build());
         return clientHttpRequestFactory;
     }

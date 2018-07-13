@@ -81,12 +81,21 @@ public class MyExternalApiRestController {
      * @return Added Post object (note it will also have an id)
      */
     @PostMapping("/post")
-    @ResponseStatus(HttpStatus.CREATED) // http status code 201 Set the Location header to contain a link to the newly-created resource (on POST). Response body content may or may not be present.
+    // not idempotent.
+    // http status code 201 Set the Location header to contain a link to the newly-created
+    // resource (on POST). Response body content may or may not be present.
+    @ResponseStatus(HttpStatus.CREATED)
+    //public  ResponseEntity<Post> postForObject(@RequestBody Post post) {
     public Post postForObject(@RequestBody Post post) {
-        // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
+
+            // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
         log.info("submitted object to create: {}", post);
+        //ResponseEntity<Post> responseEntity = rest.postForEntity(POST_URL, post, Post.class);
+
         Post createdObject = rest.postForObject(POST_URL, post, Post.class);
-        log.info("created object: {}", createdObject);
+        // Post createdObject = responseEntity.getBody();
+//        log.info("ResponseEntity: {}", responseEntity);
+//        return responseEntity;
         return createdObject;
     }
 
@@ -96,13 +105,15 @@ public class MyExternalApiRestController {
     }
 
     @DeleteMapping("/post/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // http status code 204 good for delete and put
+    // idempotent. returns 200 and content or 204 and no content
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable("id") long id) {
         rest.delete(POST_URL+"/"+id);
     }
 
     @PutMapping("/post/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // http status code 204 good for delete and put
+    // idempotent. http status code 204 good for delete and put. 200 if you return content
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void putPost(@PathVariable("id") long id, @RequestBody Post updatedEntity) {
         rest.put(POST_URL+"/"+id, updatedEntity);
     }
@@ -115,7 +126,6 @@ public class MyExternalApiRestController {
         ResponseEntity<?> response = rest.exchange(POST_URL+"/"+id, HttpMethod.PATCH, requestEntity, String.class);
         return response;
     }
-
 
 
     @GetMapping("/post")
