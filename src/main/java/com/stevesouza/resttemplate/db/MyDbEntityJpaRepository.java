@@ -13,16 +13,16 @@ import java.util.List;
  * content-type: application/hal+json
  */
 
-@RepositoryRestResource(collectionResourceRel = "postentity", path = "postentity")
-public interface PostJpaRepository extends JpaRepository<Post, Long> {
+@RepositoryRestResource(collectionResourceRel = "mydbentity", path = "mydbentity")
+public interface MyDbEntityJpaRepository extends JpaRepository<MyDbEntity, Long> {
     /**
-     * http://localhost:8080/postentity/search/findByName?name=SteveSouza
+     * http://localhost:8080/mydbentity/search/findByFirstName?name=SteveSouza
      *
      * The implemenation will be automatically generated.
      *
      * @param name
      * @return List of Post objects
      */
-    List<Post> findByName(@Param("name") String name);
+    List<Post> findByFirstName(@Param("name") String name);
 
 }
