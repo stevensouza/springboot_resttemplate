@@ -5,10 +5,7 @@ import com.stevesouza.resttemplate.db.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -84,7 +81,9 @@ public class MyExternalApiRestController {
     // not idempotent.
     // http status code 201 Set the Location header to contain a link to the newly-created
     // resource (on POST). Response body content may or may not be present.
-    @ResponseStatus(HttpStatus.CREATED)
+    // @ResponseStatus(HttpStatus.CREATED)
+    // in this case i simply return the status code from the underlying api
+    // note I return Post object, but String could just as easily be returned for raw json.
     public  ResponseEntity<Post> postForObject(@RequestBody Post post) {
         //public Post postForObject(@RequestBody Post post) {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
@@ -92,7 +91,7 @@ public class MyExternalApiRestController {
         ResponseEntity<Post> responseEntity = rest.postForEntity(POST_URL, post, Post.class);
         //Post createdObject = rest.postForObject(POST_URL, post, Post.class);
         // Post createdObject = responseEntity.getBody();
-        log.info("ResponseEntity: {}", responseEntity);
+        log.info("Post ResponseEntity: {}", responseEntity);
         return responseEntity;
         //return createdObject;
     }
@@ -111,18 +110,30 @@ public class MyExternalApiRestController {
 
     @PutMapping("/post/{id}")
     // idempotent. http status code 204 good for delete and put. 200 if you return content
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putPost(@PathVariable("id") long id, @RequestBody Post updatedEntity) {
-        rest.put(POST_URL+"/"+id, updatedEntity);
+    // @ResponseStatus(HttpStatus.NO_CONTENT)
+    // in the following code i simply return what the underlying api returns for a status code
+    // which is 200
+    public ResponseEntity<String> putPost(@PathVariable("id") long id, @RequestBody Post updatedEntity) {
+        // This could also be used but i want to return the requests headers for 'Location' so
+        // returning ResponseEntity.
+        // ResponseEntity<Post> responseEntity = rest.put(POST_URL, post, Post.class); this works too.  just doesn't return underlying api's headers
+        // note i Use Post.class but String.class (raw json) could also be used.
+        HttpEntity<Post> requestEntity = new HttpEntity<>(updatedEntity);
+        ResponseEntity<String> responseEntity = rest.exchange(POST_URL+"/"+id, HttpMethod.PUT, requestEntity, String.class);
+        log.info("Put responseEntity={}", responseEntity);
+        return responseEntity;
+
+       // rest.put(POST_URL+"/"+id, updatedEntity);
     }
 
     @PatchMapping("/post/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // can provide just changed fields.
-    public ResponseEntity<?>  patchPost(@PathVariable("id") long id, RequestEntity<String> requestEntity) {
-       // rest.put(POST_URL+"/"+id, updatedEntity);
+    // @ResponseStatus(HttpStatus.NO_CONTENT) // can provide just changed fields.
+    // Note I don't convert to the underlying POJO here and leave the data in json format.
+    public ResponseEntity<String>  patchPost(@PathVariable("id") long id, RequestEntity<String> requestEntity) {
         log.info("RequestEntity= "+requestEntity);
-        ResponseEntity<?> response = rest.exchange(POST_URL+"/"+id, HttpMethod.PATCH, requestEntity, String.class);
-        return response;
+        ResponseEntity<String> responseEntity = rest.exchange(POST_URL+"/"+id, HttpMethod.PATCH, requestEntity, String.class);
+        log.info("Patch responseEntity={}", responseEntity);
+        return responseEntity;
     }
 
 
