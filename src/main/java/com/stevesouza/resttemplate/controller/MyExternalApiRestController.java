@@ -1,6 +1,7 @@
 package com.stevesouza.resttemplate.controller;
 
 
+import com.stevesouza.resttemplate.db.MyDbEntity;
 import com.stevesouza.resttemplate.db.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/resttemplate")
 public class MyExternalApiRestController {
-    private static final String POST_URL="http://localhost:8080/postentity";
+    private static final String BASE_URL ="http://localhost:8080/mydbentity";
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     // note I could autowire here but it isn't as flexible as when you autowire in the constructor.
@@ -74,71 +75,71 @@ public class MyExternalApiRestController {
 
     /**
      *
-     * @param post Post object to add.
-     * @return Added Post object (note it will also have an id)
+     * @param entity entity object to add.
+     * @return ResponseEntity including added object
      */
-    @PostMapping("/post")
+    @PostMapping("/mydbentity")
     // not idempotent.
     // http status code 201 Set the Location header to contain a link to the newly-created
     // resource (on POST). Response body content may or may not be present.
     // @ResponseStatus(HttpStatus.CREATED)
     // in this case i simply return the status code from the underlying api
     // note I return Post object, but String could just as easily be returned for raw json.
-    public  ResponseEntity<Post> postForObject(@RequestBody Post post) {
-        //public Post postForObject(@RequestBody Post post) {
+    public  ResponseEntity<MyDbEntity> post(@RequestBody MyDbEntity entity) {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
-        log.info("submitted object to create: {}", post);
-        ResponseEntity<Post> responseEntity = rest.postForEntity(POST_URL, post, Post.class);
-        //Post createdObject = rest.postForObject(POST_URL, post, Post.class);
-        // Post createdObject = responseEntity.getBody();
-        log.info("Post ResponseEntity: {}", responseEntity);
+        log.info("submitted object to create: {}", entity);
+        ResponseEntity<MyDbEntity> responseEntity = rest.postForEntity(BASE_URL, entity, MyDbEntity.class);
+        // MyDbEntity createdObject = rest.postForObject(BASE_URL, entity, MyDbEntity.class);
+        // MyDbEntity createdObject = responseEntity.getBody();
+        log.info("POST ResponseEntity: {}", responseEntity);
         return responseEntity;
         //return createdObject;
     }
 
-    @GetMapping("/post/{id}")
-    public String getPost(@PathVariable("id") long id) {
-        return rest.getForObject(POST_URL+"/"+id, String.class);
+    @GetMapping("/mydbentity")
+    public String getAll() {
+        return rest.getForObject(BASE_URL, String.class);
     }
 
-    @DeleteMapping("/post/{id}")
+    @GetMapping("/mydbentity/{id}")
+    public String get(@PathVariable("id") long id) {
+        return rest.getForObject(BASE_URL +"/"+id, String.class);
+    }
+
+    @DeleteMapping("/mydbentity/{id}")
     // idempotent. returns 200 and content or 204 and no content
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable("id") long id) {
-        rest.delete(POST_URL+"/"+id);
+    public void delete(@PathVariable("id") long id) {
+        rest.delete(BASE_URL +"/"+id);
     }
 
-    @PutMapping("/post/{id}")
+    @PutMapping("/mydbentity/{id}")
     // idempotent. http status code 204 good for delete and put. 200 if you return content
     // @ResponseStatus(HttpStatus.NO_CONTENT)
     // in the following code i simply return what the underlying api returns for a status code
     // which is 200
-    public ResponseEntity<String> putPost(@PathVariable("id") long id, @RequestBody Post updatedEntity) {
+    public ResponseEntity<String> put(@PathVariable("id") long id, @RequestBody MyDbEntity updatedEntity) {
         // This could also be used but i want to return the requests headers for 'Location' so
         // returning ResponseEntity.
-        // ResponseEntity<Post> responseEntity = rest.put(POST_URL, post, Post.class); this works too.  just doesn't return underlying api's headers
+        // ResponseEntity<MyDbEntity> responseEntity = rest.put(BASE_URL, updatedEntity, MyDbEntity.class); this works too.  just doesn't return underlying api's headers
         // note i Use Post.class but String.class (raw json) could also be used.
-        HttpEntity<Post> requestEntity = new HttpEntity<>(updatedEntity);
-        ResponseEntity<String> responseEntity = rest.exchange(POST_URL+"/"+id, HttpMethod.PUT, requestEntity, String.class);
-        log.info("Put responseEntity={}", responseEntity);
+        HttpEntity<MyDbEntity> requestEntity = new HttpEntity<>(updatedEntity);
+        ResponseEntity<String> responseEntity = rest.exchange(BASE_URL +"/"+id, HttpMethod.PUT, requestEntity, String.class);
+        log.info("PUT responseEntity={}", responseEntity);
         return responseEntity;
 
-       // rest.put(POST_URL+"/"+id, updatedEntity);
+       // rest.put(BASE_URL+"/"+id, updatedEntity);
     }
 
-    @PatchMapping("/post/{id}")
+    @PatchMapping("/mydbentity/{id}")
     // @ResponseStatus(HttpStatus.NO_CONTENT) // can provide just changed fields.
     // Note I don't convert to the underlying POJO here and leave the data in json format.
-    public ResponseEntity<String>  patchPost(@PathVariable("id") long id, RequestEntity<String> requestEntity) {
+    public ResponseEntity<String>  patch(@PathVariable("id") long id, RequestEntity<String> requestEntity) {
         log.info("RequestEntity= "+requestEntity);
-        ResponseEntity<String> responseEntity = rest.exchange(POST_URL+"/"+id, HttpMethod.PATCH, requestEntity, String.class);
-        log.info("Patch responseEntity={}", responseEntity);
+        ResponseEntity<String> responseEntity = rest.exchange(BASE_URL +"/"+id, HttpMethod.PATCH, requestEntity, String.class);
+        log.info("PATCH responseEntity={}", responseEntity);
         return responseEntity;
     }
 
 
-    @GetMapping("/post")
-    public String getAllPosts() {
-        return rest.getForObject(POST_URL, String.class);
-    }
 }
