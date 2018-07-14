@@ -6,3 +6,5 @@ experiments with
 * RestTemplate
 * Validation
 * Databases
+* Hal
+* json
