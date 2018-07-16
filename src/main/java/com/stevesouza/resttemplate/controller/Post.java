@@ -1,4 +1,4 @@
-package com.stevesouza.resttemplate.db;
+package com.stevesouza.resttemplate.controller;
 
 
 /**
@@ -31,7 +31,6 @@ public class Post {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getUserId() {
         return userId;
