@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(value = "/mydbentityrest")
 public class MyDbEntityRestController {
-    private static final String BASE_URL = "http://localhost:8080/mydbentity";
+    private static final String BASE_URL = "http://localhost:8080/api/mydbentity";
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     // note I could autowire here but it isn't as flexible as when you autowire in the constructor.
