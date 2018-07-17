@@ -2,6 +2,7 @@ package com.stevesouza.resttemplate.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -15,7 +16,9 @@ import java.util.List;
  */
 
 @RepositoryRestResource(collectionResourceRel = "mydbentity", path = "mydbentity")
-public interface MyDbEntityJpaRepository extends JpaRepository<MyDbEntity, Long> {
+public interface MyDbEntityJpaRepository extends PagingAndSortingRepository<MyDbEntity, Long> {
+// if you don't want pagination use the following JpaRepository
+//public interface MyDbEntityJpaRepository extends JpaRepository<MyDbEntity, Long> {
     /**
      * http://localhost:8080/mydbentity/search/findByFirstName?name=SteveSouza
      *
