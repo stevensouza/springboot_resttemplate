@@ -1,6 +1,7 @@
 package com.stevesouza.resttemplate.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -24,5 +25,14 @@ public interface MyDbEntityJpaRepository extends JpaRepository<MyDbEntity, Long>
      * @return List of Post objects
      */
     List<MyDbEntity> findByFirstName(@Param("name") String name);
+
+    /** http://localhost:8080/mydbentity/search/findByAgeLessThan?age=50 */
+    List<MyDbEntity> findByAgeLessThan(@Param("age") int age);
+
+     /**   http://localhost:8080/mydbentity/search/countByAgeLessThan?age=60 */
+     long countByAgeLessThan(@Param("age") int age);
+
+     @Query("SELECT e.firstName FROM MyDbEntity e where e.firstName = :firstname")
+     String findByFirstNameWithQuery(@Param("firstname") String str);
 
 }
