@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.MessageFormat;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
@@ -164,6 +166,31 @@ public class MyDbEntityRestController {
         ResponseEntity<String> responseEntity = rest.exchange(BASE_URL +"/"+id, HttpMethod.PATCH, requestEntity, String.class);
         log.info("PATCH responseEntity={}", responseEntity);
         return responseEntity;
+    }
+
+    // needs to have Accept: text/plain or error. I think could also use consumes arg to @GetMapping
+    // to not call this method unless that is done.
+    //     @GetMapping(path="argplay",  produces = "text/plain") - note if you pass in Accept: application/json an error would occur http status 406
+
+    // without a produces arg it will try to respond if it can.
+    // note path argument is not required could just put in "argplay".  I was explicit as a learning
+    // exercise.
+    @GetMapping(path="argplay/{pathvariable}")
+    public String argPlay(
+            @RequestHeader HttpHeaders httpHeaders,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @PathVariable("pathvariable") String pathVariable,
+            @RequestParam(name="param", defaultValue = "hello world") String param,
+            @CookieValue(name="mycookie", defaultValue="mydefaultCookieValue") String myCookie,
+            @RequestHeader("accept") String acceptHeader
+           ){
+        String formatStr = "param={0} \n httpheaders={1} \n request={2}\n response={3}\n cookie={4} \n acceptHeader={5}\n pathVariable={6}\n";
+        String str =
+                MessageFormat.format(formatStr,
+                param, httpHeaders, request.toString(), response, myCookie, acceptHeader, pathVariable);
+        log.info(str);
+        return str;
     }
 
 
