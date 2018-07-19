@@ -1,4 +1,4 @@
-package com.stevesouza.resttemplate;
+package com.stevesouza.resttemplate.config;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
