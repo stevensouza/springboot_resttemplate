@@ -9,9 +9,11 @@ import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.text.MessageFormat;
 
 /**
@@ -180,15 +182,17 @@ public class MyDbEntityRestController {
             @RequestHeader HttpHeaders httpHeaders,
             HttpServletRequest request,
             HttpServletResponse response,
+            HttpSession session,
+            WebRequest webRequest,
             @PathVariable("pathvariable") String pathVariable,
             @RequestParam(name="param", defaultValue = "hello world") String param,
             @CookieValue(name="mycookie", defaultValue="mydefaultCookieValue") String myCookie,
             @RequestHeader("accept") String acceptHeader
            ){
-        String formatStr = "param={0} \n httpheaders={1} \n request={2}\n response={3}\n cookie={4} \n acceptHeader={5}\n pathVariable={6}\n";
+        String formatStr = "param={0} \n httpheaders={1} \n request={2}\n response={3}\n cookie={4} \n acceptHeader={5}\n pathVariable={6}\n session={7}\n webrequest={8}\n";
         String str =
                 MessageFormat.format(formatStr,
-                param, httpHeaders, request.toString(), response, myCookie, acceptHeader, pathVariable);
+                param, httpHeaders, request.toString(), response, myCookie, acceptHeader, pathVariable, session, webRequest);
         log.info(str);
         return str;
     }
