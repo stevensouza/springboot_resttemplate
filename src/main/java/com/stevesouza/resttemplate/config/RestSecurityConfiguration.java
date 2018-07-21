@@ -5,7 +5,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -17,11 +18,18 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .withUser("joe").password("souza").roles("USER").and()
-                .withUser("steve").password("souza").roles("USER", "ADMIN").and()
-                .withUser("admin").password("admin").roles("ADMIN").and()
-                .withUser("user").password("user").roles("USER");
+        // note the DelegatingPasswordEncoder encodes as bcrypt only, but can match to anything.
+        // But the match must be passed in the id (unless a default matcher was defined) {bcrypt}
+        // for example. More explicit to use  BCryptPasswordEncoder for encoding
+
+        // used to encode steve password in bcrypt
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        auth.inMemoryAuthentication()
+               //.passwordEncoder(NoOpPasswordEncoder.getInstance())
+                .withUser("joe").password("joe").roles("USER").and()
+                .withUser("steve").password(encoder.encode("steve")).roles("USER", "ADMIN").and()
+                .withUser("admin").password("{noop}admin").roles("ADMIN").and()
+                .withUser("user").password("{noop}user").roles("USER");
     }
 
     /**
@@ -36,10 +44,11 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // .authenticated() - any user that is logged in can access. if not logged in returns 401 Not authenticated
         // .formLogin() - accessing any url triggers an automatic login page.  also a localhost:8080/logout page is provided
+        //   note with rest api I wasn't able to return the proper login info
 
         http
-                .formLogin().and()
-                //.httpBasic().and()
+                .formLogin().and() // form login uses 'username' and 'password' in the form submission by default
+                .httpBasic().and()
                 .authorizeRequests()
                     .anyRequest().authenticated().and()
          // note unless crsf is disabled postman and rest calls returned a 403 error Forbidden. I need to look into the
@@ -49,6 +58,8 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.PUT, "/mydbentity/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.PATCH, "/mydbentity/**").hasRole("ADMIN");
     }
+
+
 
 
 
