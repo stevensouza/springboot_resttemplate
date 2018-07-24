@@ -50,7 +50,7 @@ public class MyExternalApiRestController {
     // This id isn't used, but just passed to show the syntax.
     public String getPosts(@RequestParam(value = "id", required = false) String notUsedId) {
         ResponseEntity<String> response = rest.getForEntity(BASE_URL, String.class);
-        log.info("http status code for '/getposts': " + response.getStatusCode() + ", notUsed parameter=" + notUsedId);
+        log.info("http status code for '/getposts': {}, notUsed parameter={}", response.getStatusCode(), notUsedId);
 
         return response.getBody();
     }
