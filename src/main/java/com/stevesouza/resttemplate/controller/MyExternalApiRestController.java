@@ -12,13 +12,13 @@ import java.util.List;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
- *
+ * <p>
  * Note static images can be placed in various locations.  I put one in src/main/resources/static/mystaticimage.png and
  * it is served with the following url: http://localhost:8080/mystaticimage.png
- *
+ * <p>
  * RestController annotation includes both Controller and ResponseBody annotations. So @ResponseBody is not needed as an annotation
  * on the method return value.
- *
+ * <p>
  * Note: I don't use a JpaRepository in this class, but a typical use case is to Autowire it into the constructor and call its methods
  * from the RestController.
  *
@@ -40,7 +40,7 @@ public class MyExternalApiRestController {
     // Also if there is only one constructor autowired isn't required.
     // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-    public  MyExternalApiRestController(RestTemplate rest) {
+    public MyExternalApiRestController(RestTemplate rest) {
         this.rest = rest;
     }
 
@@ -48,9 +48,9 @@ public class MyExternalApiRestController {
     // /getposts/{id} - @PathVariable("id")
     // note default for @RequestParam is true and an exception will be thrown if it isn't provided.
     // This id isn't used, but just passed to show the syntax.
-    public String getPosts(@RequestParam(value="id", required = false) String notUsedId) {
+    public String getPosts(@RequestParam(value = "id", required = false) String notUsedId) {
         ResponseEntity<String> response = rest.getForEntity(BASE_URL, String.class);
-        log.info("http status code for '/getposts': " + response.getStatusCode()+ ", notUsed parameter="+notUsedId);
+        log.info("http status code for '/getposts': " + response.getStatusCode() + ", notUsed parameter=" + notUsedId);
 
         return response.getBody();
     }

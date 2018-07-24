@@ -33,6 +33,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
 		<!-- allows you to do POST, PUT, PATCH, DELETE, GET of entities via a web page defined at
       http://localhost:8080/browser/index.html
     -->
@@ -85,6 +86,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<!-- note if i let this default to the spring boot default of version 2.3 an exception is thrown on testing
+		-->
+		<dependency>
+			<groupId>net.minidev</groupId>
+			<artifactId>json-smart</artifactId>
+            <version>2.2.1</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 
