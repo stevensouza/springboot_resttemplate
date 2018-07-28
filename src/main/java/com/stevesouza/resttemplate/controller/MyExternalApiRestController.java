@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,6 +64,18 @@ public class MyExternalApiRestController {
         return posts;
     }
 
+    @GetMapping("/getposts2_aslistobjects")
+    public MyList getPost2sAsObjects() {
+        // see if better way https://stackoverflow.com/questions/6173182/spring-json-convert-a-typed-collection-like-listmypojo
+        // google search:
+        MyList posts = rest.getForObject(BASE_URL,  MyList.class);
+     //   ArrayList<Post2> posts = rest.getForObject(BASE_URL, new ArrayList<Post2>(){}.getClass());
+
+        log.info("executing '/getposts2_aslistobjects'");
+
+        return posts;
+    }
+
     @GetMapping("/getposts_asarray")
     public Post[] getPostsAsObjectArray() {
         // Note I added an extra field 'name' to the Post object and populated it by default and it will show
@@ -71,5 +84,8 @@ public class MyExternalApiRestController {
         log.info("executing '/getposts_asarray'");
         return posts;
     }
+
+    public static class MyList extends ArrayList<Post2> { }
+
 
 }

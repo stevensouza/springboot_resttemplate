@@ -87,6 +87,14 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+
 		<!-- note if i let this default to the spring boot default of version 2.3 an exception is thrown on testing
 		-->
 		<dependency>
@@ -94,6 +102,12 @@
 			<artifactId>json-smart</artifactId>
             <version>2.2.1</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 
