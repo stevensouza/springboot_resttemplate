@@ -77,10 +77,7 @@
 			<scope>test</scope>
 		</dependency>
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -93,7 +90,36 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- non spring useful libraries -->
 
+
+		<!-- allows for easy conversion of objects -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+
+		<!-- auto creation of getters/setters.  At least use @Data -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- without this http patch method does not work.  replaces default jdk way of doing http requests -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+
+		<!-- easily generate test data even with complex object webs.  good for actual code when stubbing a controller -->
+		<dependency>
+			<groupId>io.github.benas</groupId>
+			<artifactId>random-beans</artifactId>
+			<version>3.7.0</version>
+		</dependency>
 
 		<!-- note if i let this default to the spring boot default of version 2.3 an exception is thrown on testing
 		-->
@@ -103,6 +129,8 @@
             <version>2.2.1</version>
 			<scope>test</scope>
 		</dependency>
+
+
 
 		<dependency>
 			<groupId>commons-io</groupId>
