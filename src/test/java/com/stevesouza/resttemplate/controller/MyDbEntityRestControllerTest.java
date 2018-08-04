@@ -78,4 +78,12 @@ public class MyDbEntityRestControllerTest extends TestRestBaseClass {
         assertThat(responseEntity.getStatusCodeValue()).as("Incorrect user").isEqualTo(302);
     }
 
+    @Test
+    public void getRandom() {
+        ResponseEntity<String> responseEntity =
+                getTestRestTemplate("user", "user").
+                        getForEntity(BASE_URL+"/mydbentityrest/random", String.class);
+        log.info(responseEntity.toString());
+    }
+
 }

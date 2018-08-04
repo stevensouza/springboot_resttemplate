@@ -1,7 +1,13 @@
 package com.stevesouza.resttemplate.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.stevesouza.resttemplate.db.MyDbEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
@@ -195,6 +204,24 @@ public class MyDbEntityRestController {
                 param, httpHeaders, request.toString(), response, myCookie, acceptHeader, pathVariable, session, webRequest);
         log.info(str);
         return str;
+    }
+
+    @GetMapping(path="random")
+    public Delme getRandom() {
+
+        return new Delme("steve","souza", new HashSet<>(Arrays.asList("hello","world")));
+
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Slf4j
+    public static class Delme {
+        private String firstName;
+        private String lastName;
+        @JsonProperty("mydata")
+        private Set<String> set;
     }
 
 
