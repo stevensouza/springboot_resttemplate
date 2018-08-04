@@ -121,6 +121,12 @@
 			<version>3.7.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>io.github.benas</groupId>
+			<artifactId>random-beans-validation</artifactId>
+			<version>3.7.0</version>
+		</dependency>
+
 		<!-- note if i let this default to the spring boot default of version 2.3 an exception is thrown on testing
 		-->
 		<dependency>

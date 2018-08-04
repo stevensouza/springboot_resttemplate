@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 /**
  *  *  @Column(name="strField3")
@@ -28,6 +30,8 @@ public class MyDbEntity {
     //@Max(10)
     private String firstName="Joe";
     private String lastName;
+    @Min(0)
+    @Max(100)
     private int age;
 
 }

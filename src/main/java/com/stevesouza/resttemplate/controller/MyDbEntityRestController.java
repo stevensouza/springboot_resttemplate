@@ -4,6 +4,7 @@ package com.stevesouza.resttemplate.controller;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.stevesouza.resttemplate.db.MyDbEntity;
 import com.stevesouza.resttemplate.utils.MiscUtils;
+import com.stevesouza.resttemplate.vo.MyDbEntityVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -205,6 +206,15 @@ public class MyDbEntityRestController {
                 param, httpHeaders, request.toString(), response, myCookie, acceptHeader, pathVariable, session, webRequest);
         log.info(str);
         return str;
+    }
+
+    @GetMapping(path="vo")
+    public MyDbEntityVO getVo() {
+        MyDbEntity entity = MiscUtils.randomData(MyDbEntity.class);
+        log.info(entity.toString());
+        MyDbEntityVO vo = MiscUtils.convert(entity, MyDbEntityVO.class);
+        log.info(vo.toString());
+        return vo;
     }
 
     @GetMapping(path="random")
