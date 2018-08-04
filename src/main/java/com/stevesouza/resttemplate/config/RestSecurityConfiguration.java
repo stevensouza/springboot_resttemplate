@@ -61,6 +61,10 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
          // note unless crsf is disabled postman and rest calls returned a 403 error Forbidden. I need to look into the
          // further implications of this.
         .csrf().disable();
+
+        // allows you to use http://localhost:8080/h2-console
+        // https://stackoverflow.com/questions/40165915/why-does-the-h2-console-in-spring-boot-show-a-blank-screen-after-logging-in
+        http.headers().frameOptions().sameOrigin();
 //                .antMatchers(HttpMethod.POST, "/mydbentity").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.PUT, "/mydbentity/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.PATCH, "/mydbentity/**").hasRole("ADMIN");
