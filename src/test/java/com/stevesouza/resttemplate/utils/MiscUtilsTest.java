@@ -31,7 +31,7 @@ public class MiscUtilsTest {
     }
 
     @Test
-    public void convert() {
+    public void convertFrom1PojoTypeToAnother() {
         Pojo1 pojo1 = MiscUtils.randomData(Pojo1.class);
         // For this to succeed both source and destination classes must have
         // getters and setters or else the model mapper must be configured to access
@@ -52,9 +52,9 @@ public class MiscUtilsTest {
     }
 
     @Test
-    public void toObject() {
+    public void toObjectFromJsonString() {
         String json = String.format(POJO1_JSON, "joe", "jones");
-        Pojo1 pojo1 = MiscUtils.toObject(json, Pojo1.class);
+        Pojo1 pojo1 = MiscUtils.toObjectFromJsonString(json, Pojo1.class);
 
         assertThat(pojo1.getFirstName()).isEqualTo("joe");
         assertThat(pojo1.getLastName()).isEqualTo("jones");

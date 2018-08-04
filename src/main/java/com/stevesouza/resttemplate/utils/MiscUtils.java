@@ -69,7 +69,7 @@ public class MiscUtils {
             }
         }
 
-        public static <T> T toObject(String json, Class<T> destinationType)  {
+        public static <T> T toObjectFromJsonString(String json, Class<T> destinationType)  {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 return mapper.readValue(json, destinationType);
