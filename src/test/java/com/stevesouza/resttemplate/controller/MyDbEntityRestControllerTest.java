@@ -84,6 +84,7 @@ public class MyDbEntityRestControllerTest extends TestRestBaseClass {
                 getTestRestTemplate("user", "user").
                         getForEntity(BASE_URL+"/mydbentityrest/random", String.class);
         log.info(responseEntity.toString());
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
     }
 
 }

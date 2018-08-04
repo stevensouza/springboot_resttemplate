@@ -7,6 +7,7 @@ import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import org.apache.commons.io.IOUtils;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,27 +57,27 @@ public class MiscUtils {
     }
 
 
-        public static <T> T convert(Object convertFrom, Class<T> destinationType) {
-            return modelMapper.map(convertFrom, destinationType);
-        }
+    public static <T> T convert(Object convertFrom, Class<T> destinationType) {
+        return modelMapper.map(convertFrom, destinationType);
+    }
 
-        public static String toJsonString(Object pojo) {
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                return mapper.writeValueAsString(pojo);
-            } catch (IOException e) {
-                throw new RuntimeException("Unable to convert the following object to json: "+pojo, e);
-            }
+    public static String toJsonString(Object pojo) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(pojo);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to convert the following object to json: "+pojo, e);
         }
+    }
 
-        public static <T> T toObjectFromJsonString(String json, Class<T> destinationType)  {
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                return mapper.readValue(json, destinationType);
-            } catch (IOException e) {
-                throw new RuntimeException("Unable to convert the json string to the given object type: "+destinationType, e);
-            }
+    public static <T> T toObjectFromJsonString(String json, Class<T> destinationType)  {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(json, destinationType);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to convert the json string to the given object type: "+destinationType, e);
         }
+    }
 
 
      public static <T> T randomData(final Class<T> type, final String... excludedFields) {

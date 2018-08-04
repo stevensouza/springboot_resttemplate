@@ -3,6 +3,7 @@ package com.stevesouza.resttemplate.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.stevesouza.resttemplate.db.MyDbEntity;
+import com.stevesouza.resttemplate.utils.MiscUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -207,10 +208,12 @@ public class MyDbEntityRestController {
     }
 
     @GetMapping(path="random")
-    public Delme getRandom() {
-
-        return new Delme("steve","souza", new HashSet<>(Arrays.asList("hello","world")));
-
+    public DelmeVO getRandom() {
+        Delme delme = MiscUtils.randomData(Delme.class);
+        log.info(delme.toString());
+        DelmeVO delmeVo = MiscUtils.convert(delme, DelmeVO.class);
+        log.info(delmeVo.toString());
+        return delmeVo;
     }
 
     @Data
@@ -220,8 +223,36 @@ public class MyDbEntityRestController {
     public static class Delme {
         private String firstName;
         private String lastName;
-        @JsonProperty("mydata")
-        private Set<String> set;
+        @JsonProperty("mydetails")
+        private Set<DelmeDetail> set;
+    }
+
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Slf4j
+    public static class DelmeVO {
+        private String firstName;
+        private String lastName;
+        @JsonProperty("mydetails")
+        private Set<DelmeVODetail> set;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Slf4j
+    public static class DelmeDetail {
+        private String detail;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Slf4j
+    public static class DelmeVODetail {
+        private String detail;
     }
 
 
