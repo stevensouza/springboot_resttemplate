@@ -48,6 +48,13 @@ import java.util.Set;
  * @author stevesouza
  */
 
+/** NOTE CURRENTLY THE REST CALLS TO RestTemplate DON'T PASS ON ANY AUTHENTICATION INFORMATION
+ * Basic auth HEADERS MUST BE PASSED ON. SEE THE patch METHOD FOR AN EXAMPLE THAT DOES
+ * SUCCESSFULLY PASS THIS LOGIN INFORMATION ON VIA RestTemplate.exchange 8/5/18
+ *
+ * ALSO NOTE TEST GENERATES A PORT AUTOMATICALLY AND THIS CODE HARDCODES 8080
+  */
+
 @RestController
 @RequestMapping(value = "/mydbentityrest")
 public class MyDbEntityRestController {
@@ -137,8 +144,13 @@ public class MyDbEntityRestController {
 
 
     @GetMapping("/mydbentity")
-    public String getAll() {
-        return rest.getForObject(BASE_URL, String.class);
+    public String getAll(RequestEntity<String> requestEntity) {
+        log.info(requestEntity.toString());
+        ResponseEntity<String> responseEntity = rest.exchange(BASE_URL , HttpMethod.GET
+                , requestEntity, String.class);
+        return responseEntity.getBody();
+
+      //  return rest.getForObject(BASE_URL, String.class);
     }
 
     @GetMapping("/mydbentity/{id}")
