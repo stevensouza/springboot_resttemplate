@@ -75,13 +75,13 @@ public class MyDbEntityRestController {
     @PostMapping("/mydbentity")
     public  ResponseEntity<String> post1(@RequestBody MyDbEntity entity, @RequestHeader MultiValueMap<String, String> headers) {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
-        log.info("submitted httpheaders: {}", headers);
+        log.debug("submitted httpheaders: {}", headers);
 
         // doing this as i need to pass on the headers
         HttpEntity<MyDbEntity> requestEntity = new HttpEntity<>(entity, headers);
         ResponseEntity<String> responseEntity = rest.exchange(BASE_URL, HttpMethod.POST, requestEntity, String.class);
 
-        log.info("POST ResponseEntity: {}", responseEntity);
+        log.debug("POST ResponseEntity: {}", responseEntity);
         return responseEntity;
     }
 
@@ -103,11 +103,11 @@ public class MyDbEntityRestController {
     // stripped out and regular json is returned.
     public  ResponseEntity<MyDbEntity> post2(@RequestBody MyDbEntity entity) {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
-        log.info("submitted object to create: {}", entity);
+        log.debug("submitted object to create: {}", entity);
         ResponseEntity<MyDbEntity> responseEntity = rest.postForEntity(BASE_URL, entity, MyDbEntity.class);
         // MyDbEntity createdObject = rest.postForObject(BASE_URL, entity, MyDbEntity.class);
         // MyDbEntity createdObject = responseEntity.getBody();
-        log.info("POST ResponseEntity: {}", responseEntity);
+        log.debug("POST ResponseEntity: {}", responseEntity);
         return responseEntity;
         //return createdObject;
     }
@@ -126,11 +126,11 @@ public class MyDbEntityRestController {
     // hal links is returned instead of just plain json.
     public  ResponseEntity<String> post3(@RequestBody MyDbEntity entity) {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
-        log.info("submitted object to create: {}", entity);
+        log.debug("submitted object to create: {}", entity);
         ResponseEntity<String> responseEntity = rest.postForEntity(BASE_URL, entity, String.class);
         // MyDbEntity createdObject = rest.postForObject(BASE_URL, entity, MyDbEntity.class);
         // MyDbEntity createdObject = responseEntity.getBody();
-        log.info("POST ResponseEntity: {}", responseEntity);
+        log.debug("POST ResponseEntity: {}", responseEntity);
         return responseEntity;
         //return createdObject;
     }
@@ -165,7 +165,7 @@ public class MyDbEntityRestController {
         // note i Use Post.class but String.class (raw json) could also be used.
         HttpEntity<MyDbEntity> requestEntity = new HttpEntity<>(updatedEntity);
         ResponseEntity<String> responseEntity = rest.exchange(BASE_URL +"/"+id, HttpMethod.PUT, requestEntity, String.class);
-        log.info("PUT responseEntity={}", responseEntity);
+        log.debug("PUT responseEntity={}", responseEntity);
         return responseEntity;
 
        // rest.put(BASE_URL+"/"+id, updatedEntity);
@@ -175,9 +175,9 @@ public class MyDbEntityRestController {
     // @ResponseStatus(HttpStatus.NO_CONTENT) // can provide just changed fields.
     // Note I don't convert to the underlying POJO here and leave the data in json format.
     public ResponseEntity<String>  patch(@PathVariable("id") long id, RequestEntity<String> requestEntity) {
-        log.info("RequestEntity= "+requestEntity);
+        log.debug("RequestEntity= "+requestEntity);
         ResponseEntity<String> responseEntity = rest.exchange(BASE_URL +"/"+id, HttpMethod.PATCH, requestEntity, String.class);
-        log.info("PATCH responseEntity={}", responseEntity);
+        log.debug("PATCH responseEntity={}", responseEntity);
         return responseEntity;
     }
 
@@ -204,25 +204,25 @@ public class MyDbEntityRestController {
         String str =
                 MessageFormat.format(formatStr,
                 param, httpHeaders, request.toString(), response, myCookie, acceptHeader, pathVariable, session, webRequest);
-        log.info(str);
+        log.debug(str);
         return str;
     }
 
     @GetMapping(path="vo")
     public MyDbEntityVO getVo() {
         MyDbEntity entity = MiscUtils.randomData(MyDbEntity.class);
-        log.info(entity.toString());
+        log.debug(entity.toString());
         MyDbEntityVO vo = MiscUtils.convert(entity, MyDbEntityVO.class);
-        log.info(vo.toString());
+        log.debug(vo.toString());
         return vo;
     }
 
     @GetMapping(path="random")
     public DelmeVO getRandom() {
         Delme delme = MiscUtils.randomData(Delme.class);
-        log.info(delme.toString());
+        log.debug(delme.toString());
         DelmeVO delmeVo = MiscUtils.convert(delme, DelmeVO.class);
-        log.info(delmeVo.toString());
+        log.debug(delmeVo.toString());
         return delmeVo;
     }
 
