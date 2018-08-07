@@ -22,18 +22,22 @@ import java.util.Set;
 
 @Data
 @Entity
-public class MyDbEntity {
+public class Person {
     @Id
     @GeneratedValue
     private long id;
 
     //@Max(10)
-    private String firstName="Joe";
+    private String firstName;
     private String lastName;
 
 
     @Min(0)
     @Max(100)
     private int age;
+
+    @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
+    //@JoinColumn(name = "phone_id")
+    private Set<Phone> phones = new HashSet<>();
 
 }

@@ -2,11 +2,9 @@ package com.stevesouza.resttemplate.db;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  *  *  @Column(name="strField3")
@@ -22,18 +20,10 @@ import java.util.Set;
 
 @Data
 @Entity
-public class MyDbEntity {
+public class Phone {
     @Id
     @GeneratedValue
     private long id;
 
-    //@Max(10)
-    private String firstName="Joe";
-    private String lastName;
-
-
-    @Min(0)
-    @Max(100)
-    private int age;
-
+    private String phoneNumber;
 }
