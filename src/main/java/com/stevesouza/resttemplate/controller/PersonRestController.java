@@ -2,6 +2,9 @@ package com.stevesouza.resttemplate.controller;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stevesouza.resttemplate.db.MyDbEntity;
 import com.stevesouza.resttemplate.db.Person;
 import com.stevesouza.resttemplate.db.PersonJpaRepository;
@@ -13,6 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.cfg.JPAIndexHolder;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +90,7 @@ public class PersonRestController {
     public  Person post(@RequestBody Person entity) {
         log.debug("POST {}",entity.toString());
         Person savedPerson = personJpaRepository.save(entity);
-        log.debug("CREATED {}",savedPerson.toString());
+        log.debug(" CREATED {}",savedPerson.toString());
         return savedPerson;
     }
 
@@ -112,16 +116,17 @@ public class PersonRestController {
         }).orElseThrow(() -> new ResourceNotFoundException("id=" + id + " not found"));
 
         //Person savedPerson = personJpaRepository.save(entity);
-        log.debug("UPDATED {}", updated.toString());
+        log.debug(" UPDATED {}", updated.toString());
         return updated;
     }
 
+    /** note this method doesn't currently execute a patch, but just displays the request data as a map */
     @PatchMapping("/{id}")
-    public  Map<String, Object> patch(@PathVariable("id") long id, @RequestBody Map<String, Object> map) {
-        log.debug("PATCH {}",map.toString());
-        log.debug("phones {}", ((List<?>)map.get("phones")).get(0));
+    public  JsonNode patch(@PathVariable("id") long id, @RequestBody JsonNode json) {
+        log.debug("PATCH {}",json.toString());
+        log.debug("firstName: {}", json.get("firstName").asText());
 
-        return map;
+        return json;
     }
 
 }

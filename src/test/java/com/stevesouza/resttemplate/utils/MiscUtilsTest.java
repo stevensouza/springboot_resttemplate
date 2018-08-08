@@ -1,5 +1,6 @@
 package com.stevesouza.resttemplate.utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -58,6 +59,21 @@ public class MiscUtilsTest {
 
         assertThat(pojo1.getFirstName()).isEqualTo("joe");
         assertThat(pojo1.getLastName()).isEqualTo("jones");
+    }
+
+    @Test
+    public void toJsonNodeFromString()  throws IOException {
+        String fileContents = MiscUtils.readResourceFile("utilstest.json");
+        JsonNode json = MiscUtils.toJsonNode(fileContents);
+
+        assertThat(json.get("firstName").asText()).isEqualTo("william");
+        assertThat(json.get("lastName").asText()).isEqualTo("reid");
+        assertThat(json.get("age").asInt()).isEqualTo(65);
+        assertThat(json.get("phones").size()).isEqualTo(3);
+        assertThat(json.get("phones").get(0).get("phoneNumber").asText()).isEqualTo("111-111-1111");
+        assertThat(json.get("phones").get(1).get("phoneNumber").asText()).isEqualTo("222-222-2222");
+        assertThat(json.get("phones").get(2).get("phoneNumber").asText()).isEqualTo("333-333-3333");
+
     }
 
     @Data

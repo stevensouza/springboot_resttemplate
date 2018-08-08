@@ -2,6 +2,7 @@ package com.stevesouza.resttemplate.utils;
 
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
@@ -67,6 +68,24 @@ public class MiscUtils {
             return mapper.writeValueAsString(pojo);
         } catch (IOException e) {
             throw new RuntimeException("Unable to convert the following object to json: "+pojo, e);
+        }
+    }
+
+    public static String toJsonStringFromJsonNode(JsonNode jsonNode) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(jsonNode);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to convert the following JsonNode to a json string: "+jsonNode, e);
+        }
+    }
+
+    public static JsonNode toJsonNode(String json) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readTree(json);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to convert the json string to a JsonNode", e);
         }
     }
 
