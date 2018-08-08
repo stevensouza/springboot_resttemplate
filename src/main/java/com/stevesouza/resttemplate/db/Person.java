@@ -1,5 +1,6 @@
 package com.stevesouza.resttemplate.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Person {
     @Id
     @GeneratedValue
@@ -37,6 +39,7 @@ public class Person {
     private int age;
 
     @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
+   // @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.EAGER)
     //@JoinColumn(name = "phone_id")
     private Set<Phone> phones = new HashSet<>();
 
