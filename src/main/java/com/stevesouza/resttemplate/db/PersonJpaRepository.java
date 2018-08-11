@@ -2,9 +2,7 @@ package com.stevesouza.resttemplate.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ import java.util.List;
  * content-type: application/hal+json
  */
 
-@RepositoryRestResource(collectionResourceRel = "person", path = "person")
+//@RepositoryRestResource(collectionResourceRel = "person", path = "person")
 public interface PersonJpaRepository extends JpaRepository<Person, Long> {
 // if you  want pagination use the following JpaRepository
 //public interface PersonJpaRepository extends PagingAndSortingRepository<MyDbEntity, Long> {

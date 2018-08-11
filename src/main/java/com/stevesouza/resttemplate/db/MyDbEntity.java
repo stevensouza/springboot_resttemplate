@@ -2,11 +2,11 @@ package com.stevesouza.resttemplate.db;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *  *  @Column(name="strField3")

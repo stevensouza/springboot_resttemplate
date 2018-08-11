@@ -5,8 +5,9 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -76,6 +77,24 @@ public class MiscUtilsTest {
 
     }
 
+    @Test
+    public void randomCollectionPopulated()  throws IOException {
+        Pojo3 pojo = MiscUtils.randomData(Pojo3.class);
+        assertThat(pojo.getSet()).isNotEmpty();
+    }
+
+    @Test
+    public void randomCollectionEmpty()  throws IOException {
+        Pojo4 pojo = MiscUtils.randomData(Pojo4.class);
+        assertThat(pojo.getSet()).isEmpty();
+    }
+
+    @Test
+    public void randomCollectionPopulated2()  throws IOException {
+        Pojo4 pojo = MiscUtils.randomDataPopulateCollections(Pojo4.class);
+        assertThat(pojo.getSet()).isNotEmpty();
+    }
+
     @Data
     static class Pojo1 {
         private String firstName;
@@ -87,6 +106,18 @@ public class MiscUtilsTest {
         private String firstName;
         private String lastName;
         private int age;
+    }
+
+    @Data
+    static class Pojo3 {
+        private String firstName;
+        private Set<String> set;
+    }
+
+    @Data
+    static class Pojo4 {
+        private String firstName;
+        private Set<String> set = new HashSet<>();
     }
 
 }

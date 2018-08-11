@@ -31,7 +31,7 @@ public abstract class TestRestBaseClass {
     private int port;
 
     // ${local.server.port} is another way to the the random port number property
-    @Value("http://localhost:${local.server.port}")
+    @Value("http://localhost:${local.server.port}/api")
     public String BASE_URL;
 
     @Autowired

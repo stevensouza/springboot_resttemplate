@@ -9,9 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * content-type: application/hal+json
  */
 
-//@RepositoryRestResource(collectionResourceRel = "phone", path = "phone")
-public interface PhoneJpaRepository extends JpaRepository<Phone, Long> {
-// if you  want pagination use the following JpaRepository
-//public interface PersonJpaRepository extends PagingAndSortingRepository<MyDbEntity, Long> {
+//@RepositoryRestResource(collectionResourceRel = "certification", path = "certification")
+public interface CertificationJpaRepository extends JpaRepository<Certification, Long> {
+
 
 }

@@ -6,7 +6,9 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,6 +26,8 @@ import java.util.Set;
 @Data
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+
 public class Person {
     @Id
     @GeneratedValue
@@ -42,5 +46,15 @@ public class Person {
    // @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.EAGER)
     //@JoinColumn(name = "phone_id")
     private Set<Phone> phones = new HashSet<>();
+
+    // Note this is really modeling a many to many, but the join table is made explicit
+    @OneToMany(mappedBy = "person", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
+   //@JsonBackReference
+//    @JsonIgnore
+    //@JsonManagedReference
+    //@JsonIgnoreProperties(value = {"person", "peopleWithThisCertification"})
+    private List<PersonCertification> certifications = new ArrayList<>();
+    //private Set<PersonCertification> certifications = new HashSet<>();
+
 
 }

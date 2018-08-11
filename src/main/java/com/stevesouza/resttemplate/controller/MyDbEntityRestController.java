@@ -8,7 +8,6 @@ import com.stevesouza.resttemplate.vo.MyDbEntityVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -230,23 +227,23 @@ public class MyDbEntityRestController {
     }
 
     @GetMapping(path="random")
-    public DelmeVO getRandom() {
-        Delme delme = MiscUtils.randomData(Delme.class);
-        log.debug(delme.toString());
-        DelmeVO delmeVo = MiscUtils.convert(delme, DelmeVO.class);
-        log.debug(delmeVo.toString());
-        return delmeVo;
+    public MyPojoVO getRandom() {
+        MyPojo myPojo = MiscUtils.randomData(MyPojo.class);
+        log.debug(myPojo.toString());
+        MyPojoVO myPojoVo = MiscUtils.convert(myPojo, MyPojoVO.class);
+        log.debug(myPojoVo.toString());
+        return myPojoVo;
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     @Slf4j
-    public static class Delme {
+    public static class MyPojo {
         private String firstName;
         private String lastName;
         @JsonProperty("mydetails")
-        private Set<DelmeDetail> set;
+        private Set<MyPojoDetail> set;
     }
 
 
@@ -254,18 +251,18 @@ public class MyDbEntityRestController {
     @NoArgsConstructor
     @AllArgsConstructor
     @Slf4j
-    public static class DelmeVO {
+    public static class MyPojoVO {
         private String firstName;
         private String lastName;
         @JsonProperty("mydetails")
-        private Set<DelmeVODetail> set;
+        private Set<MyPojoVODetail> set;
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     @Slf4j
-    public static class DelmeDetail {
+    public static class MyPojoDetail {
         private String detail;
     }
 
@@ -273,7 +270,7 @@ public class MyDbEntityRestController {
     @NoArgsConstructor
     @AllArgsConstructor
     @Slf4j
-    public static class DelmeVODetail {
+    public static class MyPojoVODetail {
         private String detail;
     }
 

@@ -1,14 +1,12 @@
 package com.stevesouza.resttemplate.utils;
 
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import org.apache.commons.io.IOUtils;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,7 +19,7 @@ import java.util.stream.Stream;
 
 public class MiscUtils {
 
-    private static EnhancedRandom dataGenerator = EnhancedRandomBuilder.aNewEnhancedRandom();
+    private static EnhancedRandom dataGenerator = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().build();
 
     private static ModelMapper modelMapper = new ModelMapper();
     /**
@@ -102,6 +100,12 @@ public class MiscUtils {
      public static <T> T randomData(final Class<T> type, final String... excludedFields) {
         return dataGenerator.nextObject(type, excludedFields);
     }
+
+    public static <T> T randomDataPopulateCollections(final Class<T> type, final String... excludedFields) {
+        EnhancedRandom randomGenerator = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().overrideDefaultInitialization(true).build();
+        return randomGenerator.nextObject(type, excludedFields);
+    }
+
 
 
 

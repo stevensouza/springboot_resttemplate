@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * Note @SpringBootApplication annotation also has @Configuration as part of its definition so this @Bean definition could
@@ -50,6 +54,15 @@ public class MyConfiguration {
         //clientHttpRequestFactory.setConnectTimeout();
         //clientHttpRequestFactory.setHttpClient(HttpClientBuilder.create().build());
         return clientHttpRequestFactory;
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
     }
 
 }

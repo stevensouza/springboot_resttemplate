@@ -1,39 +1,17 @@
 package com.stevesouza.resttemplate.controller;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stevesouza.resttemplate.db.MyDbEntity;
 import com.stevesouza.resttemplate.db.Person;
 import com.stevesouza.resttemplate.db.PersonJpaRepository;
 import com.stevesouza.resttemplate.db.PhoneJpaRepository;
 import com.stevesouza.resttemplate.utils.MiscUtils;
-import com.stevesouza.resttemplate.vo.MyDbEntityVO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.cfg.JPAIndexHolder;
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.*;
-import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.text.MessageFormat;
-import java.util.*;
+import java.util.List;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.
@@ -113,7 +91,7 @@ public class PersonRestController {
         Person updated = personJpaRepository.findById(id).map((person)->{
             person.setFirstName(entity.getFirstName());
             return personJpaRepository.save(person);
-        }).orElseThrow(() -> new ResourceNotFoundException("id=" + id + " not found"));
+        }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         //Person savedPerson = personJpaRepository.save(entity);
         log.debug(" UPDATED {}", updated.toString());
@@ -127,6 +105,11 @@ public class PersonRestController {
         log.debug("firstName: {}", json.get("firstName").asText());
 
         return json;
+    }
+
+    @GetMapping("/random")
+    public Person getRandom() {
+        return MiscUtils.randomData(Person.class);
     }
 
 }

@@ -23,7 +23,7 @@
         (35, 'jon', 'doe', NEXTVAL('hibernate_sequence'));
         */
 
--- person table
+-- person
 set @PERSON1 = NEXTVAL('hibernate_sequence');
 set @PERSON2 = NEXTVAL('hibernate_sequence');
 
@@ -43,7 +43,7 @@ set @PERSON2 = NEXTVAL('hibernate_sequence');
     values
         (80, 'joe', 'souza', @PERSON2);
 
--- phone table
+-- phone
 set @PHONE1 = NEXTVAL('hibernate_sequence');
 set @PHONE2 = NEXTVAL('hibernate_sequence');
 set @PHONE3 = NEXTVAL('hibernate_sequence');
@@ -69,7 +69,7 @@ set @PHONE3 = NEXTVAL('hibernate_sequence');
     values
         ('703-333-3333', @PHONE3);
 
--- join table
+-- person_phones
 
         insert
     into
@@ -91,3 +91,58 @@ set @PHONE3 = NEXTVAL('hibernate_sequence');
         (person_id, phones_id)
     values
         (@PERSON2, @PHONE3);
+
+
+ -- certification
+
+
+
+set @CERT1 = NEXTVAL('hibernate_sequence');
+set @CERT2 = NEXTVAL('hibernate_sequence');
+set @CERT3 = NEXTVAL('hibernate_sequence');
+
+    insert
+    into
+        certification
+        (id, certification_name)
+    values
+        (@CERT1, 'java');
+
+    insert
+    into
+        certification
+        (id, certification_name)
+    values
+        (@CERT2, 'groovy');
+
+   insert
+    into
+        certification
+        (id, certification_name)
+    values
+        (@CERT3, 'guitar');
+
+
+ -- person_certification
+
+   insert
+   into
+        person_certification
+        (id, location, person_id, certification_id)
+    values
+        (NEXTVAL('hibernate_sequence'), 'arlington', @PERSON1, @CERT1);
+
+   insert
+    into
+        person_certification
+        (id, location, person_id, certification_id)
+    values
+        (NEXTVAL('hibernate_sequence'), 'amsterdam', @PERSON1, @CERT2);
+
+   insert
+    into
+        person_certification
+        (id, location, person_id, certification_id)
+    values
+        (NEXTVAL('hibernate_sequence'), 'va beach', @PERSON2, @CERT3);
+
