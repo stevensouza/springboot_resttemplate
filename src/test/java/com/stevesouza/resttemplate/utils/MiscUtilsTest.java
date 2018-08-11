@@ -1,12 +1,18 @@
 package com.stevesouza.resttemplate.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.stevesouza.resttemplate.TestUtils;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.modelmapper.TypeToken;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,6 +49,35 @@ public class MiscUtilsTest {
         assertThat(pojo2.firstName).isEqualTo(pojo1.firstName);
         assertThat(pojo2.lastName).isEqualTo(pojo1.lastName);
     }
+
+    @Test
+    public void convertFromCollectionOf1PojoTypeToAnother() {
+        Pojo2List pojo2List = MiscUtils.randomData(Pojo2List.class);
+        List<Pojo1> pojo1List;
+        pojo1List = MiscUtils.convert(pojo2List.getPojoList(), new TypeToken<List<Pojo1>>(){});
+
+        TestUtils.assertLenientJsonEquality(pojo1List, pojo2List.getPojoList());
+
+        // The following test is redundant to the above, but uses the streaming/lambda jdk capabilities to create a List<Pojo1>
+        // and confirm it looks like the one created from convert above.
+
+        List<Pojo1> pojo1ListValidate = new ArrayList<>();
+        for (Pojo1 pojo2 : pojo2List.getPojoList()) {
+            Pojo1 pojo1 = new Pojo1(pojo2.getFirstName(), pojo2.getLastName());
+            pojo1ListValidate.add(pojo1);
+        }
+        /**
+         * stream approach for above
+         *        List<Pojo1> pojo1ListValidate = pojo2List.getPojoList().stream().map(
+         *                 pojo2 -> {
+         *                     return new Pojo1(pojo2.getFirstName(), pojo2.getLastName());
+         *                 }
+         *                 ).collect(Collectors.toList());
+         *         assertThat(pojo1List).isEqualTo(pojo1ListValidate);
+         */
+        assertThat(pojo1List).isEqualTo(pojo1ListValidate);
+    }
+
 
     @Test
     public void toJsonString() {
@@ -96,6 +131,8 @@ public class MiscUtilsTest {
     }
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     static class Pojo1 {
         private String firstName;
         private String lastName;
@@ -118,6 +155,12 @@ public class MiscUtilsTest {
     static class Pojo4 {
         private String firstName;
         private Set<String> set = new HashSet<>();
+    }
+
+    @Data
+    static  class Pojo2List  {
+        // note I don't know of a way to generate a list directly in random beans so using this indirect approach of putting the list in a pojo
+        List<Pojo1> pojoList;
     }
 
 }

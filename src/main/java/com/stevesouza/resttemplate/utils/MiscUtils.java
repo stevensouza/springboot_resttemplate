@@ -7,6 +7,7 @@ import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import org.apache.commons.io.IOUtils;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -59,6 +60,12 @@ public class MiscUtils {
     public static <T> T convert(Object convertFrom, Class<T> destinationType) {
         return modelMapper.map(convertFrom, destinationType);
     }
+
+    public static <T> T convert(Object convertFrom, TypeToken<T> typeToken) {
+        return modelMapper.map(convertFrom, typeToken.getType());
+    }
+
+    //Type listType = new TypeToken<List<String>>() {}.getType();
 
     public static String toJsonString(Object pojo) {
         ObjectMapper mapper = new ObjectMapper();
