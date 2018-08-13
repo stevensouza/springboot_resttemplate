@@ -134,6 +134,13 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>26.0-jre</version>
+		</dependency>
+
+
 		<!-- easily generate test data even with complex object webs.  good for actual code when stubbing a controller -->
 		<dependency>
 			<groupId>io.github.benas</groupId>
