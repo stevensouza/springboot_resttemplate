@@ -15,6 +15,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -106,6 +107,14 @@ public class MiscUtils {
 
      public static <T> T randomData(final Class<T> type, final String... excludedFields) {
         return dataGenerator.nextObject(type, excludedFields);
+    }
+
+    public static <T>  List<T> randomData(List<T> list, final Class<T> type, final String... excludedFields) {
+        for (int i=0; i<10; i++) {
+            list.add(dataGenerator.nextObject(type, excludedFields));
+        }
+
+        return list;
     }
 
     public static <T> T randomDataPopulateCollections(final Class<T> type, final String... excludedFields) {

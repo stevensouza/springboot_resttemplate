@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.modelmapper.TypeToken;
 
@@ -110,6 +111,13 @@ public class MiscUtilsTest {
         assertThat(json.get("phones").get(1).get("phoneNumber").asText()).isEqualTo("222-222-2222");
         assertThat(json.get("phones").get(2).get("phoneNumber").asText()).isEqualTo("333-333-3333");
 
+    }
+
+    @Test
+    public void randomPopulateList()  throws IOException {
+       List<Pojo1> list = MiscUtils.randomData(new ArrayList<>(), Pojo1.class);
+       assertThat(list).isNotEmpty();
+       assertThat(list.get(0).getClass()).isEqualTo(Pojo1.class);
     }
 
     @Test
