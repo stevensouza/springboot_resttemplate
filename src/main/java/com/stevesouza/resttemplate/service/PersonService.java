@@ -1,16 +1,21 @@
 package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.db.PersonJpaRepository;
+import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+@Service
 @Data
-@Log
+@Slf4j
 public class PersonService {
     private PersonJpaRepository personJpaRepository;
    //private PhoneJpaRepository phoneJpaRepository;
@@ -23,12 +28,12 @@ public class PersonService {
     @Autowired
     public PersonService(PersonJpaRepository personJpaRepository) {
         this.personJpaRepository = personJpaRepository;
-//        this.phoneJpaRepository = phoneJpaRepository;
     }
 
     public List<PersonVO> getAll() {
-        return  null;
-                //MiscUtils.convert(personJpaRepository.findAll(), Class<List<PersonVO>>.getClass());
+        TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
+        List<PersonVO> list = MiscUtils.convert(personJpaRepository.findAll(), typeToken);
+        return list;
     }
 
 

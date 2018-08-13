@@ -12,16 +12,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 public class PersonVOTest {
+
     @Test
     public void testPersonToPersonVoIsRight() {
-        Person entity = MiscUtils.randomData(Person.class);
-        PersonCertification personCertification = MiscUtils.randomData(PersonCertification.class);
-        entity.getCertifications().add(personCertification);
+        Person entity = MiscUtils.randomDataPopulateCollections(Person.class);
         PersonVO vo = MiscUtils.convert(entity, PersonVO.class);
 
         assertThat(vo.getId()).isEqualTo(entity.getId());
         assertThat(vo.getFirstName()).isEqualTo(entity.getFirstName());
         assertThat(vo.getAge()).isEqualTo(entity.getAge());
+        assertThat(vo.getCertifications().size()).isEqualTo(entity.getCertifications().size());
+        assertThat(vo.getPhones().size()).isEqualTo(entity.getPhones().size());
 
         PersonCertificationVO actualPersonCertVo = vo.getCertifications().get(0);
         PersonCertification expectedPersonCert = entity.getCertifications().get(0);
@@ -32,12 +33,6 @@ public class PersonVOTest {
         Certification expectedCert = entity.getCertifications().get(0).getCertification();
         assertThat(actualCertVo.getId()).isEqualTo(expectedCert.getId());
         assertThat(actualCertVo.getCertificationName()).isEqualTo(expectedCert.getCertificationName());
-
-
-        log.info(entity.toString());
-        log.info(vo.toString());
-
-        TestUtils.assertLenientJsonEquality(vo, entity);
     }
 
 }

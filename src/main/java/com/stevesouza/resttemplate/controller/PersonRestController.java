@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.db.Person;
 import com.stevesouza.resttemplate.db.PersonJpaRepository;
 import com.stevesouza.resttemplate.db.PhoneJpaRepository;
+import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ import java.util.List;
 public class PersonRestController {
 
     private PersonJpaRepository personJpaRepository;
+    private PersonService personService;
     private PhoneJpaRepository phoneJpaRepository;
 
     // can also use more standardized @Inject
@@ -49,7 +51,8 @@ public class PersonRestController {
     // Also if there is only one constructor autowired isn't required.
     // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-    public PersonRestController(PersonJpaRepository personJpaRepository, PhoneJpaRepository phoneJpaRepository) {
+    public PersonRestController(PersonService personService, PersonJpaRepository personJpaRepository, PhoneJpaRepository phoneJpaRepository) {
+        this.personService = personService;
         this.personJpaRepository = personJpaRepository;
         this.phoneJpaRepository = phoneJpaRepository;
     }

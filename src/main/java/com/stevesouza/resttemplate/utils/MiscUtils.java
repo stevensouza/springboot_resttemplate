@@ -69,8 +69,6 @@ public class MiscUtils {
         return modelMapper.map(convertFrom, typeToken.getType());
     }
 
-    //Type listType = new TypeToken<List<String>>() {}.getType();
-
     public static String toJsonString(Object pojo) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -131,6 +129,15 @@ public class MiscUtils {
     public static <T> T randomDataPopulateCollections(final Class<T> type, final String... excludedFields) {
         EnhancedRandom randomGenerator = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().overrideDefaultInitialization(true).build();
         return randomGenerator.nextObject(type, excludedFields);
+    }
+
+    public static <T>  List<T> randomDataPopulateCollections(List<T> list, final Class<T> type, final String... excludedFields) {
+        EnhancedRandom randomGenerator = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().overrideDefaultInitialization(true).build();
+        for (int i=0; i<DEFAULT_RANDOM_COLLECTION_SIZE; i++) {
+            list.add(randomGenerator.nextObject(type, excludedFields));
+        }
+
+        return list;
     }
 
 
