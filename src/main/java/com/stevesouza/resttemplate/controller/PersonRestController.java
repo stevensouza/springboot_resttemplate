@@ -7,6 +7,7 @@ import com.stevesouza.resttemplate.db.PersonJpaRepository;
 import com.stevesouza.resttemplate.db.PhoneJpaRepository;
 import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
+import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,9 @@ import java.util.List;
 @Slf4j
 public class PersonRestController {
 
-    private PersonJpaRepository personJpaRepository;
+   // private PersonJpaRepository personJpaRepository;
     private PersonService personService;
-    private PhoneJpaRepository phoneJpaRepository;
+   // private PhoneJpaRepository phoneJpaRepository;
 
     // can also use more standardized @Inject
     // The autowiring allows me to inject other implementations including a mock.
@@ -51,15 +52,14 @@ public class PersonRestController {
     // Also if there is only one constructor autowired isn't required.
     // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-    public PersonRestController(PersonService personService, PersonJpaRepository personJpaRepository, PhoneJpaRepository phoneJpaRepository) {
+   // public PersonRestController(PersonService personService, PersonJpaRepository personJpaRepository, PhoneJpaRepository phoneJpaRepository) {
+     public PersonRestController(PersonService personService) {
         this.personService = personService;
-        this.personJpaRepository = personJpaRepository;
-        this.phoneJpaRepository = phoneJpaRepository;
     }
 
     @GetMapping
-    public List<Person> getAll() {
-        return personJpaRepository.findAll();
+    public List<PersonVO> getAll() {
+        return personService.getAll();
     }
 
 
@@ -68,9 +68,9 @@ public class PersonRestController {
     // The following is probably preferred as it lets you pass in headers to the request as well as
     // return json+hal format (i.e. a string)
     @PostMapping()
-    public  Person post(@RequestBody Person entity) {
-        log.debug("POST {}",entity.toString());
-        Person savedPerson = personJpaRepository.save(entity);
+    public  PersonVO post(@RequestBody PersonVO vo) {
+        log.debug("POST {}",vo.toString());
+        PersonVO savedPerson = personService.post(vo);
         log.debug(" CREATED {}",savedPerson.toString());
         return savedPerson;
     }
@@ -79,24 +79,18 @@ public class PersonRestController {
     // idempotent. returns 200 and content or 204 and no content
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") long id) {
-        personJpaRepository.deleteById(id);
+        personService.delete(id);
     }
 
     @GetMapping("/{id}")
-    public   Person get(@PathVariable("id") long id) {
-        Person person = personJpaRepository.getOne(id);
-        return person;
+    public   PersonVO get(@PathVariable("id") long id) {
+        return personService.get(id);
     }
 
     @PutMapping("/{id}")
-    public  Person put(@PathVariable("id") long id, @RequestBody  Person entity) {
-        log.debug("PUT {}",entity.toString());
-        Person updated = personJpaRepository.findById(id).map((person)->{
-            person.setFirstName(entity.getFirstName());
-            return personJpaRepository.save(person);
-        }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
-
-        //Person savedPerson = personJpaRepository.save(entity);
+    public  PersonVO put(@PathVariable("id") long id, @RequestBody  PersonVO vo) {
+        log.debug("PUT {}",vo.toString());
+        PersonVO updated = personService.put(id, vo);
         log.debug(" UPDATED {}", updated.toString());
         return updated;
     }
@@ -111,8 +105,8 @@ public class PersonRestController {
     }
 
     @GetMapping("/random")
-    public Person getRandom() {
-        return MiscUtils.randomData(Person.class);
+    public PersonVO getRandom() {
+        return MiscUtils.randomData(PersonVO.class);
     }
 
 }

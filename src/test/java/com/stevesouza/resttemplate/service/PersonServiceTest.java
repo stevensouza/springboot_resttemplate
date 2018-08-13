@@ -1,6 +1,5 @@
 package com.stevesouza.resttemplate.service;
 
-import com.stevesouza.resttemplate.TestRestBaseClass;
 import com.stevesouza.resttemplate.TestUtils;
 import com.stevesouza.resttemplate.db.Person;
 import com.stevesouza.resttemplate.db.PersonJpaRepository;
@@ -10,12 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

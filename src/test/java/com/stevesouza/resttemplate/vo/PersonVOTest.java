@@ -1,6 +1,5 @@
 package com.stevesouza.resttemplate.vo;
 
-import com.stevesouza.resttemplate.TestUtils;
 import com.stevesouza.resttemplate.db.Certification;
 import com.stevesouza.resttemplate.db.Person;
 import com.stevesouza.resttemplate.db.PersonCertification;
