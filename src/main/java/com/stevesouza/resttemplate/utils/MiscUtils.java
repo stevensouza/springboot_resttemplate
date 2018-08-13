@@ -16,14 +16,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MiscUtils {
 
     private static EnhancedRandom dataGenerator = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().build();
-
     private static ModelMapper modelMapper = new ModelMapper();
+    private static int DEFAULT_RANDOM_COLLECTION_SIZE = 10;
+
+
     /**
      * Note this method reads a file however it doesn't put newlines in the string.
      * mainly kept it as an example of try-with-resources.
@@ -110,11 +113,19 @@ public class MiscUtils {
     }
 
     public static <T>  List<T> randomData(List<T> list, final Class<T> type, final String... excludedFields) {
-        for (int i=0; i<10; i++) {
+        for (int i=0; i<DEFAULT_RANDOM_COLLECTION_SIZE; i++) {
             list.add(dataGenerator.nextObject(type, excludedFields));
         }
 
         return list;
+    }
+
+    public static <T> Set<T> randomData(Set<T> set, final Class<T> type, final String... excludedFields) {
+        for (int i=0; i<DEFAULT_RANDOM_COLLECTION_SIZE; i++) {
+            set.add(dataGenerator.nextObject(type, excludedFields));
+        }
+
+        return set;
     }
 
     public static <T> T randomDataPopulateCollections(final Class<T> type, final String... excludedFields) {
