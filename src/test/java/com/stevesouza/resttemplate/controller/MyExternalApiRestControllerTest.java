@@ -32,15 +32,15 @@ public class MyExternalApiRestControllerTest extends TestRestBaseClass {
 //    private MockMvc mvc;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()  {
     }
 
     @Test
-    public void testOnGoogle() throws Exception {
+    public void testOnGoogle() {
 //        mvc.perform(get("https://jsonplaceholder.typicode.com/posts")
 //                .contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isUnauthorized());
@@ -55,7 +55,7 @@ public class MyExternalApiRestControllerTest extends TestRestBaseClass {
     }
 
     @Test
-    public void testGetPosts() throws Exception {
+    public void testGetPosts() {
         Post[] data = controller.getPostsAsObjectArray();
         assertThat(data.length).isNotZero();
         Post post = data[0];

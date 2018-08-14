@@ -144,5 +144,12 @@ set @CERT3 = NEXTVAL('hibernate_sequence');
         person_certification
         (id, location, person_id, certification_id)
     values
+        (NEXTVAL('hibernate_sequence'), 'va beach', @PERSON2, @CERT1);
+
+   insert
+    into
+        person_certification
+        (id, location, person_id, certification_id)
+    values
         (NEXTVAL('hibernate_sequence'), 'va beach', @PERSON2, @CERT3);
 

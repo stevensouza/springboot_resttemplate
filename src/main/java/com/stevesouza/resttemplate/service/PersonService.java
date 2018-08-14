@@ -35,6 +35,17 @@ public class PersonService {
         return list;
     }
 
+    public List<PersonVO> selectAll() {
+        TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
+        List<PersonVO> list = MiscUtils.convert(personJpaRepository.selectAll(), typeToken);
+        return list;
+    }
+
+    public List<PersonVO> getAllUsersWithCertificateId(long id) {
+        TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
+        List<PersonVO> list = MiscUtils.convert(personJpaRepository.getAllUsersWithCertificateId(id), typeToken);
+        return list;
+    }
 
     // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
     // all create a mydbentity though slightly different approaches.
@@ -70,6 +81,8 @@ public class PersonService {
     public Person convertToEntity(PersonVO personVo) {
         return MiscUtils.convert(personVo, Person.class);
     }
+
+
 
 
 }

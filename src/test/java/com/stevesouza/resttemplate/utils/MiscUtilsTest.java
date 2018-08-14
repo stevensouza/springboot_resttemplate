@@ -113,26 +113,26 @@ public class MiscUtilsTest {
     }
 
     @Test
-    public void randomPopulateList()  throws IOException {
+    public void randomPopulateList()  {
        List<Pojo1> list = MiscUtils.randomData(new ArrayList<>(), Pojo1.class);
        assertThat(list).isNotEmpty();
        assertThat(list.get(0).getClass()).isEqualTo(Pojo1.class);
     }
 
     @Test
-    public void randomCollectionPopulated()  throws IOException {
+    public void randomCollectionPopulated()  {
         Pojo3 pojo = MiscUtils.randomData(Pojo3.class);
         assertThat(pojo.getSet()).isNotEmpty();
     }
 
     @Test
-    public void randomCollectionEmpty()  throws IOException {
+    public void randomCollectionEmpty() {
         Pojo4 pojo = MiscUtils.randomData(Pojo4.class);
         assertThat(pojo.getSet()).isEmpty();
     }
 
     @Test
-    public void randomCollectionPopulated2()  throws IOException {
+    public void randomCollectionPopulated2() {
         Pojo4 pojo = MiscUtils.randomDataPopulateCollections(Pojo4.class);
         assertThat(pojo.getSet()).isNotEmpty();
     }

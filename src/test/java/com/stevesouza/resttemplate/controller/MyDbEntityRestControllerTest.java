@@ -12,11 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MyDbEntityRestControllerTest extends TestRestBaseClass {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 
     @Test

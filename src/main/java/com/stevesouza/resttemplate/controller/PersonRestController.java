@@ -2,9 +2,6 @@ package com.stevesouza.resttemplate.controller;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.stevesouza.resttemplate.db.Person;
-import com.stevesouza.resttemplate.db.PersonJpaRepository;
-import com.stevesouza.resttemplate.db.PhoneJpaRepository;
 import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
@@ -37,9 +34,9 @@ import java.util.List;
  */
 
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/person")
-@Slf4j
 public class PersonRestController {
 
    // private PersonJpaRepository personJpaRepository;
@@ -62,6 +59,16 @@ public class PersonRestController {
         return personService.getAll();
     }
 
+
+    @GetMapping("/selectall")
+    public List<PersonVO> selectAll() {
+        return personService.selectAll();
+    }
+
+    @GetMapping("/userswithcertificate/{id}")
+    public List<PersonVO> getAllUsersWithCertificateId(@PathVariable("id") long id) {
+        return personService.getAllUsersWithCertificateId(id);
+    }
 
     // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
     // all create a mydbentity though slightly different approaches.

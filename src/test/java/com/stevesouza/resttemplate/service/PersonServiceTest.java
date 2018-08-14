@@ -23,13 +23,13 @@ public class PersonServiceTest  {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
         personJpaRepository = mock(PersonJpaRepository.class);
         personService = new PersonService(personJpaRepository);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
 
     }
 

@@ -37,4 +37,11 @@ public interface PersonJpaRepository extends JpaRepository<Person, Long> {
     @Query("SELECT e.firstName FROM Person e where e.firstName = :firstname")
     String findByFirstNameWithQuery(@Param("firstname") String str);
 
+    @Query("SELECT p from Person p")
+    List<Person> selectAll();
+    // could also do
+    //     List<Person> selectAll(Sort sort);
+
+    @Query("SELECT p from Person p  JOIN PersonCertification pc ON p.id = pc.person.id and pc.certification.id=:id")
+    List<Person> getAllUsersWithCertificateId(@Param("id") long id);
 }
