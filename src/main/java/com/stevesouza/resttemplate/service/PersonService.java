@@ -2,6 +2,7 @@ package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.controller.ResourceNotFound;
 import com.stevesouza.resttemplate.db.Person;
+import com.stevesouza.resttemplate.db.PersonCertification;
 import com.stevesouza.resttemplate.db.PersonJpaRepository;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
@@ -47,12 +48,78 @@ public class PersonService {
         return list;
     }
 
-    // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
-    // all create a mydbentity though slightly different approaches.
-    // The following is probably preferred as it lets you pass in headers to the request as well as
-    // return json+hal format (i.e. a string)
+
+    /**
+     * input json. Note with this model phone is OneToMany and will be created each time (unique per person).
+     * Certification must already exist though.
+     *
+
+     *
+     * Resulting json
+     * @param vo
+     * {
+     *     "firstName": "jeff",
+     *     "lastName": "beck",
+     *     "age": 77,
+     *     "phones": [
+     *         {
+     *             "phoneNumber": "123-456-7890"
+     *         },
+     *         {
+     *             "phoneNumber": "456-789-0123"
+     *         }
+     *     ],
+     *     "certifications": [
+     *
+     *     	            {
+     *                 "location": "ballston",
+     *                 "certification": {
+     *                     "id": 7,
+     *                     "certificationName": "groovy"
+     *                 }
+     *             }
+     *
+     *     ]
+     * }
+     *
+     * @return saved entity json. Note the id's for any of the new entities, but certification id is unchanged
+     *
+     * {
+     *     "id": 13,
+     *     "firstName": "jeff",
+     *     "lastName": "beck",
+     *     "age": 77,
+     *     "phones": [
+     *         {
+     *             "id": 15,
+     *             "phoneNumber": "123-456-7890"
+     *         },
+     *         {
+     *             "id": 16,
+     *             "phoneNumber": "456-789-0123"
+     *         }
+     *     ],
+     *     "certifications": [
+     *         {
+     *             "id": 14,
+     *             "location": "ballston",
+     *             "certification": {
+     *                 "id": 7,
+     *                 "certificationName": "groovy"
+     *             }
+     *         }
+     *     ]
+     * }
+     *
+     */
     public  PersonVO post(PersonVO vo) {
-        Person savedPerson = personJpaRepository.save(convertToEntity(vo));
+        Person person = convertToEntity(vo);
+        // must connect the person to the foreign key in PersonCertification as vo
+        // doesn't have this connection.
+        person.getCertifications().
+                forEach(personCert -> personCert.setPerson(person));
+        Person savedPerson = personJpaRepository.saveAndFlush(person);
+
         return convertToVo(savedPerson);
     }
 
