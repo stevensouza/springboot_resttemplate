@@ -2,8 +2,7 @@ package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.controller.ResourceNotFound;
 import com.stevesouza.resttemplate.db.Person;
-import com.stevesouza.resttemplate.db.PersonCertification;
-import com.stevesouza.resttemplate.db.PersonJpaRepository;
+import com.stevesouza.resttemplate.repository.PersonJpaRepository;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
@@ -112,13 +111,14 @@ public class PersonService {
      * }
      *
      */
-    public  PersonVO post(PersonVO vo) {
+
+    public  PersonVO create(PersonVO vo) {
         Person person = convertToEntity(vo);
         // must connect the person to the foreign key in PersonCertification as vo
         // doesn't have this connection.
         person.getCertifications().
                 forEach(personCert -> personCert.setPerson(person));
-        Person savedPerson = personJpaRepository.saveAndFlush(person);
+        Person savedPerson = personJpaRepository.save(person);
 
         return convertToVo(savedPerson);
     }
@@ -132,7 +132,7 @@ public class PersonService {
         return convertToVo(personJpaRepository.getOne(id));
     }
 
-    public  PersonVO put(long id, PersonVO vo) {
+    public  PersonVO update(long id, PersonVO vo) {
         Person updated = personJpaRepository.findById(id).map((person)->{
             person.setFirstName(vo.getFirstName());
             return personJpaRepository.save(person);

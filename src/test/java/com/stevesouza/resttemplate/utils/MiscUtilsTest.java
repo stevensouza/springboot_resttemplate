@@ -2,6 +2,7 @@ package com.stevesouza.resttemplate.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.TestUtils;
+import com.stevesouza.resttemplate.db.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static io.github.benas.randombeans.api.EnhancedRandom.randomListOf;
 /**
  *
  */
@@ -114,10 +115,19 @@ public class MiscUtilsTest {
 
     @Test
     public void randomPopulateList()  {
-       List<Pojo1> list = MiscUtils.randomData(new ArrayList<>(), Pojo1.class);
-       assertThat(list).isNotEmpty();
-       assertThat(list.get(0).getClass()).isEqualTo(Pojo1.class);
+        List<Pojo1> list = MiscUtils.randomData(new ArrayList<>(), Pojo1.class);
+        assertThat(list).isNotEmpty();
+        assertThat(list.get(0).getClass()).isEqualTo(Pojo1.class);
     }
+
+    @Test
+    public void randomPopulateList2()  {
+        List<Pojo1> list  = randomListOf(10, Pojo1.class);
+        assertThat(list).hasSize(10);
+        assertThat(list.get(0).getClass()).isEqualTo(Pojo1.class);
+    }
+
+
 
     @Test
     public void randomCollectionPopulated()  {

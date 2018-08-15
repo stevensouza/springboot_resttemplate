@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,7 @@ import java.util.List;
 @RequestMapping(value = "/person")
 public class PersonRestController {
 
-   // private PersonJpaRepository personJpaRepository;
     private PersonService personService;
-   // private PhoneJpaRepository phoneJpaRepository;
 
     // can also use more standardized @Inject
     // The autowiring allows me to inject other implementations including a mock.
@@ -77,7 +76,7 @@ public class PersonRestController {
     @PostMapping()
     public  PersonVO post(@RequestBody PersonVO vo) {
         log.debug("POST {}",vo.toString());
-        PersonVO savedPerson = personService.post(vo);
+        PersonVO savedPerson = personService.create(vo);
         log.debug(" CREATED {}",savedPerson.toString());
         return savedPerson;
     }
@@ -97,7 +96,7 @@ public class PersonRestController {
     @PutMapping("/{id}")
     public  PersonVO put(@PathVariable("id") long id, @RequestBody  PersonVO vo) {
         log.debug("PUT {}",vo.toString());
-        PersonVO updated = personService.put(id, vo);
+        PersonVO updated = personService.update(id, vo);
         log.debug(" UPDATED {}", updated.toString());
         return updated;
     }
@@ -113,6 +112,7 @@ public class PersonRestController {
 
     @GetMapping("/random")
     public PersonVO getRandom() {
+        EnhancedRandom.random(String.class);
         return MiscUtils.randomData(PersonVO.class);
     }
 

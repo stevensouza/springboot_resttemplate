@@ -1,5 +1,6 @@
-package com.stevesouza.resttemplate.db;
+package com.stevesouza.resttemplate.repository;
 
+import com.stevesouza.resttemplate.db.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
