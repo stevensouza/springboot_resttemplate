@@ -2,6 +2,8 @@ package com.stevesouza.resttemplate.controller;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.stevesouza.resttemplate.repository.MyPersonColumns;
+import com.stevesouza.resttemplate.repository.PersonJpaRepository;
 import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
@@ -62,6 +64,16 @@ public class PersonRestController {
     @GetMapping("/selectall")
     public List<PersonVO> selectAll() {
         return personService.selectAll();
+    }
+
+    @GetMapping("/selectcolumns")
+    public List<Object[]> selectColumns() {
+        return personService.selectColumns();
+    }
+
+    @GetMapping("/selectcolumnsasobjects")
+    public List<MyPersonColumns> selectColumnsAsObject() {
+        return personService.selectColumnsAsObject();
     }
 
     @GetMapping("/userswithcertificate/{id}")

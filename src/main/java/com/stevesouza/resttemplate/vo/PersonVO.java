@@ -3,6 +3,8 @@ package com.stevesouza.resttemplate.vo;
 import com.stevesouza.resttemplate.db.Phone;
 import lombok.Data;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +20,10 @@ public class PersonVO {
     private long id;
     private String firstName;
     private String lastName;
+
+    @Min(0)
+    @Max(100)
     private int age;
-    private Set<Phone> phones = new HashSet<>();
+    private Set<PhoneVO> phones = new HashSet<>();
     private List<PersonCertificationVO> certifications = new ArrayList<>();
 }

@@ -1,10 +1,8 @@
 package com.stevesouza.resttemplate.db;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  *  *  @Column(name="strField3")
@@ -19,6 +17,10 @@ import javax.persistence.Id;
  */
 
 @Data
+//@Getter
+//@Setter
+//@RequiredArgsConstructor
+//@EqualsAndHashCode
 @Entity
 public class Phone {
     @Id
@@ -26,4 +28,9 @@ public class Phone {
     private long id;
 
     private String phoneNumber;
+
+    @EqualsAndHashCode.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Person person;
+
 }

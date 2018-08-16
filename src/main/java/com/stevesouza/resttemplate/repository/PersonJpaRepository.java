@@ -1,6 +1,11 @@
 package com.stevesouza.resttemplate.repository;
 
 import com.stevesouza.resttemplate.db.Person;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.aspectj.lang.annotation.DeclareAnnotation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -45,4 +50,13 @@ public interface PersonJpaRepository extends JpaRepository<Person, Long> {
 
     @Query("SELECT p from Person p  JOIN PersonCertification pc ON p.id = pc.person.id and pc.certification.id=:id")
     List<Person> getAllUsersWithCertificateId(@Param("id") long id);
+
+    @Query("SELECT p.id, p.firstName, p.lastName from Person p")
+    List<Object[]> selectColumns();
+
+    //@Query("SELECT new MyPersonColumns(p.id, p.firstName) from Person p")
+    @Query("SELECT new com.stevesouza.resttemplate.repository.MyPersonColumns(p.id, p.firstName) from Person p")
+    List<MyPersonColumns> selectColumnsAsObject();
+
+
 }

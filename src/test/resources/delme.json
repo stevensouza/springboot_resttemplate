@@ -1,0 +1,14 @@
+
+
+PersonVO(id=1, firstName=Usteve, lastName=Usouza, age=70,
+
+  phones=[
+    Phone(id=14, phoneNumber=I703-222-2222),
+    Phone(id=4, phoneNumber=703-222-2222)],
+
+certifications=[
+    PersonCertificationVO(id=13, location=Ilondon,
+      certification=CertificationVO(id=6, certificationName=java)),
+    PersonCertificationVO(id=10, location=amsterdam,
+      certification=CertificationVO(id=7, certificationName=groovy))])
+2018

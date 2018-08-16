@@ -2,18 +2,24 @@ package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.controller.ResourceNotFound;
 import com.stevesouza.resttemplate.db.Person;
+import com.stevesouza.resttemplate.db.Phone;
+import com.stevesouza.resttemplate.repository.MyPersonColumns;
 import com.stevesouza.resttemplate.repository.PersonJpaRepository;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @Data
 @Slf4j
 public class PersonService {
@@ -31,14 +37,34 @@ public class PersonService {
 
     public List<PersonVO> getAll() {
         TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-        List<PersonVO> list = MiscUtils.convert(personJpaRepository.findAll(), typeToken);
+        List<Person> listDelme = personJpaRepository.findAll();
+        listDelme.forEach(person -> delme(person));
+        listDelme.forEach(person -> System.out.println("******"+person.getFirstName()));
+        List<PersonVO> list = MiscUtils.convert(listDelme, typeToken);
+
+       // List<PersonVO> list = MiscUtils.convert(personJpaRepository.findAll(), typeToken);
         return list;
+    }
+
+    private void delme(Person person) {
+        person.getPhones().clear();
+//        for (Phone phone : person.getPhones()) {
+//            phone.setPerson();
+//        }
     }
 
     public List<PersonVO> selectAll() {
         TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
         List<PersonVO> list = MiscUtils.convert(personJpaRepository.selectAll(), typeToken);
         return list;
+    }
+
+    public List<Object[]> selectColumns() {
+        return personJpaRepository.selectColumns();
+    }
+
+    public List<MyPersonColumns> selectColumnsAsObject() {
+        return personJpaRepository.selectColumnsAsObject();
     }
 
     public List<PersonVO> getAllUsersWithCertificateId(long id) {
@@ -133,9 +159,17 @@ public class PersonService {
     }
 
     public  PersonVO update(long id, PersonVO vo) {
+        Person submittedPerson = convertToEntity(vo);
+        log.info("submitted person {}", submittedPerson);
+
+        submittedPerson.getCertifications().
+                forEach(personCert -> personCert.setPerson(submittedPerson));
+        submittedPerson.getPhones().
+                forEach(phone -> phone.setPerson(submittedPerson));
+
         Person updated = personJpaRepository.findById(id).map((person)->{
-            person.setFirstName(vo.getFirstName());
-            return personJpaRepository.save(person);
+            copyVoToEntity(submittedPerson, person);
+            return personJpaRepository.saveAndFlush(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         return convertToVo(updated);
@@ -147,6 +181,44 @@ public class PersonService {
 
     public Person convertToEntity(PersonVO personVo) {
         return MiscUtils.convert(personVo, Person.class);
+    }
+
+    Person copyVoToEntity(Person newEntity, Person existingEnity) {
+        existingEnity.setFirstName(newEntity.getFirstName());
+        existingEnity.setLastName(newEntity.getLastName());
+        existingEnity.setAge(newEntity.getAge());
+        existingEnity.getCertifications().clear();
+        existingEnity.getCertifications().addAll(newEntity.getCertifications());
+
+        existingEnity.getPhones().clear();
+        existingEnity.getPhones().addAll(newEntity.getPhones());
+
+/*        // phone is more complicated as i am allowing updates/inserts/deletes
+        Set<Phone> existingPhones = existingEnity.getPhones();
+        Set<Phone> newPhones = newEntity.getPhones();
+        Map<Long, Phone> newPhonesMap = new HashMap<>();
+        for (Phone phone : newPhones) {
+            newPhonesMap.put(phone.getId(), phone);
+        }
+
+        // updates  - update any phone records that already exist if their phone number changed.
+        for (Phone phone : existingPhones) {
+            Phone newPhone = newPhonesMap.get(phone.getId());
+            if (newPhone!=null && !phone.getPhoneNumber().equals(newPhone.getPhoneNumber())) {
+                phone.setPhoneNumber(newPhone.getPhoneNumber());
+            }
+        }
+
+        // deletes
+        Set<Long> newKeys = newPhonesMap.keySet();
+        // remove if phone id wasn't sent in update json and exists in database
+        existingPhones.removeIf(phone -> !newKeys.contains(phone.getId()));
+        Set<Phone> toInsert = newPhones.stream().filter(phone -> phone.getId()==0).collect(Collectors.toSet());
+        existingPhones.addAll(toInsert);
+                log.info("*****"+existingPhones);
+
+        */
+        return existingEnity;
     }
 
 

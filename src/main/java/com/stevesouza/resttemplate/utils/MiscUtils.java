@@ -105,6 +105,11 @@ public class MiscUtils {
         }
     }
 
+    public static <T> T toObjectFromJsonFile(String jsonFile, Class<T> destinationType) throws IOException {
+        String json = readResourceFile(jsonFile);
+        return toObjectFromJsonString(json, destinationType);
+    }
+
 
      public static <T> T randomData(final Class<T> type, final String... excludedFields) {
         return dataGenerator.nextObject(type, excludedFields);

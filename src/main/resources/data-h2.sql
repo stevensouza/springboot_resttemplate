@@ -51,46 +51,46 @@ set @PHONE3 = NEXTVAL('hibernate_sequence');
     insert
     into
         phone
-        (phone_number, id)
+        (phone_number, person_id, id)
     values
-        ('703-111-1111', @PHONE1);
+        ('703-111-1111', @PERSON1, @PHONE1);
 
     insert
     into
         phone
-        (phone_number, id)
+        (phone_number, person_id, id)
     values
-        ('703-222-2222', @PHONE2);
+        ('703-222-2222', @PERSON1, @PHONE2);
 
     insert
     into
         phone
-        (phone_number, id)
+        (phone_number, person_id, id)
     values
-        ('703-333-3333', @PHONE3);
+        ('703-333-3333', @PERSON2, @PHONE3);
 
 -- person_phones
 
-        insert
-    into
-        person_phones
-        (person_id, phones_id)
-    values
-        (@PERSON1, @PHONE1);
-
-         insert
-    into
-        person_phones
-        (person_id, phones_id)
-    values
-        (@PERSON1, @PHONE2);
-
-         insert
-    into
-        person_phones
-        (person_id, phones_id)
-    values
-        (@PERSON2, @PHONE3);
+--         insert
+--     into
+--         person_phones
+--         (person_id, phones_id)
+--     values
+--         (@PERSON1, @PHONE1);
+--
+--          insert
+--     into
+--         person_phones
+--         (person_id, phones_id)
+--     values
+--         (@PERSON1, @PHONE2);
+--
+--          insert
+--     into
+--         person_phones
+--         (person_id, phones_id)
+--     values
+--         (@PERSON2, @PHONE3);
 
 
  -- certification

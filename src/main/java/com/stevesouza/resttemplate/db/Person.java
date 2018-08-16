@@ -1,7 +1,7 @@
 package com.stevesouza.resttemplate.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -24,6 +24,10 @@ import java.util.Set;
  */
 
 @Data
+//@Getter
+//@Setter
+//@RequiredArgsConstructor
+//@EqualsAndHashCode
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
@@ -42,14 +46,13 @@ public class Person {
     @Max(100)
     private int age;
 
-    @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
-   // @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "person", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
     //@JoinColumn(name = "phone_id")
     private Set<Phone> phones = new HashSet<>();
 
     // Note this is really modeling a many to many, but the join table is made explicit
     @OneToMany(mappedBy = "person", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
-   //@JsonBackReference
+    //@JsonBackReference
 //    @JsonIgnore
     //@JsonManagedReference
     //@JsonIgnoreProperties(value = {"person", "peopleWithThisCertification"})

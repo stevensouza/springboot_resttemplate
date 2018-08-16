@@ -1,5 +1,6 @@
 package com.stevesouza.resttemplate;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.net.URL;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Slf4j
 public abstract class TestRestBaseClass {
 
     public Logger log = LoggerFactory.getLogger(this.getClass());

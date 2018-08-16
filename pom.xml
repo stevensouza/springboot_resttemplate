@@ -113,6 +113,13 @@
 		<!-- non spring useful libraries -->
 
 
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.2</version>
+		</dependency>
+
+
 		<!-- allows for easy conversion of objects -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>

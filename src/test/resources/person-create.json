@@ -1,0 +1,24 @@
+{
+  "firstName": "jeff",
+  "lastName": "beck",
+  "age": 77,
+  "phones": [
+    {
+      "phoneNumber": "123-456-7890"
+    },
+    {
+      "phoneNumber": "456-789-0123"
+    }
+  ],
+  "certifications": [
+
+    {
+      "location": "ballston",
+      "certification": {
+        "id": 7,
+        "certificationName": "groovy"
+      }
+    }
+
+  ]
+}
