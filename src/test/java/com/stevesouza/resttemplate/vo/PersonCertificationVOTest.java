@@ -1,7 +1,7 @@
 package com.stevesouza.resttemplate.vo;
 
 import com.stevesouza.resttemplate.TestUtils;
-import com.stevesouza.resttemplate.db.PersonCertification;
+import com.stevesouza.resttemplate.domain.PersonCertification;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

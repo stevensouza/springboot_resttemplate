@@ -2,7 +2,6 @@ package com.stevesouza.resttemplate.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.TestUtils;
-import com.stevesouza.resttemplate.db.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

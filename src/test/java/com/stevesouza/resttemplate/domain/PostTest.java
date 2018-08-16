@@ -1,4 +1,4 @@
-package com.stevesouza.resttemplate.db;
+package com.stevesouza.resttemplate.domain;
 
 import org.junit.After;
 import org.junit.Before;

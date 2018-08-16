@@ -1,6 +1,6 @@
 package com.stevesouza.resttemplate.repository;
 
-import com.stevesouza.resttemplate.db.MyDbEntity;
+import com.stevesouza.resttemplate.domain.MyDbEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;

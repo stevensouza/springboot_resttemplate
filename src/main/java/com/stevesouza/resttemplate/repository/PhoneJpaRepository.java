@@ -1,6 +1,6 @@
 package com.stevesouza.resttemplate.repository;
 
-import com.stevesouza.resttemplate.db.Phone;
+import com.stevesouza.resttemplate.domain.Phone;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /** note because I include the rest data artifact endpoints will automatically be created to POST, DELETE, PATCH

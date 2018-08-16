@@ -1,22 +1,19 @@
 package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.controller.ResourceNotFound;
-import com.stevesouza.resttemplate.db.Person;
-import com.stevesouza.resttemplate.db.Phone;
+import com.stevesouza.resttemplate.domain.Person;
 import com.stevesouza.resttemplate.repository.MyPersonColumns;
 import com.stevesouza.resttemplate.repository.PersonJpaRepository;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

@@ -1,6 +1,5 @@
 package com.stevesouza.resttemplate.vo;
 
-import com.stevesouza.resttemplate.db.Phone;
 import lombok.Data;
 
 import javax.validation.constraints.Max;

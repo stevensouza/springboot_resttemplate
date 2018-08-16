@@ -1,11 +1,6 @@
 package com.stevesouza.resttemplate.repository;
 
-import com.stevesouza.resttemplate.db.Person;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.aspectj.lang.annotation.DeclareAnnotation;
+import com.stevesouza.resttemplate.domain.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

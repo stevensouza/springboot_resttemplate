@@ -1,4 +1,4 @@
-package com.stevesouza.resttemplate.db;
+package com.stevesouza.resttemplate.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

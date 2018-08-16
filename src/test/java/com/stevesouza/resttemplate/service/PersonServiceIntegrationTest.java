@@ -1,7 +1,6 @@
 package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.TestRestBaseClass;
-import com.stevesouza.resttemplate.db.Person;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.extern.slf4j.Slf4j;

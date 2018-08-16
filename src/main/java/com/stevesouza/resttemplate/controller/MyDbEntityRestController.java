@@ -2,7 +2,7 @@ package com.stevesouza.resttemplate.controller;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.stevesouza.resttemplate.db.MyDbEntity;
+import com.stevesouza.resttemplate.domain.MyDbEntity;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.MyDbEntityVO;
 import lombok.AllArgsConstructor;

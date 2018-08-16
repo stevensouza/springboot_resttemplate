@@ -1,7 +1,7 @@
 package com.stevesouza.resttemplate.controller;
 
 
-import com.stevesouza.resttemplate.db.Certification;
+import com.stevesouza.resttemplate.domain.Certification;
 import com.stevesouza.resttemplate.repository.CertificationJpaRepository;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import lombok.extern.slf4j.Slf4j;
