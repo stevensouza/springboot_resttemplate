@@ -1,6 +1,5 @@
 package com.stevesouza.resttemplate;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ import java.net.URL;
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class TestRestBaseClass {
 
-    Logger log = LoggerFactory.getLogger(this.getClass());
+    public Logger log = LoggerFactory.getLogger(this.getClass());
 
     // annotation populates with random port generated.
     // However, TestRestTemplate successfully uses the rigth port so no need to do this.
