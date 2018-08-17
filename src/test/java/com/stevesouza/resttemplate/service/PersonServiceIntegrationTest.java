@@ -74,10 +74,5 @@ public class PersonServiceIntegrationTest extends TestRestBaseClass {
         json = MiscUtils.readResourceFile("person-update-answer.json");
         assertEquals("Values of fields that exist in both json documents do not match.",
                 json, MiscUtils.toJsonString(updatedVo), JSONCompareMode.LENIENT);
-
-        // TestUtils.assertLenientJsonEqualit
-//        PersonVO vo = MiscUtils.toObjectFromJsonFile("person-create.json", PersonVO.class);
-//        vo = personService.create(vo);
-//        log.info(vo.toString());
     }
 }
