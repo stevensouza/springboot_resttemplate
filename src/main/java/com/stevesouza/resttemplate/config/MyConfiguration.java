@@ -10,11 +10,13 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Note @SpringBootApplication annotation also has @Configuration as part of its definition so this @Bean definition could
  * just as easily been put in there.  Note this is the equivalent of defining spring beans in xml.
  */
+@EnableSwagger2
 @Configuration
 public class MyConfiguration {
 
