@@ -13,7 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Service
 @Transactional
@@ -21,6 +26,8 @@ import java.util.*;
 @Slf4j
 public class PersonService {
     private PersonJpaRepository personJpaRepository;
+    @PersistenceContext
+    private EntityManager em;
 
     // can also use more standardized @Inject
     // The autowiring allows me to inject other implementations including a mock.

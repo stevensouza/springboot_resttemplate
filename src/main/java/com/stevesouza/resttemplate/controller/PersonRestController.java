@@ -3,7 +3,6 @@ package com.stevesouza.resttemplate.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.repository.MyPersonColumns;
-import com.stevesouza.resttemplate.repository.PersonJpaRepository;
 import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;

@@ -21,10 +21,9 @@ import java.net.URL;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Slf4j
 public abstract class TestRestBaseClass {
 
-    public Logger log = LoggerFactory.getLogger(this.getClass());
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     // annotation populates with random port generated.
     // However, TestRestTemplate successfully uses the rigth port so no need to do this.

@@ -1,7 +1,7 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
