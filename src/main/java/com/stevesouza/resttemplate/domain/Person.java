@@ -2,10 +2,12 @@ package com.stevesouza.resttemplate.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +33,7 @@ import java.util.Set;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-
+@Slf4j
 public class Person {
     @Id
     @GeneratedValue
@@ -58,6 +60,24 @@ public class Person {
     //@JsonIgnoreProperties(value = {"person", "peopleWithThisCertification"})
     private List<PersonCertification> certifications = new ArrayList<>();
     //private Set<PersonCertification> certifications = new HashSet<>();
+
+    // also have: @PostPersist, @PostUpdate, @PostRemove
+    @PrePersist
+    public void prePersist() {
+          log.info("persist audit: user={} {}, time={}", firstName, lastName, LocalDateTime.now());
+     }
+
+    @PreUpdate
+    public void preUpdate() {
+        log.info("update audit: user={} {}, time={}", firstName, lastName, LocalDateTime.now());
+    }
+
+    @PreRemove
+    public void preUpdate() {
+        log.info("remove audit: user={} {}, time={}", firstName, lastName, LocalDateTime.now());
+    }
+
+
 
 
 }
