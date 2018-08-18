@@ -22,7 +22,7 @@ import javax.validation.constraints.Min;
 
 @Data
 @Entity
-public class MyDbEntity {
+public class MyDbEntity  {
     @Id
     @GeneratedValue
     private long id;

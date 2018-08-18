@@ -1,6 +1,7 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.stevesouza.resttemplate.vo.CertificationVO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,10 +14,10 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 
-public class Certification {
-    @Id
-    @GeneratedValue
-    private long id;
+public class Certification extends EntityBase<CertificationVO> {
+//    @Id
+//    @GeneratedValue
+//    private long id;
 
     private String certificationName;
 

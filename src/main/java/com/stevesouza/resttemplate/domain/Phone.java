@@ -1,5 +1,6 @@
 package com.stevesouza.resttemplate.domain;
 
+import com.stevesouza.resttemplate.vo.PhoneVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,10 +24,10 @@ import javax.persistence.*;
 //@RequiredArgsConstructor
 //@EqualsAndHashCode
 @Entity
-public class Phone {
-    @Id
-    @GeneratedValue
-    private long id;
+public class Phone extends EntityBase<PhoneVO> {
+//    @Id
+//    @GeneratedValue
+//    private long id;
 
     private String phoneNumber;
 

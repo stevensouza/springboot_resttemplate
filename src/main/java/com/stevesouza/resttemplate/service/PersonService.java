@@ -37,21 +37,9 @@ public class PersonService {
     }
 
     public List<PersonVO> getAll() {
-        TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-        List<Person> listDelme = personJpaRepository.findAll();
-        listDelme.forEach(person -> delme(person));
-        listDelme.forEach(person -> System.out.println("******"+person.getFirstName()));
-        List<PersonVO> list = MiscUtils.convert(listDelme, typeToken);
-
-       // List<PersonVO> list = MiscUtils.convert(personJpaRepository.findAll(), typeToken);
-        return list;
-    }
-
-    private void delme(Person person) {
-        person.getPhones().clear();
-//        for (Phone phone : person.getPhones()) {
-//            phone.setPerson();
-//        }
+         TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
+         List<PersonVO> list = MiscUtils.convert(personJpaRepository.findAll(), typeToken);
+         return list;
     }
 
     public List<PersonVO> selectAll() {
@@ -143,11 +131,17 @@ public class PersonService {
         Person person = convertToEntity(vo);
         // must connect the person to the foreign key in PersonCertification as vo
         // doesn't have this connection.
+
+        // PUT this in vo.toEntity();
         person.getCertifications().
                 forEach(personCert -> personCert.setPerson(person));
+        person.getPhones().
+                forEach(phone -> phone.setPerson(person));
+        
         Person savedPerson = personJpaRepository.save(person);
+        return savedPerson.toVo();
 
-        return convertToVo(savedPerson);
+       // return convertToVo(savedPerson);
     }
 
     // idempotent. returns 200 and content or 204 and no content
@@ -156,7 +150,9 @@ public class PersonService {
     }
 
     public PersonVO get(long id) {
-        return convertToVo(personJpaRepository.getOne(id));
+        return personJpaRepository.getOne(id).toVo();
+
+//        return convertToVo(personJpaRepository.getOne(id));
     }
 
     public  PersonVO update(long id, PersonVO vo) {
@@ -173,12 +169,12 @@ public class PersonService {
             return personJpaRepository.saveAndFlush(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
-        return convertToVo(updated);
+        return updated.toVo();
     }
 
-    public PersonVO convertToVo(Person person) {
-        return MiscUtils.convert(person, PersonVO.class);
-    }
+//    public PersonVO convertToVo(Person person) {
+//        return MiscUtils.convert(person, PersonVO.class);
+//    }
 
     public Person convertToEntity(PersonVO personVo) {
         return MiscUtils.convert(personVo, Person.class);

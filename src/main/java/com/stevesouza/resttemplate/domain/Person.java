@@ -1,12 +1,18 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,11 +39,7 @@ import java.util.Set;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-@Slf4j
-public class Person {
-    @Id
-    @GeneratedValue
-    private long id;
+public class Person extends EntityBase<PersonVO> {
 
     //@Max(10)
     private String firstName;
@@ -60,24 +62,6 @@ public class Person {
     //@JsonIgnoreProperties(value = {"person", "peopleWithThisCertification"})
     private List<PersonCertification> certifications = new ArrayList<>();
     //private Set<PersonCertification> certifications = new HashSet<>();
-
-    // also have: @PostPersist, @PostUpdate, @PostRemove
-    @PrePersist
-    public void prePersist() {
-          log.info("persist audit: user={} {}, time={}", firstName, lastName, LocalDateTime.now());
-     }
-
-    @PreUpdate
-    public void preUpdate() {
-        log.info("update audit: user={} {}, time={}", firstName, lastName, LocalDateTime.now());
-    }
-
-    @PreRemove
-    public void preUpdate() {
-        log.info("remove audit: user={} {}, time={}", firstName, lastName, LocalDateTime.now());
-    }
-
-
 
 
 }

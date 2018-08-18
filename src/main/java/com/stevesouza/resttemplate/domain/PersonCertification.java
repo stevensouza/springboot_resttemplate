@@ -1,6 +1,7 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.stevesouza.resttemplate.vo.PersonCertificationVO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,21 +22,19 @@ import javax.persistence.*;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class PersonCertification {
-    @Id
-    @GeneratedValue
-    private long id;
+public class PersonCertification extends EntityBase<PersonCertificationVO> {
+//    @Id
+//    @GeneratedValue
+//    private long id;
 
     private String location;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @ManyToOne // default fetch is eager
-   // @JsonIgnore
+    //  not required but can do this. points to parent tables primary key: @JoinColumn(name="person_id")
+    //    @ManyToOne // default fetch is eager
     private Person person;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    //@ManyToOne // default fetch is eager
-   // @JsonIgnore
     private Certification certification;
 
 }
