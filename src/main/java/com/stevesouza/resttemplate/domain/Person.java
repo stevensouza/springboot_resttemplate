@@ -1,8 +1,8 @@
 package com.stevesouza.resttemplate.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,13 +28,8 @@ import java.util.Set;
  */
 
 @Data
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Person extends EntityBase<PersonVO> {
 
     //@Max(10)

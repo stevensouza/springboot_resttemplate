@@ -1,8 +1,8 @@
 package com.stevesouza.resttemplate.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stevesouza.resttemplate.vo.PersonCertificationVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,9 +21,8 @@ import javax.persistence.ManyToOne;
  */
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class PersonCertification extends EntityBase<PersonCertificationVO> {
 //    @Id
 //    @GeneratedValue

@@ -2,6 +2,7 @@ package com.stevesouza.resttemplate.vo;
 
 import com.stevesouza.resttemplate.domain.Person;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class PersonVO extends VOBase<Person>{
     private long id;
     private String firstName;

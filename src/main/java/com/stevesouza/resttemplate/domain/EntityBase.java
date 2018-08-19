@@ -1,8 +1,7 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.stevesouza.resttemplate.utils.MiscUtils;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.security.core.Authentication;
@@ -14,9 +13,8 @@ import java.time.LocalDateTime;
 
 
 @Slf4j
+@Data
 @MappedSuperclass
-@Getter
-@Setter
 public abstract class EntityBase<VO> {
     @Id
     @GeneratedValue

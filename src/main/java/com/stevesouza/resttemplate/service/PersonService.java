@@ -146,7 +146,7 @@ public class PersonService {
         log.info("submitted person {}", submittedPerson);
         Person updated = personJpaRepository.findById(id).map((person)->{
             submittedPerson.update(person);
-            return personJpaRepository.saveAndFlush(person);
+            return personJpaRepository.save(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         return updated.toVo();
