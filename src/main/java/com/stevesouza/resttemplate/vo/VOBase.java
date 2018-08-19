@@ -1,6 +1,5 @@
 package com.stevesouza.resttemplate.vo;
 
-import com.stevesouza.resttemplate.domain.EntityBase;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import org.springframework.core.GenericTypeResolver;
 

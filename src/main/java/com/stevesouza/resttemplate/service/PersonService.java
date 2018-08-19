@@ -145,13 +145,12 @@ public class PersonService {
         Person submittedPerson = vo.toEntity();
         log.info("submitted person {}", submittedPerson);
         Person updated = personJpaRepository.findById(id).map((person)->{
-//            copy(submittedPerson, person);
             submittedPerson.update(person);
             return personJpaRepository.saveAndFlush(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         return updated.toVo();
     }
-    
+
 
 }

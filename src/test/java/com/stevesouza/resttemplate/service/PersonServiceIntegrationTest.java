@@ -1,7 +1,6 @@
 package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.TestRestBaseClass;
-import com.stevesouza.resttemplate.domain.Person;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import io.github.benas.randombeans.api.EnhancedRandom;
@@ -10,7 +9,6 @@ import org.json.JSONException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.modelmapper.ModelMapper;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 

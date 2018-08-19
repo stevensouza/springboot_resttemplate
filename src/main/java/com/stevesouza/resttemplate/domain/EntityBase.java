@@ -1,13 +1,10 @@
 package com.stevesouza.resttemplate.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stevesouza.resttemplate.utils.MiscUtils;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.GenericTypeResolver;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
