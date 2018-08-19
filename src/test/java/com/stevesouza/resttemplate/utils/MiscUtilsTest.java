@@ -2,12 +2,17 @@ package com.stevesouza.resttemplate.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.TestUtils;
+import com.stevesouza.resttemplate.domain.Person;
+import com.stevesouza.resttemplate.domain.PersonCertification;
+import com.stevesouza.resttemplate.domain.Phone;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -144,6 +149,25 @@ public class MiscUtilsTest {
     public void randomCollectionPopulated2() {
         Pojo4 pojo = MiscUtils.randomDataPopulateCollections(Pojo4.class);
         assertThat(pojo.getSet()).isNotEmpty();
+    }
+
+
+    @Test
+    public void testBeanToBeanCopyWithBeanUtils() {
+        Person person1 = EnhancedRandom.random(Person.class);
+        person1.setPhones(EnhancedRandom.randomSetOf(20, Phone.class));
+        person1.setCertifications(EnhancedRandom.randomListOf(20, PersonCertification.class));
+
+        Person person2 = EnhancedRandom.random(Person.class);
+        person2.setPhones(EnhancedRandom.randomSetOf(40, Phone.class));
+        person2.setCertifications(EnhancedRandom.randomListOf(40, PersonCertification.class));
+
+        assertThat(person1).isNotEqualTo(person2);
+        BeanUtils.copyProperties(person1, person2);
+        assertThat(person1).isEqualTo(person2);
+        log.info(person1.toString());
+        log.info(person2.toString());
+
     }
 
     @Data
