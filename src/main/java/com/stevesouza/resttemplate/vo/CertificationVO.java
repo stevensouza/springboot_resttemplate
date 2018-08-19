@@ -1,5 +1,6 @@
 package com.stevesouza.resttemplate.vo;
 
+import com.stevesouza.resttemplate.domain.Certification;
 import lombok.Data;
 
 
@@ -7,7 +8,7 @@ import lombok.Data;
 //@Entity
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class CertificationVO {
+public class CertificationVO  extends VOBase<Certification> {
     private long id;
     private String certificationName;
 

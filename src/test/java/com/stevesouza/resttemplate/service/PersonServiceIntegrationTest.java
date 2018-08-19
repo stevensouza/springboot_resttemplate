@@ -1,16 +1,20 @@
 package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.TestRestBaseClass;
+import com.stevesouza.resttemplate.domain.Person;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.modelmapper.ModelMapper;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -56,12 +60,18 @@ public class PersonServiceIntegrationTest extends TestRestBaseClass {
 
     }
 
-    @Test
+    @Test(expected = EntityNotFoundException.class)
     public void delete() {
+        PersonVO newVo = personService.create(EnhancedRandom.random(PersonVO.class));
+        assertThat(personService.get(newVo.getId())).isNotNull();
+        personService.delete(newVo.getId());
+        personService.get(newVo.getId()); // entity not found - throws exception
     }
 
     @Test
     public void get() {
+        PersonVO newVo = personService.create(EnhancedRandom.random(PersonVO.class));
+        assertThat(personService.get(newVo.getId())).isNotNull();
     }
 
     @Test
@@ -75,4 +85,5 @@ public class PersonServiceIntegrationTest extends TestRestBaseClass {
         assertEquals("Values of fields that exist in both json documents do not match.",
                 json, MiscUtils.toJsonString(updatedVo), JSONCompareMode.LENIENT);
     }
+
 }

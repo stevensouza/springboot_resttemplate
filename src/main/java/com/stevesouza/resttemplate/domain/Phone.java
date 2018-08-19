@@ -4,7 +4,9 @@ import com.stevesouza.resttemplate.vo.PhoneVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 /**
  *  *  @Column(name="strField3")

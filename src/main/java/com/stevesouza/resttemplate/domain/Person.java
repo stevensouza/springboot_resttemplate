@@ -3,17 +3,13 @@ package com.stevesouza.resttemplate.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -62,6 +58,18 @@ public class Person extends EntityBase<PersonVO> {
     //@JsonIgnoreProperties(value = {"person", "peopleWithThisCertification"})
     private List<PersonCertification> certifications = new ArrayList<>();
     //private Set<PersonCertification> certifications = new HashSet<>();
+
+    public void addPhone(Phone phone) {
+        phones.add(phone);
+        phone.setPerson(this);
+
+    }
+
+    public void addPersonCertification(PersonCertification personCertification) {
+        certifications.add(personCertification);
+        personCertification.setPerson(this);
+    }
+
 
 
 }

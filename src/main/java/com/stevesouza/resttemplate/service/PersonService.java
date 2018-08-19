@@ -128,20 +128,8 @@ public class PersonService {
      */
 
     public  PersonVO create(PersonVO vo) {
-        Person person = convertToEntity(vo);
-        // must connect the person to the foreign key in PersonCertification as vo
-        // doesn't have this connection.
-
-        // PUT this in vo.toEntity();
-        person.getCertifications().
-                forEach(personCert -> personCert.setPerson(person));
-        person.getPhones().
-                forEach(phone -> phone.setPerson(person));
-        
-        Person savedPerson = personJpaRepository.save(person);
-        return savedPerson.toVo();
-
-       // return convertToVo(savedPerson);
+        Person person = vo.toEntity();
+        return  personJpaRepository.save(person).toVo();
     }
 
     // idempotent. returns 200 and content or 204 and no content
@@ -151,71 +139,32 @@ public class PersonService {
 
     public PersonVO get(long id) {
         return personJpaRepository.getOne(id).toVo();
-
-//        return convertToVo(personJpaRepository.getOne(id));
     }
 
     public  PersonVO update(long id, PersonVO vo) {
-        Person submittedPerson = convertToEntity(vo);
+        Person submittedPerson = vo.toEntity();
         log.info("submitted person {}", submittedPerson);
-
-        submittedPerson.getCertifications().
-                forEach(personCert -> personCert.setPerson(submittedPerson));
-        submittedPerson.getPhones().
-                forEach(phone -> phone.setPerson(submittedPerson));
-
         Person updated = personJpaRepository.findById(id).map((person)->{
-            copyVoToEntity(submittedPerson, person);
+            copy(submittedPerson, person);
             return personJpaRepository.saveAndFlush(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         return updated.toVo();
     }
 
-//    public PersonVO convertToVo(Person person) {
-//        return MiscUtils.convert(person, PersonVO.class);
-//    }
 
-    public Person convertToEntity(PersonVO personVo) {
-        return MiscUtils.convert(personVo, Person.class);
-    }
+    Person copy(Person fromNewEntity, Person toExistingEnity) {
+        toExistingEnity.setFirstName(fromNewEntity.getFirstName());
+        toExistingEnity.setLastName(fromNewEntity.getLastName());
+        toExistingEnity.setAge(fromNewEntity.getAge());
 
-    Person copyVoToEntity(Person newEntity, Person existingEnity) {
-        existingEnity.setFirstName(newEntity.getFirstName());
-        existingEnity.setLastName(newEntity.getLastName());
-        existingEnity.setAge(newEntity.getAge());
-        existingEnity.getCertifications().clear();
-        existingEnity.getCertifications().addAll(newEntity.getCertifications());
+        toExistingEnity.getCertifications().clear();
+        toExistingEnity.getCertifications().addAll(fromNewEntity.getCertifications());
 
-        existingEnity.getPhones().clear();
-        existingEnity.getPhones().addAll(newEntity.getPhones());
+        toExistingEnity.getPhones().clear();
+        toExistingEnity.getPhones().addAll(fromNewEntity.getPhones());
 
-/*        // phone is more complicated as i am allowing updates/inserts/deletes
-        Set<Phone> existingPhones = existingEnity.getPhones();
-        Set<Phone> newPhones = newEntity.getPhones();
-        Map<Long, Phone> newPhonesMap = new HashMap<>();
-        for (Phone phone : newPhones) {
-            newPhonesMap.put(phone.getId(), phone);
-        }
-
-        // updates  - update any phone records that already exist if their phone number changed.
-        for (Phone phone : existingPhones) {
-            Phone newPhone = newPhonesMap.get(phone.getId());
-            if (newPhone!=null && !phone.getPhoneNumber().equals(newPhone.getPhoneNumber())) {
-                phone.setPhoneNumber(newPhone.getPhoneNumber());
-            }
-        }
-
-        // deletes
-        Set<Long> newKeys = newPhonesMap.keySet();
-        // remove if phone id wasn't sent in update json and exists in database
-        existingPhones.removeIf(phone -> !newKeys.contains(phone.getId()));
-        Set<Phone> toInsert = newPhones.stream().filter(phone -> phone.getId()==0).collect(Collectors.toSet());
-        existingPhones.addAll(toInsert);
-                log.info("*****"+existingPhones);
-
-        */
-        return existingEnity;
+        return toExistingEnity;
     }
 
 
