@@ -145,29 +145,13 @@ public class PersonService {
         Person submittedPerson = vo.toEntity();
         log.info("submitted person {}", submittedPerson);
         Person updated = personJpaRepository.findById(id).map((person)->{
-            copy(submittedPerson, person);
+//            copy(submittedPerson, person);
+            submittedPerson.update(person);
             return personJpaRepository.saveAndFlush(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         return updated.toVo();
     }
-
-
-    Person copy(Person fromNewEntity, Person toExistingEnity) {
-        toExistingEnity.setFirstName(fromNewEntity.getFirstName());
-        toExistingEnity.setLastName(fromNewEntity.getLastName());
-        toExistingEnity.setAge(fromNewEntity.getAge());
-
-        toExistingEnity.getCertifications().clear();
-        toExistingEnity.getCertifications().addAll(fromNewEntity.getCertifications());
-
-        toExistingEnity.getPhones().clear();
-        toExistingEnity.getPhones().addAll(fromNewEntity.getPhones());
-
-        return toExistingEnity;
-    }
-
-
-
+    
 
 }
