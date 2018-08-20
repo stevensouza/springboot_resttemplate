@@ -3,6 +3,8 @@ package com.stevesouza.resttemplate.domain;
 import com.stevesouza.resttemplate.vo.CertificationVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,12 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @Entity
 public class Certification extends EntityBase<CertificationVO> {
     private String certificationName;
 
     @OneToMany(mappedBy = "certification", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<PersonCertification> peopleWithThisCertification = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Certification{" +
+                "id=" + getId() + '\'' +
+                "certificationName='" + certificationName + '\'' +
+                '}';
+    }
 }

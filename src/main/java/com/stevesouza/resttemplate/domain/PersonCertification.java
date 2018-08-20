@@ -1,8 +1,11 @@
 package com.stevesouza.resttemplate.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stevesouza.resttemplate.vo.PersonCertificationVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,22 +23,27 @@ import javax.persistence.ManyToOne;
  *  * 	@Max(100)
  */
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @Entity
 public class PersonCertification extends EntityBase<PersonCertificationVO> {
-//    @Id
-//    @GeneratedValue
-//    private long id;
-
     private String location;
 
     @ManyToOne(fetch = FetchType.LAZY)
     //  not required but can do this. points to parent tables primary key: @JoinColumn(name="person_id")
     //    @ManyToOne // default fetch is eager
+    //  @JsonIgnore
     private Person person;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    // @JsonIgnore
     private Certification certification;
 
+    @Override
+    public String toString() {
+        return "PersonCertification{" +
+                "id=" + getId() + '\'' +
+                "location='" + location + '\'' +
+                '}';
+    }
 }

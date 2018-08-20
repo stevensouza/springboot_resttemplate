@@ -1,7 +1,7 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.stevesouza.resttemplate.utils.MiscUtils;
-import lombok.Data;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.security.core.Authentication;
@@ -13,22 +13,22 @@ import java.time.LocalDateTime;
 
 
 @Slf4j
-@Data
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class EntityBase<VO> {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private LocalDateTime updatedOn;
     private String updatedBy;
 
-
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,6 +48,23 @@ public abstract class EntityBase<VO> {
     private Class getClassOfParameterType() {
         Class<VO> clazz = (Class<VO>) GenericTypeResolver.resolveTypeArgument(getClass(), EntityBase.class);
         return clazz;
+    }
+
+    // equals and hashcode were inplemented per https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EntityBase)) return false;
+        return id != null && id.equals(((EntityBase) o).id);
+    }
+
+    // This always gives the same hashcode which make storing in Set's inefficient, however
+    // the author in the link aboves says in the size of set's typically used it is ok. The problem is
+    // that you need a field that doesn't change for a hash and id is not that field as it can be null and
+    // then change to a number when jpa saves it.
+    @Override
+    public int hashCode() {
+        return 31;
     }
 
 
@@ -88,4 +105,5 @@ public abstract class EntityBase<VO> {
         }
         return userName;
     }
+
 }

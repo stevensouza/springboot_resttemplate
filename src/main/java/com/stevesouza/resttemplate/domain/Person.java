@@ -1,8 +1,8 @@
 package com.stevesouza.resttemplate.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stevesouza.resttemplate.vo.PersonVO;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,8 +27,8 @@ import java.util.Set;
  *  * 	@Max(100)
  */
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @Entity
 public class Person extends EntityBase<PersonVO> {
 
@@ -80,6 +80,13 @@ public class Person extends EntityBase<PersonVO> {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + getId() + '\'' +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

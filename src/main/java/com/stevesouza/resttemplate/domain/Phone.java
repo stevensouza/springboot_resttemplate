@@ -3,6 +3,8 @@ package com.stevesouza.resttemplate.domain;
 import com.stevesouza.resttemplate.vo.PhoneVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,8 +22,8 @@ import javax.persistence.ManyToOne;
  *  * 	@Max(100)
  */
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @Entity
 public class Phone extends EntityBase<PhoneVO> {
     private String phoneNumber;
@@ -31,5 +33,14 @@ public class Phone extends EntityBase<PhoneVO> {
     @EqualsAndHashCode.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private Person person;
+
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + getId() + '\'' +
+                "phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 
 }
