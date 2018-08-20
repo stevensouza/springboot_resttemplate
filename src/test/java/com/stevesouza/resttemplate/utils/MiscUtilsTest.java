@@ -154,20 +154,12 @@ public class MiscUtilsTest {
 
     @Test
     public void testBeanToBeanCopyWithBeanUtils() {
-        Person person1 = EnhancedRandom.random(Person.class);
-        person1.setPhones(EnhancedRandom.randomSetOf(20, Phone.class));
-        person1.setCertifications(EnhancedRandom.randomListOf(20, PersonCertification.class));
+        Pojo1 pojo1 = EnhancedRandom.random(Pojo1.class);
+        Pojo1 pojo2 = EnhancedRandom.random(Pojo1.class);
 
-        Person person2 = EnhancedRandom.random(Person.class);
-        person2.setPhones(EnhancedRandom.randomSetOf(40, Phone.class));
-        person2.setCertifications(EnhancedRandom.randomListOf(40, PersonCertification.class));
-
-        assertThat(person1).isNotEqualTo(person2);
-        BeanUtils.copyProperties(person1, person2);
-        assertThat(person1).isEqualTo(person2);
-        log.info(person1.toString());
-        log.info(person2.toString());
-
+        assertThat(pojo1).isNotEqualTo(pojo2);
+        BeanUtils.copyProperties(pojo1, pojo2);
+        assertThat(pojo1).isEqualTo(pojo2);
     }
 
     @Data
