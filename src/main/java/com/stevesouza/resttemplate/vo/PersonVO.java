@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PersonVO extends VOBase<Person>{
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
 

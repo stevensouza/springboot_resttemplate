@@ -5,11 +5,8 @@ import lombok.Data;
 
 
 @Data
-//@Entity
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class PersonCertificationVO  extends VOBase<PersonCertification> {
-    private long id;
+    private Long id;
     private String location;
     private CertificationVO certification;
 }

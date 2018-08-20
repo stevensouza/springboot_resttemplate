@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class PhoneVO  extends VOBase<Phone> {
-    private long id;
+    private Long id;
     private String phoneNumber;
 }
