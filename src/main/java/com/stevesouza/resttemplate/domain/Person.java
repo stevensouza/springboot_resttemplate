@@ -43,7 +43,7 @@ public class Person extends EntityBase<PersonVO> {
 
     @OneToMany(mappedBy = "person", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
     //@JoinColumn(name = "phone_id")
-    private Set<Phone> phones = new HashSet<>();
+    private List<Phone> phones =  new ArrayList<>();
 
     // Note this is really modeling a many to many, but the join table is made explicit
     @OneToMany(mappedBy = "person", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)

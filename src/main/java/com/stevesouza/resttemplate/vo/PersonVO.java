@@ -7,9 +7,7 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Data
@@ -22,7 +20,7 @@ public class PersonVO extends VOBase<Person>{
     @Min(0)
     @Max(100)
     private int age;
-    private Set<PhoneVO> phones = new HashSet<>();
+    private List<PhoneVO>phones = new ArrayList<>();
     private List<PersonCertificationVO> certifications = new ArrayList<>();
 
     @Override
