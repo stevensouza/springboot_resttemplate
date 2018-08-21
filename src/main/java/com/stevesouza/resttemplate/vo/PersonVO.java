@@ -32,4 +32,16 @@ public class PersonVO extends VOBase<Person>{
                     forEach(phone -> phone.setPerson(person));
         return person;
     }
+
+    @Override
+    public String toString() {
+        return "PersonVO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", phones=" + phones +
+                ", certifications=" + certifications +
+                '}';
+    }
 }

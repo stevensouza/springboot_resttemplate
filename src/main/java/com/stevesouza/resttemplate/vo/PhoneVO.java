@@ -10,4 +10,12 @@ import lombok.Setter;
 public class PhoneVO  extends VOBase<Phone> {
     private Long id;
     private String phoneNumber;
+
+    @Override
+    public String toString() {
+        return "PhoneVO{" +
+                "id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

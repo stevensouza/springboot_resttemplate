@@ -10,4 +10,13 @@ import lombok.Setter;
 public class CertificationVO  extends VOBase<Certification> {
     private Long id;
     private String certificationName;
+
+
+    @Override
+    public String toString() {
+        return "CertificationVO{" +
+                "id=" + id +
+                ", certificationName='" + certificationName + '\'' +
+                '}';
+    }
 }

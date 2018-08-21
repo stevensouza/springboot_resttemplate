@@ -11,4 +11,13 @@ public class PersonCertificationVO  extends VOBase<PersonCertification> {
     private Long id;
     private String location;
     private CertificationVO certification;
+
+    @Override
+    public String toString() {
+        return "PersonCertificationVO{" +
+                "id=" + id +
+                ", location='" + location + '\'' +
+                ", certification=" + certification +
+                '}';
+    }
 }
