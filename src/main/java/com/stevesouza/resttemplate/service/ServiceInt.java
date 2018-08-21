@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
-public interface ServiceBase<VO extends VOBase> {
+public interface ServiceInt<VO extends VOBase> {
     List<VO> getAll();
 
     VO create(VO vo);

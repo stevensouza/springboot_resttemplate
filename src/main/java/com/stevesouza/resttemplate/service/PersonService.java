@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @Data
 @Slf4j
-public class PersonService implements ServiceBase<PersonVO> {
+public class PersonService implements ServiceInt<PersonVO> {
     private PersonJpaRepository personJpaRepository;
 
     // can also use more standardized @Inject
