@@ -12,10 +12,9 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;ˆ
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
+ˆ
 
 @Service
 @Transactional
@@ -23,8 +22,6 @@ import java.util.List;
 @Slf4j
 public class PersonService {
     private PersonJpaRepository personJpaRepository;
-    @PersistenceContext
-    private EntityManager em;
 
     // can also use more standardized @Inject
     // The autowiring allows me to inject other implementations including a mock.
