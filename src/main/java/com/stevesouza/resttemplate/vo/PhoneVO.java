@@ -2,8 +2,11 @@ package com.stevesouza.resttemplate.vo;
 
 import com.stevesouza.resttemplate.domain.Phone;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class PhoneVO  extends VOBase<Phone> {
     private Long id;
     private String phoneNumber;
