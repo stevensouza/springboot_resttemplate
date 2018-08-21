@@ -2,9 +2,6 @@ package com.stevesouza.resttemplate.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.TestUtils;
-import com.stevesouza.resttemplate.domain.Person;
-import com.stevesouza.resttemplate.domain.PersonCertification;
-import com.stevesouza.resttemplate.domain.Phone;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,12 +1,12 @@
 package com.stevesouza.resttemplate.vo;
 
 import com.stevesouza.resttemplate.domain.PersonCertification;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 
-@Data
-@EqualsAndHashCode(callSuper=true)
+@Getter
+@Setter
 public class PersonCertificationVO  extends VOBase<PersonCertification> {
     private Long id;
     private String location;

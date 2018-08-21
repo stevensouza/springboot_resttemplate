@@ -1,8 +1,8 @@
 package com.stevesouza.resttemplate.vo;
 
 import com.stevesouza.resttemplate.domain.Person;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class PersonVO extends VOBase<Person>{
     private Long id;
     private String firstName;

@@ -1,22 +1,26 @@
 package com.stevesouza.resttemplate.vo;
 
 import com.stevesouza.resttemplate.utils.MiscUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.core.GenericTypeResolver;
 
-// E stands for Entity
-public abstract class VOBase<E> {
+// ENT stands for jpa Entity
+@Getter
+@Setter
+public abstract class VOBase<ENT> {
 
     public String toJson() {
         return MiscUtils.toJsonString(this);
     }
 
-    public E toEntity() {
-        Class<E> clazz = getClassOfParameterType();
+    public ENT toEntity() {
+        Class<ENT> clazz = getClassOfParameterType();
         return MiscUtils.convert(this, clazz);
     }
 
     private Class getClassOfParameterType() {
-        Class<E> clazz = (Class<E>) GenericTypeResolver.resolveTypeArgument(getClass(), VOBase.class);
+        Class<ENT> clazz = (Class<ENT>) GenericTypeResolver.resolveTypeArgument(getClass(), VOBase.class);
         return clazz;
     }
 

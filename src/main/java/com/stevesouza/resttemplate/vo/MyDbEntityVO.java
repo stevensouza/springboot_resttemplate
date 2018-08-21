@@ -11,5 +11,4 @@ public class MyDbEntityVO {
     private String firstName="Joe";
     private String lastName;
     private int age;
-
 }

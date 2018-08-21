@@ -1,7 +1,8 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.stevesouza.resttemplate.utils.MiscUtils;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.security.core.Authentication;
@@ -50,24 +51,6 @@ public abstract class EntityBase<VO> {
         return clazz;
     }
 
-    // equals and hashcode were inplemented per https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EntityBase)) return false;
-        return id != null && id.equals(((EntityBase) o).id);
-    }
-
-    // This always gives the same hashcode which make storing in Set's inefficient, however
-    // the author in the link aboves says in the size of set's typically used it is ok. The problem is
-    // that you need a field that doesn't change for a hash and id is not that field as it can be null and
-    // then change to a number when jpa saves it.
-    @Override
-    public int hashCode() {
-        return 31;
-    }
-
-
     // also have: @PostPersist, @PostUpdate, @PostRemove
     @PrePersist
     public void prePersist() {
@@ -89,6 +72,7 @@ public abstract class EntityBase<VO> {
         log.info("audit info: {}, entity='{}', updatedBy='{}',  time={}", updateType, getClass().getSimpleName(), updatedBy, updatedOn);
     }
 
+    // user that updated the record - for auditing purposes
     private String updatedBy() {
         String userName = null;
         SecurityContextHolder.getContext();
