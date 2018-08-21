@@ -11,16 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;ˆ
 
-ˆ
+import java.util.List;
+
 
 @Service
-@Transactional
 @Data
 @Slf4j
-public class PersonService {
+public class PersonService implements ServiceBase<PersonVO> {
     private PersonJpaRepository personJpaRepository;
 
     // can also use more standardized @Inject
@@ -33,6 +31,7 @@ public class PersonService {
         this.personJpaRepository = personJpaRepository;
     }
 
+    @Override
     public List<PersonVO> getAll() {
          TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
          List<PersonVO> list = MiscUtils.convert(personJpaRepository.findAll(), typeToken);
@@ -124,20 +123,24 @@ public class PersonService {
      *
      */
 
+    @Override
     public  PersonVO create(PersonVO vo) {
         Person person = vo.toEntity();
         return  personJpaRepository.save(person).toVo();
     }
 
     // idempotent. returns 200 and content or 204 and no content
+    @Override
     public void delete(long id) {
         personJpaRepository.deleteById(id);
     }
 
+    @Override
     public PersonVO get(long id) {
         return personJpaRepository.getOne(id).toVo();
     }
 
+    @Override
     public  PersonVO update(long id, PersonVO vo) {
         Person submittedPerson = vo.toEntity();
         log.info("submitted person {}", submittedPerson);

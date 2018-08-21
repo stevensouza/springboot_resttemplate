@@ -1,4 +1,19 @@
 package com.stevesouza.resttemplate.service;
 
-public interface ServiceBase {
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Transactional
+public interface ServiceBase<VO> {
+    List<VO> getAll();
+
+    VO create(VO vo);
+
+    // idempotent. returns 200 and content or 204 and no content
+    void delete(long id);
+
+    VO get(long id);
+
+    VO update(long id, VO vo);
 }
