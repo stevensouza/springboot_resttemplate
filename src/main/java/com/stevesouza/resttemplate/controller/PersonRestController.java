@@ -39,7 +39,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = "/person")
-public class PersonRestController {
+public class PersonRestController implements RestControllerInt<PersonVO> {
 
     private PersonService personService;
 
@@ -54,6 +54,7 @@ public class PersonRestController {
         this.personService = personService;
     }
 
+    @Override
     @GetMapping
     public List<PersonVO> getAll() {
         return personService.getAll();
@@ -84,6 +85,7 @@ public class PersonRestController {
     // all create a mydbentity though slightly different approaches.
     // The following is probably preferred as it lets you pass in headers to the request as well as
     // return json+hal format (i.e. a string)
+    @Override
     @PostMapping()
     public  PersonVO post(@RequestBody PersonVO vo) {
         log.debug("POST {}",vo.toString());
@@ -92,6 +94,7 @@ public class PersonRestController {
         return savedPerson;
     }
 
+    @Override
     @DeleteMapping("/{id}")
     // idempotent. returns 200 and content or 204 and no content
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -99,13 +102,15 @@ public class PersonRestController {
         personService.delete(id);
     }
 
+    @Override
     @GetMapping("/{id}")
     public   PersonVO get(@PathVariable("id") long id) {
         return personService.get(id);
     }
 
+    @Override
     @PutMapping("/{id}")
-    public  PersonVO put(@PathVariable("id") long id, @RequestBody  PersonVO vo) {
+    public  PersonVO put(@PathVariable("id") long id, @RequestBody PersonVO vo) {
         log.debug("PUT {}",vo.toString());
         PersonVO updated = personService.update(id, vo);
         log.debug(" UPDATED {}", updated.toString());
