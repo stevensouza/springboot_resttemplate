@@ -1,6 +1,7 @@
 package com.stevesouza.resttemplate.domain;
 
 import com.stevesouza.resttemplate.utils.MiscUtils;
+import com.stevesouza.resttemplate.vo.VOBase;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class EntityBase<VO> {
+public abstract class EntityBase<VO extends VOBase> {
     @Id
     @GeneratedValue
     private Long id;
