@@ -3,7 +3,6 @@ package com.stevesouza.resttemplate.service;
 import com.stevesouza.resttemplate.TestRestBaseClass;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.CertificationVO;
-import com.stevesouza.resttemplate.vo.PersonVO;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;

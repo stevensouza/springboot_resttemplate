@@ -79,9 +79,9 @@ public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBa
 
     //public EntityBase update(EntityBase target) {
 
-        public THIS_ENTITY update(THIS_ENTITY target) {
-            return target;
-        }
+    public THIS_ENTITY update(THIS_ENTITY target) {
+       throw new UnsupportedOperationException("This method is not implemented in: "+getClass());
+    }
 
     // user that updated the record - for auditing purposes
     private String updatedBy() {

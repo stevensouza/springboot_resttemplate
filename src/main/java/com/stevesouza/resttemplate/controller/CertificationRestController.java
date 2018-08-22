@@ -1,21 +1,12 @@
 package com.stevesouza.resttemplate.controller;
 
 
-import com.stevesouza.resttemplate.domain.Certification;
-import com.stevesouza.resttemplate.repository.CertificationJpaRepository;
 import com.stevesouza.resttemplate.service.CertificationService;
-import com.stevesouza.resttemplate.service.PersonService;
-import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.CertificationVO;
-import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Note when you have a @RestController you don't need to specify the return type as @ResponseBody as that is implied.

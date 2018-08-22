@@ -2,13 +2,9 @@ package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.controller.ResourceNotFound;
 import com.stevesouza.resttemplate.domain.Certification;
-import com.stevesouza.resttemplate.domain.Person;
 import com.stevesouza.resttemplate.repository.CertificationJpaRepository;
-import com.stevesouza.resttemplate.repository.MyPersonColumns;
-import com.stevesouza.resttemplate.repository.PersonJpaRepository;
 import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.CertificationVO;
-import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.TypeToken;
