@@ -125,8 +125,7 @@ public class PersonService implements ServiceInt<PersonVO> {
 
     @Override
     public  PersonVO create(PersonVO vo) {
-        Person person = vo.toEntity();
-        return  personJpaRepository.save(person).toVo();
+        return  personJpaRepository.save(vo.toEntity()).toVo();
     }
 
     // idempotent. returns 200 and content or 204 and no content

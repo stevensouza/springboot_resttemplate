@@ -63,19 +63,35 @@ public class Person extends EntityBase<PersonVO> {
         personCertification.setPerson(this);
     }
 
-    public Person update(Person target) {
-       target.setFirstName(getFirstName());
-       target.setLastName(getLastName());
-       target.setAge(getAge());
+    @Override
+    public EntityBase update(EntityBase target) {
+        Person personTarget = (Person) target;
+        personTarget.setFirstName(getFirstName());
+        personTarget.setLastName(getLastName());
+        personTarget.setAge(getAge());
 
-       target.getCertifications().clear();
-       target.getCertifications().addAll(getCertifications());
+        personTarget.getCertifications().clear();
+        personTarget.getCertifications().addAll(getCertifications());
 
-       target.getPhones().clear();
-       target.getPhones().addAll(getPhones());
+        personTarget.getPhones().clear();
+        personTarget.getPhones().addAll(getPhones());
 
-       return target;
+        return personTarget;
     }
+//
+//    public Person update(Person target) {
+//       target.setFirstName(getFirstName());
+//       target.setLastName(getLastName());
+//       target.setAge(getAge());
+//
+//       target.getCertifications().clear();
+//       target.getCertifications().addAll(getCertifications());
+//
+//       target.getPhones().clear();
+//       target.getPhones().addAll(getPhones());
+//
+//       return target;
+//    }
 
 
     @Override

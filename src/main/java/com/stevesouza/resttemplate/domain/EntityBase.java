@@ -45,7 +45,10 @@ public abstract class EntityBase<VO extends VOBase> {
         return MiscUtils.convert(this, clazz);
     }
 
-    // move to vo
+    /**
+     *
+     * @return 'public class MyClass<MyVO>' would return MyVO.class
+     */
 
     private Class<VO> getClassOfParameterType() {
         final int FIRST_TYPE_PARAMETER = 0;
@@ -53,7 +56,7 @@ public abstract class EntityBase<VO extends VOBase> {
         return clazz;
     }
 
-    // also have: @PostPersist, @PostUpdate, @PostRemove
+        // also have: @PostPersist, @PostUpdate, @PostRemove
     @PrePersist
     public void prePersist() {
         audit("persist");
@@ -72,6 +75,10 @@ public abstract class EntityBase<VO extends VOBase> {
         updatedBy = updatedBy();
         updatedOn = LocalDateTime.now();
         log.info("audit info: {}, entity='{}', updatedBy='{}',  time={}", updateType, getClass().getSimpleName(), updatedBy, updatedOn);
+    }
+
+    public EntityBase update(EntityBase target) {
+        return target;
     }
 
     // user that updated the record - for auditing purposes

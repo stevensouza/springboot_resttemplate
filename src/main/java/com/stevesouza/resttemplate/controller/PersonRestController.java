@@ -44,8 +44,8 @@ public class PersonRestController extends RestControllerBase<PersonVO, PersonSer
     // Also if there is only one constructor autowired isn't required.
     // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-    public PersonRestController(PersonService personService) {
-        setService(personService);
+    public PersonRestController(PersonService service) {
+        setService(service);
     }
 
     @GetMapping("/selectall")

@@ -18,8 +18,15 @@ import java.util.List;
 public class Certification extends EntityBase<CertificationVO> {
     private String certificationName;
 
-    @OneToMany(mappedBy = "certification", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "certification", fetch = FetchType.LAZY)
     private List<PersonCertification> peopleWithThisCertification = new ArrayList<>();
+
+    @Override
+    public EntityBase update(EntityBase target) {
+        Certification certTarget = (Certification) target;
+        certTarget.setCertificationName(getCertificationName());
+        return certTarget;
+    }
 
     @Override
     public String toString() {

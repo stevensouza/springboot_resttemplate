@@ -3,7 +3,11 @@ package com.stevesouza.resttemplate.controller;
 
 import com.stevesouza.resttemplate.domain.Certification;
 import com.stevesouza.resttemplate.repository.CertificationJpaRepository;
+import com.stevesouza.resttemplate.service.CertificationService;
+import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
+import com.stevesouza.resttemplate.vo.CertificationVO;
+import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,30 +40,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/certifications")
 @Slf4j
-public class CertificationRestController {
+public class CertificationRestController extends RestControllerBase<CertificationVO, CertificationService> {
 
-    private CertificationJpaRepository certificationJpaRepository;
-
-    // can also use more standardized @Inject
-    // The autowiring allows me to inject other implementations including a mock.
-    // Autowire would work for any arguments in the constructor.
-    // Also if there is only one constructor autowired isn't required.
-    // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-    public CertificationRestController(CertificationJpaRepository certificationJpaRepository) {
-        this.certificationJpaRepository = certificationJpaRepository;
-    }
-
-    @GetMapping
-    public List<Certification> getAll() {
-        return certificationJpaRepository.findAll();
-    }
-
-
-    @GetMapping("/{id}")
-    public   Certification get(@PathVariable("id") long id) {
-        Certification certification = certificationJpaRepository.getOne(id);
-        return certification;
+    public CertificationRestController(CertificationService service) {
+        setService(service);
     }
 
 

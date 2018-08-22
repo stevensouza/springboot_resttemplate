@@ -2,6 +2,7 @@ package com.stevesouza.resttemplate.service;
 
 import com.stevesouza.resttemplate.TestRestBaseClass;
 import com.stevesouza.resttemplate.utils.MiscUtils;
+import com.stevesouza.resttemplate.vo.CertificationVO;
 import com.stevesouza.resttemplate.vo.PersonVO;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 @Slf4j
-public class PersonServiceIntegrationTest extends TestRestBaseClass {
+public class CertificationServiceIntegrationTest extends TestRestBaseClass {
     @Autowired
-    private PersonService personService;
+    private CertificationService service;
 
 
     @Before
@@ -37,21 +38,16 @@ public class PersonServiceIntegrationTest extends TestRestBaseClass {
 
     @Test
     public void getAll() {
-        List<PersonVO> personVOList = personService.getAll();
-        assertThat(personVOList).isNotEmpty();
+        List<CertificationVO> list = service.getAll();
+        assertThat(list).isNotEmpty();
     }
 
-    @Test
-    public void selectAll() {
-        List<PersonVO> personVOList = personService.selectAll();
-        assertThat(personVOList).isNotEmpty();
-    }
 
     @Test
     public void create() throws IOException, JSONException {
-        String json = MiscUtils.readResourceFile("person-create.json");
-        PersonVO vo = MiscUtils.toObjectFromJsonString(json,  PersonVO.class);
-        PersonVO newVo = personService.create(vo);
+        String json = MiscUtils.readResourceFile("certification-create.json");
+        CertificationVO vo = MiscUtils.toObjectFromJsonString(json,  CertificationVO.class);
+        CertificationVO newVo = service.create(vo);
         log.info(newVo.toString());
         assertEquals("Values of fields that exist in both json documents do not match.",
                         json, MiscUtils.toJsonString(newVo), JSONCompareMode.LENIENT);
@@ -60,26 +56,26 @@ public class PersonServiceIntegrationTest extends TestRestBaseClass {
 
     @Test(expected = EntityNotFoundException.class)
     public void delete() {
-        PersonVO newVo = personService.create(EnhancedRandom.random(PersonVO.class));
-        assertThat(personService.get(newVo.getId())).isNotNull();
-        personService.delete(newVo.getId());
-        personService.get(newVo.getId()); // entity not found - throws exception
+        CertificationVO newVo = service.create(EnhancedRandom.random(CertificationVO.class));
+        assertThat(service.get(newVo.getId())).isNotNull();
+        service.delete(newVo.getId());
+        service.get(newVo.getId()); // entity not found - throws exception
     }
 
     @Test
     public void get() {
-        PersonVO newVo = personService.create(EnhancedRandom.random(PersonVO.class));
-        assertThat(personService.get(newVo.getId())).isNotNull();
+        CertificationVO newVo = service.create(EnhancedRandom.random(CertificationVO.class));
+        assertThat(service.get(newVo.getId())).isNotNull();
     }
 
     @Test
     public void update() throws IOException, JSONException {
-        String json = MiscUtils.readResourceFile("person-update.json");
-        PersonVO vo = MiscUtils.toObjectFromJsonString(json,  PersonVO.class);
+        String json = MiscUtils.readResourceFile("certification-update.json");
+        CertificationVO vo = MiscUtils.toObjectFromJsonString(json,  CertificationVO.class);
         log.info(vo.toString());
-        PersonVO updatedVo = personService.update(vo.getId(), vo);
+        CertificationVO updatedVo = service.update(vo.getId(), vo);
         log.info(updatedVo.toString());
-        json = MiscUtils.readResourceFile("person-update-answer.json");
+        json = MiscUtils.readResourceFile("certification-update.json");
         assertEquals("Values of fields that exist in both json documents do not match.",
                 json, MiscUtils.toJsonString(updatedVo), JSONCompareMode.LENIENT);
     }
