@@ -23,17 +23,15 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @Entity
-public class PersonCertification extends EntityBase<PersonCertificationVO> {
+public class PersonCertification extends EntityBase<PersonCertificationVO, PersonCertification> {
     private String location;
 
     @ManyToOne(fetch = FetchType.LAZY)
     //  not required but can do this. points to parent tables primary key: @JoinColumn(name="person_id")
     //    @ManyToOne // default fetch is eager
-    //  @JsonIgnore
     private Person person;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    // @JsonIgnore
     private Certification certification;
 
     @Override

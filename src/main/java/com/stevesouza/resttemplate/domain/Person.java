@@ -28,7 +28,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Person extends EntityBase<PersonVO> {
+public class Person extends EntityBase<PersonVO, Person> {
 
     //@Max(10)
     private String firstName;
@@ -45,12 +45,7 @@ public class Person extends EntityBase<PersonVO> {
 
     // Note this is really modeling a many to many, but the join table is made explicit
     @OneToMany(mappedBy = "person", orphanRemoval=true, cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
-    //@JsonBackReference
-//    @JsonIgnore
-    //@JsonManagedReference
-    //@JsonIgnoreProperties(value = {"person", "peopleWithThisCertification"})
     private List<PersonCertification> certifications = new ArrayList<>();
-    //private Set<PersonCertification> certifications = new HashSet<>();
 
     public void addPhone(Phone phone) {
         phones.add(phone);
@@ -64,34 +59,19 @@ public class Person extends EntityBase<PersonVO> {
     }
 
     @Override
-    public EntityBase update(EntityBase target) {
-        Person personTarget = (Person) target;
-        personTarget.setFirstName(getFirstName());
-        personTarget.setLastName(getLastName());
-        personTarget.setAge(getAge());
+    public Person update(Person target) {
+        target.setFirstName(getFirstName());
+        target.setLastName(getLastName());
+        target.setAge(getAge());
 
-        personTarget.getCertifications().clear();
-        personTarget.getCertifications().addAll(getCertifications());
+        target.getCertifications().clear();
+        target.getCertifications().addAll(getCertifications());
 
-        personTarget.getPhones().clear();
-        personTarget.getPhones().addAll(getPhones());
+        target.getPhones().clear();
+        target.getPhones().addAll(getPhones());
 
-        return personTarget;
+        return target;
     }
-//
-//    public Person update(Person target) {
-//       target.setFirstName(getFirstName());
-//       target.setLastName(getLastName());
-//       target.setAge(getAge());
-//
-//       target.getCertifications().clear();
-//       target.getCertifications().addAll(getCertifications());
-//
-//       target.getPhones().clear();
-//       target.getPhones().addAll(getPhones());
-//
-//       return target;
-//    }
 
 
     @Override

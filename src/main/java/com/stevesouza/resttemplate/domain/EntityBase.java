@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class EntityBase<VO extends VOBase> {
+public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBase> {
     @Id
     @GeneratedValue
     private Long id;
@@ -77,9 +77,11 @@ public abstract class EntityBase<VO extends VOBase> {
         log.info("audit info: {}, entity='{}', updatedBy='{}',  time={}", updateType, getClass().getSimpleName(), updatedBy, updatedOn);
     }
 
-    public EntityBase update(EntityBase target) {
-        return target;
-    }
+    //public EntityBase update(EntityBase target) {
+
+        public THIS_ENTITY update(THIS_ENTITY target) {
+            return target;
+        }
 
     // user that updated the record - for auditing purposes
     private String updatedBy() {

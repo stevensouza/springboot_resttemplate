@@ -141,10 +141,10 @@ public class PersonService implements ServiceInt<PersonVO> {
 
     @Override
     public  PersonVO update(long id, PersonVO vo) {
-        Person submittedPerson = vo.toEntity();
-        log.info("submitted person {}", submittedPerson);
+        Person submittedEntity = vo.toEntity();
+        log.info("submitted person {}", submittedEntity);
         Person updated = personJpaRepository.findById(id).map((person)->{
-            submittedPerson.update(person);
+            submittedEntity.update(person);
             return personJpaRepository.save(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 

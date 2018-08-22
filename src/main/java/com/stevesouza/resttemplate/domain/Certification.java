@@ -15,17 +15,16 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Certification extends EntityBase<CertificationVO> {
+public class Certification extends EntityBase<CertificationVO, Certification> {
     private String certificationName;
 
     @OneToMany(mappedBy = "certification", fetch = FetchType.LAZY)
     private List<PersonCertification> peopleWithThisCertification = new ArrayList<>();
 
     @Override
-    public EntityBase update(EntityBase target) {
-        Certification certTarget = (Certification) target;
-        certTarget.setCertificationName(getCertificationName());
-        return certTarget;
+    public Certification update(Certification target) {
+        target.setCertificationName(getCertificationName());
+        return target;
     }
 
     @Override
