@@ -39,9 +39,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = "/person")
-public class PersonRestController implements RestControllerInt<PersonVO> {
-
-    private PersonService personService;
+public class PersonRestController extends RestControllerBase<PersonVO, PersonService> {
 
     // can also use more standardized @Inject
     // The autowiring allows me to inject other implementations including a mock.
@@ -49,73 +47,72 @@ public class PersonRestController implements RestControllerInt<PersonVO> {
     // Also if there is only one constructor autowired isn't required.
     // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-   // public PersonRestController(PersonService personService, PersonJpaRepository personJpaRepository, PhoneJpaRepository phoneJpaRepository) {
-     public PersonRestController(PersonService personService) {
-        this.personService = personService;
+    public PersonRestController(PersonService personService) {
+        setService(personService);
     }
-
-    @Override
-    @GetMapping
-    public List<PersonVO> getAll() {
-        return personService.getAll();
-    }
+//
+//
+//    @Override
+//    public PersonService getService() {
+//        return super.getService();
+//    }
 
 
     @GetMapping("/selectall")
     public List<PersonVO> selectAll() {
-        return personService.selectAll();
+        return getService().selectAll();
     }
 
     @GetMapping("/selectcolumns")
     public List<Object[]> selectColumns() {
-        return personService.selectColumns();
+        return getService().selectColumns();
     }
 
     @GetMapping("/selectcolumnsasobjects")
     public List<MyPersonColumns> selectColumnsAsObject() {
-        return personService.selectColumnsAsObject();
+        return getService().selectColumnsAsObject();
     }
 
     @GetMapping("/userswithcertificate/{id}")
     public List<PersonVO> getAllUsersWithCertificateId(@PathVariable("id") long id) {
-        return personService.getAllUsersWithCertificateId(id);
+        return getService().getAllUsersWithCertificateId(id);
     }
 
-    // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
-    // all create a mydbentity though slightly different approaches.
-    // The following is probably preferred as it lets you pass in headers to the request as well as
-    // return json+hal format (i.e. a string)
-    @Override
-    @PostMapping()
-    public  PersonVO post(@RequestBody PersonVO vo) {
-        log.debug("POST {}",vo.toString());
-        PersonVO savedPerson = personService.create(vo);
-        log.debug(" CREATED {}",savedPerson.toString());
-        return savedPerson;
-    }
+//    // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
+//    // all create a mydbentity though slightly different approaches.
+//    // The following is probably preferred as it lets you pass in headers to the request as well as
+//    // return json+hal format (i.e. a string)
+//    @Override
+//    @PostMapping()
+//    public  PersonVO post(@RequestBody PersonVO vo) {
+//        log.debug("POST {}",vo.toString());
+//        PersonVO savedPerson = personService.create(vo);
+//        log.debug(" CREATED {}",savedPerson.toString());
+//        return savedPerson;
+//    }
 
-    @Override
-    @DeleteMapping("/{id}")
-    // idempotent. returns 200 and content or 204 and no content
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") long id) {
-        personService.delete(id);
-    }
+//    @Override
+//    @DeleteMapping("/{id}")
+//    // idempotent. returns 200 and content or 204 and no content
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delete(@PathVariable("id") long id) {
+//        personService.delete(id);
+//    }
 
-    @Override
-    @GetMapping("/{id}")
-    public   PersonVO get(@PathVariable("id") long id) {
-        return personService.get(id);
-    }
+//    @Override
+//    @GetMapping("/{id}")
+//    public   PersonVO get(@PathVariable("id") long id) {
+//        return personService.get(id);
+//    }
 
-    @Override
-    @PutMapping("/{id}")
-    public  PersonVO put(@PathVariable("id") long id, @RequestBody PersonVO vo) {
-        log.debug("PUT {}",vo.toString());
-        PersonVO updated = personService.update(id, vo);
-        log.debug(" UPDATED {}", updated.toString());
-        return updated;
-    }
+//    @Override
+//    @PutMapping("/{id}")
+//    public  PersonVO put(@PathVariable("id") long id, @RequestBody PersonVO vo) {
+//        log.debug("PUT {}",vo.toString());
+//        PersonVO updated = personService.update(id, vo);
+//        log.debug(" UPDATED {}", updated.toString());
+//        return updated;
+//    }
 
     /** note this method doesn't currently execute a patch, but just displays the request data as a map */
     @PatchMapping("/{id}")
@@ -126,10 +123,9 @@ public class PersonRestController implements RestControllerInt<PersonVO> {
         return json;
     }
 
-    @GetMapping("/random")
-    public PersonVO getRandom() {
-        EnhancedRandom.random(String.class);
-        return MiscUtils.randomData(PersonVO.class);
-    }
+//    @GetMapping("/random")
+//    public PersonVO getRandom() {
+//        return MiscUtils.randomData(PersonVO.class);
+//    }
 
 }

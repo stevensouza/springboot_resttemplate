@@ -47,8 +47,9 @@ public abstract class EntityBase<VO extends VOBase> {
 
     // move to vo
 
-    private Class getClassOfParameterType() {
-        Class<VO> clazz = (Class<VO>) GenericTypeResolver.resolveTypeArgument(getClass(), EntityBase.class);
+    private Class<VO> getClassOfParameterType() {
+        final int FIRST_TYPE_PARAMETER = 0;
+        Class<VO> clazz = (Class<VO>) GenericTypeResolver.resolveTypeArguments(getClass(), EntityBase.class)[FIRST_TYPE_PARAMETER];
         return clazz;
     }
 

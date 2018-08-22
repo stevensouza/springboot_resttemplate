@@ -3,13 +3,15 @@ package com.stevesouza.resttemplate.controller;
 
 import com.stevesouza.resttemplate.domain.Certification;
 import com.stevesouza.resttemplate.repository.CertificationJpaRepository;
+import com.stevesouza.resttemplate.repository.MyPersonColumns;
+import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.utils.MiscUtils;
+import com.stevesouza.resttemplate.vo.CertificationVO;
+import com.stevesouza.resttemplate.vo.PersonVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,56 +58,51 @@ public class CertificationRestController {
     }
 
 
-    // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
-    // all create a mydbentity though slightly different approaches.
-    // The following is probably preferred as it lets you pass in headers to the request as well as
-    // return json+hal format (i.e. a string)
-//    @PostMapping()
-//    public  Person post(@RequestBody Person entity) {
-//        log.debug("POST {}",entity.toString());
-//        Person savedPerson = personJpaRepository.save(entity);
-//        log.debug(" CREATED {}",savedPerson.toString());
-//        return savedPerson;
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    // idempotent. returns 200 and content or 204 and no content
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void delete(@PathVariable("id") long id) {
-//        personJpaRepository.deleteById(id);
-//    }
-
     @GetMapping("/{id}")
     public   Certification get(@PathVariable("id") long id) {
         Certification certification = certificationJpaRepository.getOne(id);
         return certification;
     }
-//
-//    @PutMapping("/{id}")
-//    public  Person put(@PathVariable("id") long id, @RequestBody  Person entity) {
-//        log.debug("PUT {}",entity.toString());
-//        Person updated = personJpaRepository.findById(id).map((person)->{
-//            person.setFirstName(entity.getFirstName());
-//            return personJpaRepository.save(person);
-//        }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
-//
-//        //Person savedPerson = personJpaRepository.save(entity);
-//        log.debug(" UPDATED {}", updated.toString());
-//        return updated;
-//    }
-//
-//    /** note this method doesn't currently execute a patch, but just displays the request data as a map */
-//    @PatchMapping("/{id}")
-//    public  JsonNode patch(@PathVariable("id") long id, @RequestBody JsonNode json) {
-//        log.debug("PATCH {}",json.toString());
-//        log.debug("firstName: {}", json.get("firstName").asText());
-//
-//        return json;
-//    }
 
     @GetMapping("/random")
     public Certification getRandom() {
         return MiscUtils.randomData(Certification.class);
     }
+
+    // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
+    // all create a mydbentity though slightly different approaches.
+    // The following is probably preferred as it lets you pass in headers to the request as well as
+    // return json+hal format (i.e. a string)
+//    @Override
+//    @PostMapping()
+//    public CertificationVO post(@RequestBody CertificationVO vo) {
+//        log.debug("POST {}",vo.toString());
+//      //  PersonVO savedPerson = personService.create(vo);
+//        log.debug(" CREATED {}",entity.toString());
+//        return entity;
+//    }
+//
+//    @Override
+//    @DeleteMapping("/{id}")
+//    // idempotent. returns 200 and content or 204 and no content
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delete(@PathVariable("id") long id) {
+//        certificationService.delete(id);
+//    }
+//
+//    @Override
+//    @GetMapping("/{id}")
+//    public   PersonVO get(@PathVariable("id") long id) {
+//        return certificationService.get(id);
+//    }
+//
+//    @Override
+//    @PutMapping("/{id}")
+//    public  PersonVO put(@PathVariable("id") long id, @RequestBody PersonVO vo) {
+//        log.debug("PUT {}",vo.toString());
+//        PersonVO updated = personService.update(id, vo);
+//        log.debug(" UPDATED {}", updated.toString());
+//        return updated;
+//    }
 
 }

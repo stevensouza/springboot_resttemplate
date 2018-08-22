@@ -20,8 +20,9 @@ public abstract class VOBase<ENT extends EntityBase> {
         return MiscUtils.convert(this, clazz);
     }
 
-    private Class getClassOfParameterType() {
-        Class<ENT> clazz = (Class<ENT>) GenericTypeResolver.resolveTypeArgument(getClass(), VOBase.class);
+    private Class<ENT> getClassOfParameterType() {
+        final int FIRST_TYPE_PARAMETER = 0;
+        Class<ENT> clazz = (Class<ENT>) GenericTypeResolver.resolveTypeArguments(getClass(), VOBase.class)[FIRST_TYPE_PARAMETER];
         return clazz;
     }
 
