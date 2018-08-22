@@ -1,19 +1,10 @@
 package com.stevesouza.resttemplate.controller;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.stevesouza.resttemplate.domain.EntityBase;
-import com.stevesouza.resttemplate.repository.MyPersonColumns;
-import com.stevesouza.resttemplate.service.PersonService;
 import com.stevesouza.resttemplate.service.ServiceInt;
 import com.stevesouza.resttemplate.utils.MiscUtils;
-import com.stevesouza.resttemplate.vo.PersonVO;
 import com.stevesouza.resttemplate.vo.VOBase;
-import io.github.benas.randombeans.api.EnhancedRandom;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

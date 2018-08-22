@@ -1,7 +1,6 @@
 package com.stevesouza.resttemplate.vo;
 
 import com.stevesouza.resttemplate.domain.Phone;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

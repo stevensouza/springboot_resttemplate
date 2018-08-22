@@ -4,12 +4,9 @@ package com.stevesouza.resttemplate.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.stevesouza.resttemplate.repository.MyPersonColumns;
 import com.stevesouza.resttemplate.service.PersonService;
-import com.stevesouza.resttemplate.utils.MiscUtils;
 import com.stevesouza.resttemplate.vo.PersonVO;
-import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,13 +47,6 @@ public class PersonRestController extends RestControllerBase<PersonVO, PersonSer
     public PersonRestController(PersonService personService) {
         setService(personService);
     }
-//
-//
-//    @Override
-//    public PersonService getService() {
-//        return super.getService();
-//    }
-
 
     @GetMapping("/selectall")
     public List<PersonVO> selectAll() {
@@ -78,42 +68,6 @@ public class PersonRestController extends RestControllerBase<PersonVO, PersonSer
         return getService().getAllUsersWithCertificateId(id);
     }
 
-//    // Content-Type should be application/json and passed on from httpheaders.  methods post1, post2, post3
-//    // all create a mydbentity though slightly different approaches.
-//    // The following is probably preferred as it lets you pass in headers to the request as well as
-//    // return json+hal format (i.e. a string)
-//    @Override
-//    @PostMapping()
-//    public  PersonVO post(@RequestBody PersonVO vo) {
-//        log.debug("POST {}",vo.toString());
-//        PersonVO savedPerson = personService.create(vo);
-//        log.debug(" CREATED {}",savedPerson.toString());
-//        return savedPerson;
-//    }
-
-//    @Override
-//    @DeleteMapping("/{id}")
-//    // idempotent. returns 200 and content or 204 and no content
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void delete(@PathVariable("id") long id) {
-//        personService.delete(id);
-//    }
-
-//    @Override
-//    @GetMapping("/{id}")
-//    public   PersonVO get(@PathVariable("id") long id) {
-//        return personService.get(id);
-//    }
-
-//    @Override
-//    @PutMapping("/{id}")
-//    public  PersonVO put(@PathVariable("id") long id, @RequestBody PersonVO vo) {
-//        log.debug("PUT {}",vo.toString());
-//        PersonVO updated = personService.update(id, vo);
-//        log.debug(" UPDATED {}", updated.toString());
-//        return updated;
-//    }
-
     /** note this method doesn't currently execute a patch, but just displays the request data as a map */
     @PatchMapping("/{id}")
     public  JsonNode patch(@PathVariable("id") long id, @RequestBody JsonNode json) {
@@ -122,10 +76,5 @@ public class PersonRestController extends RestControllerBase<PersonVO, PersonSer
 
         return json;
     }
-
-//    @GetMapping("/random")
-//    public PersonVO getRandom() {
-//        return MiscUtils.randomData(PersonVO.class);
-//    }
 
 }
