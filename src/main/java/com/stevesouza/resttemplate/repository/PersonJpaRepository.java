@@ -14,10 +14,8 @@ import java.util.List;
  * content-type: application/hal+json
  */
 
-//@RepositoryRestResource(collectionResourceRel = "person", path = "person")
 public interface PersonJpaRepository extends JpaRepository<Person, Long> {
 // if you  want pagination use the following JpaRepository
-//public interface PersonJpaRepository extends PagingAndSortingRepository<MyDbEntity, Long> {
 
     /**
      * http://localhost:8080/person/search/findByFirstName?name=SteveSouza
@@ -40,8 +38,6 @@ public interface PersonJpaRepository extends JpaRepository<Person, Long> {
 
     @Query("SELECT p from Person p")
     List<Person> selectAll();
-    // could also do
-    //     List<Person> selectAll(Sort sort);
 
     @Query("SELECT p from Person p  JOIN PersonCertification pc ON p.id = pc.person.id and pc.certification.id=:id")
     List<Person> getAllUsersWithCertificateId(@Param("id") long id);

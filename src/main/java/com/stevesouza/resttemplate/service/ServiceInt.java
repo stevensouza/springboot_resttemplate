@@ -6,15 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
-public interface ServiceInt<VO extends VOBase> {
-    List<VO> getAll();
+public interface ServiceInt<V extends VOBase> {
+    List<V> getAll();
 
-    VO create(VO vo);
+    V create(V vo);
 
     // idempotent. returns 200 and content or 204 and no content
     void delete(long id);
 
-    VO get(long id);
+    V get(long id);
 
-    VO update(long id, VO vo);
+    V update(long id, V vo);
 }

@@ -32,7 +32,7 @@ import java.util.List;
  * @author stevesouza
  */
 @Slf4j
-public abstract class RestControllerBase<VO extends VOBase, S extends ServiceInt<VO>> {
+public abstract class RestControllerBase<V extends VOBase, S extends ServiceInt<V>> {
 
     private S service;
 
@@ -45,7 +45,7 @@ public abstract class RestControllerBase<VO extends VOBase, S extends ServiceInt
     }
 
     @GetMapping()
-    public List<VO> getAll() {
+    public List<V> getAll() {
         return service.getAll();
     }
 
@@ -55,9 +55,9 @@ public abstract class RestControllerBase<VO extends VOBase, S extends ServiceInt
     // The following is probably preferred as it lets you pass in headers to the request as well as
     // return json+hal format (i.e. a string)
     @PostMapping()
-    public  VO post(@RequestBody VO vo) {
+    public V post(@RequestBody V vo) {
         log.debug("POST {}",vo.toString());
-        VO savedVo = service.create(vo);
+        V savedVo = service.create(vo);
         log.debug(" CREATED {}",savedVo.toString());
         return savedVo;
     }
@@ -71,28 +71,27 @@ public abstract class RestControllerBase<VO extends VOBase, S extends ServiceInt
     }
 
     @GetMapping("/{id}")
-    public VO get(@PathVariable("id") long id) {
+    public V get(@PathVariable("id") long id) {
         log.debug("GET {}, id={}", getClassOfParameterType(), id);
         return service.get(id);
     }
 
     @PutMapping("/{id}")
-    public  VO put(@PathVariable("id") long id, @RequestBody VO vo) {
+    public V put(@PathVariable("id") long id, @RequestBody V vo) {
         log.debug("PUT {}",vo.toString());
-        VO updated = service.update(id, vo);
+        V updated = service.update(id, vo);
         log.debug(" UPDATED {}", updated.toString());
         return updated;
     }
 
     @GetMapping("/random")
-    public VO getRandom() {
+    public V getRandom() {
         return MiscUtils.randomData(getClassOfParameterType());
     }
 
-    private Class<VO> getClassOfParameterType() {
+    private Class<V> getClassOfParameterType() {
         final int FIRST_TYPE_PARAMETER = 0;
-        Class<VO> clazz = (Class<VO>) GenericTypeResolver.resolveTypeArguments(getClass(), RestControllerBase.class)[FIRST_TYPE_PARAMETER];
-        return clazz;
+        return (Class<V>) GenericTypeResolver.resolveTypeArguments(getClass(), RestControllerBase.class)[FIRST_TYPE_PARAMETER];
     }
 
 }

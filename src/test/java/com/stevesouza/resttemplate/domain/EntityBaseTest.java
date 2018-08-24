@@ -4,8 +4,6 @@ import com.stevesouza.resttemplate.vo.PhoneVO;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class EntityBaseTest {
 
     @Test(expected = UnsupportedOperationException.class)

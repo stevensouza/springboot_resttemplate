@@ -14,10 +14,7 @@ import java.util.List;
  * content-type: application/hal+json
  */
 
-//@RepositoryRestResource(collectionResourceRel = "mydbentity", path = "mydbentity")
 public interface MyDbEntityJpaRepository extends PagingAndSortingRepository<MyDbEntity, Long> {
-// if you don't want pagination use the following JpaRepository
-//public interface MyDbEntityJpaRepository extends JpaRepository<MyDbEntity, Long> {
     /**
      * http://localhost:8080/mydbentity/search/findByFirstName?name=SteveSouza
      *

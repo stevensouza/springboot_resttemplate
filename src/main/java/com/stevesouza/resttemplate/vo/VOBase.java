@@ -6,24 +6,22 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.core.GenericTypeResolver;
 
-// ENT stands for jpa Entity
+// E stands for jpa Entity
 @Getter
 @Setter
-public abstract class VOBase<ENT extends EntityBase> {
+public abstract class VOBase<E extends EntityBase> {
 
     public String toJson() {
         return MiscUtils.toJsonString(this);
     }
 
-    public ENT toEntity() {
-        Class<ENT> clazz = getClassOfParameterType();
-        return MiscUtils.convert(this, clazz);
+    public E toEntity() {
+        return MiscUtils.convert(this, getClassOfParameterType());
     }
 
-    private Class<ENT> getClassOfParameterType() {
+    private Class<E> getClassOfParameterType() {
         final int FIRST_TYPE_PARAMETER = 0;
-        Class<ENT> clazz = (Class<ENT>) GenericTypeResolver.resolveTypeArguments(getClass(), VOBase.class)[FIRST_TYPE_PARAMETER];
-        return clazz;
+        return  (Class<E>) GenericTypeResolver.resolveTypeArguments(getClass(), VOBase.class)[FIRST_TYPE_PARAMETER];
     }
 
 }

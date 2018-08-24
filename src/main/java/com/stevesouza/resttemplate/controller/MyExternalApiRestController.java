@@ -63,7 +63,6 @@ public class MyExternalApiRestController {
     public List<?> getPostsAsObjects() {
         List<?> posts = rest.getForObject(BASE_URL, List.class);
         log.info("executing '/getposts_aslists'");
-
         return posts;
     }
 
@@ -72,10 +71,7 @@ public class MyExternalApiRestController {
         // see if better way https://stackoverflow.com/questions/6173182/spring-json-convert-a-typed-collection-like-listmypojo
         // google search:
         MyList posts = rest.getForObject(BASE_URL,  MyList.class);
-     //   ArrayList<Post2> posts = rest.getForObject(BASE_URL, new ArrayList<Post2>(){}.getClass());
-
         log.info("executing '/getposts2_aslistobjects'");
-
         return posts;
     }
 

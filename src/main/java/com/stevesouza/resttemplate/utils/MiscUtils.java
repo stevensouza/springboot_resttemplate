@@ -12,42 +12,23 @@ import org.modelmapper.TypeToken;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MiscUtils {
 
+    private MiscUtils() {
+    }
+
     private static EnhancedRandom dataGenerator = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().build();
     private static ModelMapper modelMapper = new ModelMapper();
-    private static int DEFAULT_RANDOM_COLLECTION_SIZE = 10;
-
-
-    /**
-     * Note this method reads a file however it doesn't put newlines in the string.
-     * mainly kept it as an example of try-with-resources.
-     *
-     * @param fileName
-     * @return
-     * @throws IOException
-     */
-    @Deprecated
-    public static String readFile(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
-        try (Stream<String> lines = Files.lines(path)) {
-            return lines.collect(Collectors.joining()); // converts to a string
-        }
-    }
+    private static final int DEFAULT_RANDOM_COLLECTION_SIZE = 10;
 
 
     public static URL getResourceURL(String fileName) {
         URL url = MiscUtils.class.getClassLoader().getResource(fileName);
         if (null==url) {
-            throw new RuntimeException(new FileNotFoundException(fileName));
+            throw new MiscUtilsException(new FileNotFoundException(fileName));
         }
         return url;
     }
@@ -74,7 +55,7 @@ public class MiscUtils {
         try {
             return mapper.writeValueAsString(pojo);
         } catch (IOException e) {
-            throw new RuntimeException("Unable to convert the following object to json: "+pojo, e);
+            throw new MiscUtilsException("Unable to convert the following object to json: "+pojo, e);
         }
     }
 
@@ -83,7 +64,7 @@ public class MiscUtils {
         try {
             return mapper.writeValueAsString(jsonNode);
         } catch (IOException e) {
-            throw new RuntimeException("Unable to convert the following JsonNode to a json string: "+jsonNode, e);
+            throw new MiscUtilsException("Unable to convert the following JsonNode to a json string: "+jsonNode, e);
         }
     }
 
@@ -92,7 +73,7 @@ public class MiscUtils {
         try {
             return mapper.readTree(json);
         } catch (IOException e) {
-            throw new RuntimeException("Unable to convert the json string to a JsonNode", e);
+            throw new MiscUtilsException("Unable to convert the json string to a JsonNode", e);
         }
     }
 
@@ -101,7 +82,7 @@ public class MiscUtils {
         try {
             return mapper.readValue(json, destinationType);
         } catch (IOException e) {
-            throw new RuntimeException("Unable to convert the json string to the given object type: "+destinationType, e);
+            throw new MiscUtilsException("Unable to convert the json string to the given object type: "+destinationType, e);
         }
     }
 
@@ -143,6 +124,18 @@ public class MiscUtils {
         }
 
         return list;
+    }
+
+    public static class MiscUtilsException extends RuntimeException {
+        public MiscUtilsException(Throwable cause) {
+            super(cause);
+        }
+
+        public MiscUtilsException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+
     }
 
 

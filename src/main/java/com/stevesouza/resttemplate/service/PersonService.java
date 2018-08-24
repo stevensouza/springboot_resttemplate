@@ -34,14 +34,12 @@ public class PersonService implements ServiceInt<PersonVO> {
     @Override
     public List<PersonVO> getAll() {
          TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-         List<PersonVO> list = MiscUtils.convert(personJpaRepository.findAll(), typeToken);
-         return list;
+         return MiscUtils.convert(personJpaRepository.findAll(), typeToken);
     }
 
     public List<PersonVO> selectAll() {
         TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-        List<PersonVO> list = MiscUtils.convert(personJpaRepository.selectAll(), typeToken);
-        return list;
+        return  MiscUtils.convert(personJpaRepository.selectAll(), typeToken);
     }
 
     public List<Object[]> selectColumns() {
@@ -54,8 +52,7 @@ public class PersonService implements ServiceInt<PersonVO> {
 
     public List<PersonVO> getAllUsersWithCertificateId(long id) {
         TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-        List<PersonVO> list = MiscUtils.convert(personJpaRepository.getAllUsersWithCertificateId(id), typeToken);
-        return list;
+        return MiscUtils.convert(personJpaRepository.getAllUsersWithCertificateId(id), typeToken);
     }
 
 
@@ -143,7 +140,7 @@ public class PersonService implements ServiceInt<PersonVO> {
     public  PersonVO update(long id, PersonVO vo) {
         Person submittedEntity = vo.toEntity();
         log.info("submitted person {}", submittedEntity);
-        Person updated = personJpaRepository.findById(id).map((person)->{
+        Person updated = personJpaRepository.findById(id).map(person->{
             submittedEntity.update(person);
             return personJpaRepository.save(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));

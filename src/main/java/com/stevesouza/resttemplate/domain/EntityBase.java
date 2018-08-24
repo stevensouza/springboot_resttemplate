@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBase> {
+public abstract class EntityBase<V extends VOBase, E extends EntityBase> {
     @Id
     @GeneratedValue
     private Long id;
@@ -32,8 +32,8 @@ public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBa
         return MiscUtils.toJsonString(this);
     }
 
-    public VO toVo() {
-        Class<VO> clazz = getClassOfParameterType();
+    public V toVo() {
+        Class<V> clazz = getClassOfParameterType();
         return MiscUtils.convert(this, clazz);
     }
 
@@ -42,10 +42,9 @@ public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBa
      * @return 'public class MyClass<MyVO>' would return MyVO.class
      */
 
-    private Class<VO> getClassOfParameterType() {
+    private Class<V> getClassOfParameterType() {
         final int FIRST_TYPE_PARAMETER = 0;
-        Class<VO> clazz = (Class<VO>) GenericTypeResolver.resolveTypeArguments(getClass(), EntityBase.class)[FIRST_TYPE_PARAMETER];
-        return clazz;
+        return (Class<V>) GenericTypeResolver.resolveTypeArguments(getClass(), EntityBase.class)[FIRST_TYPE_PARAMETER];
     }
 
         // also have: @PostPersist, @PostUpdate, @PostRemove
@@ -70,7 +69,7 @@ public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBa
         log.info("audit info: {}, entity='{}', updatedBy='{}',  time={}", updateType, getClass().getSimpleName(), updatedBy, updatedOn);
     }
 
-    public THIS_ENTITY update(THIS_ENTITY target) {
+    public E update(E target) {
        throw new UnsupportedOperationException("This method is not implemented in: "+getClass());
     }
 

@@ -38,13 +38,8 @@ public class MyConfiguration {
     // with no args as it is the default or @Scope("singleton")
     @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON) // done for demonstration purposes
     public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
-        return restTemplate;
+        return new RestTemplate(clientHttpRequestFactory());
     }
-
-//    @Autowired
-//    private CloseableHttpClient httpClient;
-
 
 
     // don't think this needs to be a bean.  or maybe it does.  saw reference about destroy being called
@@ -52,10 +47,7 @@ public class MyConfiguration {
     // by string is the jdk classes of HttpClient, but it doesn't support patch.
     @Bean
     public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory() {
-        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        //clientHttpRequestFactory.setConnectTimeout();
-        //clientHttpRequestFactory.setHttpClient(HttpClientBuilder.create().build());
-        return clientHttpRequestFactory;
+        return new HttpComponentsClientHttpRequestFactory();
     }
 
     @Bean

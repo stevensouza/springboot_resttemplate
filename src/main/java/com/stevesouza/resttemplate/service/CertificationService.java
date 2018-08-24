@@ -33,8 +33,7 @@ public class CertificationService implements ServiceInt<CertificationVO> {
     @Override
     public List<CertificationVO> getAll() {
          TypeToken<List<CertificationVO>> typeToken = new TypeToken<List<CertificationVO>>(){};
-         List<CertificationVO> list = MiscUtils.convert(certificationJpaRepository.findAll(), typeToken);
-         return list;
+         return MiscUtils.convert(certificationJpaRepository.findAll(), typeToken);
     }
 
 
@@ -58,7 +57,7 @@ public class CertificationService implements ServiceInt<CertificationVO> {
     public  CertificationVO update(long id, CertificationVO vo) {
         Certification submittedEntity = vo.toEntity();
         log.info("submitted certification {}", submittedEntity);
-        Certification updated = certificationJpaRepository.findById(id).map((certification)->{
+        Certification updated = certificationJpaRepository.findById(id).map(certification -> {
             submittedEntity.update(certification);
             return certificationJpaRepository.save(certification);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));

@@ -109,11 +109,8 @@ public class MyDbEntityRestController {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
         log.debug("submitted object to create: {}", entity);
         ResponseEntity<MyDbEntity> responseEntity = rest.postForEntity(BASE_URL, entity, MyDbEntity.class);
-        // MyDbEntity createdObject = rest.postForObject(BASE_URL, entity, MyDbEntity.class);
-        // MyDbEntity createdObject = responseEntity.getBody();
         log.debug("POST ResponseEntity: {}", responseEntity);
         return responseEntity;
-        //return createdObject;
     }
 
     @PostMapping("/mydbentity/post3")
@@ -132,22 +129,17 @@ public class MyDbEntityRestController {
         // note if there were multiple arguments you still go ("first{} second{}", arg1, arg2) as it is order based.
         log.debug("submitted object to create: {}", entity);
         ResponseEntity<String> responseEntity = rest.postForEntity(BASE_URL, entity, String.class);
-        // MyDbEntity createdObject = rest.postForObject(BASE_URL, entity, MyDbEntity.class);
-        // MyDbEntity createdObject = responseEntity.getBody();
         log.debug("POST ResponseEntity: {}", responseEntity);
         return responseEntity;
-        //return createdObject;
     }
 
 
     @GetMapping("/mydbentity")
     public String getAll(RequestEntity<String> requestEntity) {
-        log.info(requestEntity.toString());
+        log.info("{}",requestEntity);
         ResponseEntity<String> responseEntity = rest.exchange(BASE_URL , HttpMethod.GET
                 , requestEntity, String.class);
         return responseEntity.getBody();
-
-      //  return rest.getForObject(BASE_URL, String.class);
     }
 
     @GetMapping("/mydbentity/{id}")
@@ -176,8 +168,6 @@ public class MyDbEntityRestController {
         ResponseEntity<String> responseEntity = rest.exchange(BASE_URL +"/"+id, HttpMethod.PUT, requestEntity, String.class);
         log.debug("PUT responseEntity={}", responseEntity);
         return responseEntity;
-
-       // rest.put(BASE_URL+"/"+id, updatedEntity);
     }
 
     @PatchMapping("/mydbentity/{id}")
@@ -220,18 +210,18 @@ public class MyDbEntityRestController {
     @GetMapping(path="vo")
     public MyDbEntityVO getVo() {
         MyDbEntity entity = MiscUtils.randomData(MyDbEntity.class);
-        log.debug(entity.toString());
+        log.debug("{}",entity);
         MyDbEntityVO vo = MiscUtils.convert(entity, MyDbEntityVO.class);
-        log.debug(vo.toString());
+        log.debug("{}",vo);
         return vo;
     }
 
     @GetMapping(path="random")
     public MyPojoVO getRandom() {
         MyPojo myPojo = MiscUtils.randomData(MyPojo.class);
-        log.debug(myPojo.toString());
+        log.debug("{}",myPojo);
         MyPojoVO myPojoVo = MiscUtils.convert(myPojo, MyPojoVO.class);
-        log.debug(myPojoVo.toString());
+        log.debug("{}",myPojoVo);
         return myPojoVo;
     }
 
