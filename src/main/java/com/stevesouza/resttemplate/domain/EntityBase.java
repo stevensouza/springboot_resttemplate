@@ -26,14 +26,6 @@ public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBa
     private LocalDateTime updatedOn;
     private String updatedBy;
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     // extract to methods to another class so they can be used in vo and entity
 
     public String toJson() {
@@ -69,15 +61,14 @@ public abstract class EntityBase<VO extends VOBase, THIS_ENTITY extends EntityBa
 
     @PreRemove
     public void preRemove() {
-        audit("remove");    }
+        audit("remove");
+    }
 
     private void audit(String updateType) {
         updatedBy = updatedBy();
         updatedOn = LocalDateTime.now();
         log.info("audit info: {}, entity='{}', updatedBy='{}',  time={}", updateType, getClass().getSimpleName(), updatedBy, updatedOn);
     }
-
-    //public EntityBase update(EntityBase target) {
 
     public THIS_ENTITY update(THIS_ENTITY target) {
        throw new UnsupportedOperationException("This method is not implemented in: "+getClass());
