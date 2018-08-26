@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @Slf4j
 public class PersonService implements ServiceInt<PersonVO> {
-    private PersonJpaRepository personJpaRepository;
+    private PersonJpaRepository jpaRepository;
 
     // can also use more standardized @Inject
     // The autowiring allows me to inject other implementations including a mock.
@@ -27,32 +27,32 @@ public class PersonService implements ServiceInt<PersonVO> {
     // Also if there is only one constructor autowired isn't required.
     // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-    public PersonService(PersonJpaRepository personJpaRepository) {
-        this.personJpaRepository = personJpaRepository;
+    public PersonService(PersonJpaRepository jpaRepository) {
+        this.jpaRepository = jpaRepository;
     }
 
     @Override
     public List<PersonVO> getAll() {
          TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-         return MiscUtils.convert(personJpaRepository.findAll(), typeToken);
+         return MiscUtils.convert(jpaRepository.findAll(), typeToken);
     }
 
     public List<PersonVO> selectAll() {
         TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-        return  MiscUtils.convert(personJpaRepository.selectAll(), typeToken);
+        return  MiscUtils.convert(jpaRepository.selectAll(), typeToken);
     }
 
     public List<Object[]> selectColumns() {
-        return personJpaRepository.selectColumns();
+        return jpaRepository.selectColumns();
     }
 
     public List<MyPersonColumns> selectColumnsAsObject() {
-        return personJpaRepository.selectColumnsAsObject();
+        return jpaRepository.selectColumnsAsObject();
     }
 
     public List<PersonVO> getAllUsersWithCertificateId(long id) {
         TypeToken<List<PersonVO>> typeToken = new TypeToken<List<PersonVO>>(){};
-        return MiscUtils.convert(personJpaRepository.getAllUsersWithCertificateId(id), typeToken);
+        return MiscUtils.convert(jpaRepository.getAllUsersWithCertificateId(id), typeToken);
     }
 
 
@@ -122,27 +122,27 @@ public class PersonService implements ServiceInt<PersonVO> {
 
     @Override
     public  PersonVO create(PersonVO vo) {
-        return  personJpaRepository.save(vo.toEntity()).toVo();
+        return  jpaRepository.save(vo.toEntity()).toVo();
     }
 
     // idempotent. returns 200 and content or 204 and no content
     @Override
     public void delete(long id) {
-        personJpaRepository.deleteById(id);
+        jpaRepository.deleteById(id);
     }
 
     @Override
     public PersonVO get(long id) {
-        return personJpaRepository.getOne(id).toVo();
+        return jpaRepository.getOne(id).toVo();
     }
 
     @Override
     public  PersonVO update(long id, PersonVO vo) {
         Person submittedEntity = vo.toEntity();
         log.info("submitted person {}", submittedEntity);
-        Person updated = personJpaRepository.findById(id).map(person->{
+        Person updated = jpaRepository.findById(id).map(person->{
             submittedEntity.update(person);
-            return personJpaRepository.save(person);
+            return jpaRepository.save(person);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         return updated.toVo();

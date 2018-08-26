@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @Slf4j
 public class CertificationService implements ServiceInt<CertificationVO> {
-    private CertificationJpaRepository certificationJpaRepository;
+    private CertificationJpaRepository jpaRepository;
 
     // can also use more standardized @Inject
     // The autowiring allows me to inject other implementations including a mock.
@@ -26,40 +26,40 @@ public class CertificationService implements ServiceInt<CertificationVO> {
     // Also if there is only one constructor autowired isn't required.
     // Note the documentation doesn't make it clear if the RestTemplate should be shared or not....
     @Autowired
-    public CertificationService(CertificationJpaRepository certificationJpaRepository) {
-        this.certificationJpaRepository = certificationJpaRepository;
+    public CertificationService(CertificationJpaRepository jpaRepository) {
+        this.jpaRepository = jpaRepository;
     }
 
     @Override
     public List<CertificationVO> getAll() {
          TypeToken<List<CertificationVO>> typeToken = new TypeToken<List<CertificationVO>>(){};
-         return MiscUtils.convert(certificationJpaRepository.findAll(), typeToken);
+         return MiscUtils.convert(jpaRepository.findAll(), typeToken);
     }
 
 
     @Override
     public  CertificationVO create(CertificationVO vo) {
-        return  certificationJpaRepository.save(vo.toEntity()).toVo();
+        return  jpaRepository.save(vo.toEntity()).toVo();
     }
 
     // idempotent. returns 200 and content or 204 and no content
     @Override
     public void delete(long id) {
-        certificationJpaRepository.deleteById(id);
+        jpaRepository.deleteById(id);
     }
 
     @Override
     public CertificationVO get(long id) {
-        return certificationJpaRepository.getOne(id).toVo();
+        return jpaRepository.getOne(id).toVo();
     }
 
     @Override
     public  CertificationVO update(long id, CertificationVO vo) {
         Certification submittedEntity = vo.toEntity();
         log.info("submitted certification {}", submittedEntity);
-        Certification updated = certificationJpaRepository.findById(id).map(certification -> {
+        Certification updated = jpaRepository.findById(id).map(certification -> {
             submittedEntity.update(certification);
-            return certificationJpaRepository.save(certification);
+            return jpaRepository.save(certification);
         }).orElseThrow(() -> new ResourceNotFound("id=" + id + " not found"));
 
         return updated.toVo();
