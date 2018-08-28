@@ -5,10 +5,14 @@ import com.stevesouza.resttemplate.TestUtils;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.NamingConvention;
 import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
@@ -159,6 +163,20 @@ public class MiscUtilsTest {
         assertThat(pojo1).isEqualTo(pojo2);
     }
 
+    @Test
+    public void testBeanToBeanCopy() {
+        Pojo5 pojo5 = EnhancedRandom.random(Pojo5.class);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        Pojo6 pojo6 = MiscUtils.convert(pojo5, Pojo6.class);
+        log.info(pojo5.toString());
+        log.info(pojo6.toString());
+
+        assertThat(pojo6.getPojo6Id()).isEqualTo(pojo5.getId());
+        assertThat(pojo6.getName()).isEqualTo(pojo5.getName());
+    }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -192,4 +210,15 @@ public class MiscUtilsTest {
         List<Pojo1> pojoList;
     }
 
+    @Data
+    static class Pojo5 {
+        Long id;
+        String name;
+    }
+
+    @Data
+    static class Pojo6 {
+        Long pojo6Id;
+        String name;
+    }
 }
