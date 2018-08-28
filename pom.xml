@@ -191,6 +191,14 @@
 			<version>1.9.3</version>
 		</dependency>
 
+        <!-- bean comparisons like from entity to vo -->
+        <dependency>
+            <groupId>com.shazam</groupId>
+            <artifactId>shazamcrest</artifactId>
+            <version>0.11</version>
+			<scope>test</scope>
+        </dependency>
+
 
 	</dependencies>
 
