@@ -164,12 +164,28 @@ public class MiscUtilsTest {
     }
 
     @Test
-    public void testBeanToBeanCopy() {
+    public void testBeanToBeanLenientCopy() {
         Pojo5 pojo5 = EnhancedRandom.random(Pojo5.class);
         ModelMapper modelMapper = new ModelMapper();
+        // loose will allow for copying id field to techId field even though they don't match exactly.
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
-        Pojo6 pojo6 = MiscUtils.convert(pojo5, Pojo6.class);
+        Pojo6 pojo6 = modelMapper.map(pojo5, Pojo6.class);
+        log.info(pojo5.toString());
+        log.info(pojo6.toString());
+
+        assertThat(pojo6.getPojo6Id()).isEqualTo(pojo5.getId());
+        assertThat(pojo6.getName()).isEqualTo(pojo5.getName());
+    }
+
+    @Test
+    public void testBeanToBeanLenientCopyReverse() {
+        Pojo6 pojo6 = EnhancedRandom.random(Pojo6.class);
+        ModelMapper modelMapper = new ModelMapper();
+        // loose will allow for copying id field to techId field even though they don't match exactly.
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        Pojo5 pojo5 = modelMapper.map(pojo6, Pojo5.class);
         log.info(pojo5.toString());
         log.info(pojo6.toString());
 
