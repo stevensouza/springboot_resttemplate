@@ -153,3 +153,6 @@ set @CERT3 = NEXTVAL('hibernate_sequence');
     values
         (NEXTVAL('hibernate_sequence'), 'va beach', @PERSON2, @CERT3);
 
+-- if you need to reset the hibernate sequence starting point
+-- ALTER SEQUENCE hibernate_sequence RESTART WITH 200
+
